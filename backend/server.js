@@ -18,25 +18,34 @@ app.get('/health', (req, res) => {
 // Create Stripe Checkout session
 app.post('/api/create-payment', async (req, res) => {
   try {
-    const { spotId, duration, price } = req.body;
+    const { spotId, duration, price, email, phone, licensePlate, smsReminders } = req.body;
 
     // Validate input
-    if (!spotId || !duration || !price) {
+    if (!spotId || !duration || !price || !email || !phone || !licensePlate) {
       return res.status(400).json({ 
-        error: 'Missing required fields: spotId, duration, price' 
+        error: 'Missing required fields: spotId, duration, price, email, phone, licensePlate' 
+      });
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        error: 'Invalid email address' 
       });
     }
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      customer_email: email,
       line_items: [
         {
           price_data: {
             currency: 'usd',
             product_data: {
               name: `Parking Spot #${spotId}`,
-              description: `Lumber Building Parking - ${getDurationLabel(duration)}`,
+              description: `Lumber Building Parking - ${getDurationLabel(duration)}\nLicense Plate: ${licensePlate}\nPhone: ${phone}`,
             },
             unit_amount: price * 100, // Stripe expects cents
           },
@@ -49,6 +58,11 @@ app.post('/api/create-payment', async (req, res) => {
       metadata: {
         spotId: spotId.toString(),
         duration: duration,
+        email: email,
+        phone: phone,
+        licensePlate: licensePlate.toUpperCase(),
+        smsReminders: smsReminders ? 'yes' : 'no',
+        bookingDate: new Date().toISOString(),
       },
     });
 
@@ -73,6 +87,12 @@ app.get('/api/payment-session/:sessionId', async (req, res) => {
       spotId: session.metadata.spotId,
       duration: session.metadata.duration,
       amount: session.amount_total / 100, // Convert back from cents
+      email: session.metadata.email,
+      phone: session.metadata.phone,
+      licensePlate: session.metadata.licensePlate,
+      smsReminders: session.metadata.smsReminders === 'yes',
+      bookingDate: session.metadata.bookingDate,
+      customerEmail: session.customer_email,
     });
   } catch (error) {
     console.error('Error retrieving payment session:', error);

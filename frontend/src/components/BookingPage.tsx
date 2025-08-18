@@ -46,6 +46,13 @@ const BookingPage: React.FC = () => {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const [isMobile, setIsMobile] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
+  
+  // New form fields
+  const [email, setEmail] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [licensePlate, setLicensePlate] = useState<string>('');
+  const [smsReminders, setSmsReminders] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Parking duration options with pricing
   const durationOptions = [
@@ -108,28 +115,55 @@ const BookingPage: React.FC = () => {
     console.log('Duration selected:', value);
   };
 
+  // Validate form
+  const isFormValid = () => {
+    return selectedSpot && selectedDuration && selectedPrice > 0 && 
+           email.trim() !== '' && phone.trim() !== '' && licensePlate.trim() !== '';
+  };
+
   // Handle continue to payment
   const handleContinueToPayment = async () => {
-    if (selectedSpot && selectedDuration && selectedPrice > 0) {
-      try {
-        const response = await fetch('http://localhost:3001/api/create-payment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            spotId: selectedSpot,
-            duration: selectedDuration,
-            price: selectedPrice
-          }),
-        });
-        
-        const { url } = await response.json();
-        window.location.href = url; // Redirect to Stripe Checkout
-      } catch (error) {
-        console.error('Payment error:', error);
-        alert('Payment system temporarily unavailable. Please try again.');
+    if (!isFormValid()) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      console.log('Creating payment session...');
+      const response = await fetch('http://localhost:3001/api/create-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          spotId: selectedSpot,
+          duration: selectedDuration,
+          price: selectedPrice,
+          email: email.trim(),
+          phone: phone.trim(),
+          licensePlate: licensePlate.trim().toUpperCase(),
+          smsReminders
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      const data = await response.json();
+      console.log('Payment session created:', data);
+      
+      if (data.url) {
+        window.location.href = data.url; // Redirect to Stripe Checkout
+      } else {
+        throw new Error('No checkout URL received');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Payment system temporarily unavailable. Please check console and try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -253,8 +287,159 @@ const BookingPage: React.FC = () => {
           </div>
         )}
 
-        {/* Selection Status */}
+        {/* Contact Information */}
         {selectedSpot && selectedDuration && (
+          <div style={{
+            margin: isMobile ? '20px 10px' : '30px 0',
+            maxWidth: isMobile ? '100%' : '400px',
+            width: '100%'
+          }}>
+            <h3 style={{
+              fontSize: isMobile ? '18px' : '20px',
+              fontWeight: '600',
+              color: '#2c3e50',
+              textAlign: 'center',
+              marginBottom: '20px'
+            }}>
+              Contact Information
+            </h3>
+            
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '15px',
+              padding: isMobile ? '0 10px' : '0'
+            }}>
+              {/* Email Field */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: isMobile ? '14px' : '16px',
+                  fontWeight: '600',
+                  color: '#2c3e50',
+                  marginBottom: '5px'
+                }}>
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your.email@example.com"
+                  style={{
+                    width: '100%',
+                    fontSize: isMobile ? '16px' : '14px',
+                    padding: isMobile ? '12px 15px' : '10px 12px',
+                    borderRadius: '8px',
+                    border: '2px solid #ddd',
+                    backgroundColor: 'white',
+                    color: '#2c3e50',
+                    outline: 'none',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    minHeight: isMobile ? '48px' : '40px'
+                  }}
+                />
+              </div>
+
+              {/* Phone Field */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: isMobile ? '14px' : '16px',
+                  fontWeight: '600',
+                  color: '#2c3e50',
+                  marginBottom: '5px'
+                }}>
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="(555) 123-4567"
+                  style={{
+                    width: '100%',
+                    fontSize: isMobile ? '16px' : '14px',
+                    padding: isMobile ? '12px 15px' : '10px 12px',
+                    borderRadius: '8px',
+                    border: '2px solid #ddd',
+                    backgroundColor: 'white',
+                    color: '#2c3e50',
+                    outline: 'none',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    minHeight: isMobile ? '48px' : '40px'
+                  }}
+                />
+              </div>
+
+              {/* License Plate Field */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: isMobile ? '14px' : '16px',
+                  fontWeight: '600',
+                  color: '#2c3e50',
+                  marginBottom: '5px'
+                }}>
+                  License Plate Number *
+                </label>
+                <input
+                  type="text"
+                  value={licensePlate}
+                  onChange={(e) => setLicensePlate(e.target.value)}
+                  placeholder="ABC-1234"
+                  style={{
+                    width: '100%',
+                    fontSize: isMobile ? '16px' : '14px',
+                    padding: isMobile ? '12px 15px' : '10px 12px',
+                    borderRadius: '8px',
+                    border: '2px solid #ddd',
+                    backgroundColor: 'white',
+                    color: '#2c3e50',
+                    outline: 'none',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    minHeight: isMobile ? '48px' : '40px',
+                    textTransform: 'uppercase'
+                  }}
+                />
+              </div>
+
+              {/* SMS Reminders Checkbox */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 0'
+              }}>
+                <input
+                  type="checkbox"
+                  id="smsReminders"
+                  checked={smsReminders}
+                  onChange={(e) => setSmsReminders(e.target.checked)}
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    cursor: 'pointer'
+                  }}
+                />
+                <label 
+                  htmlFor="smsReminders"
+                  style={{
+                    fontSize: isMobile ? '14px' : '15px',
+                    color: '#2c3e50',
+                    cursor: 'pointer',
+                    lineHeight: '1.4'
+                  }}
+                >
+                  Send me SMS reminders about my parking reservation
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Selection Status */}
+        {selectedSpot && selectedDuration && isFormValid() && (
           <div style={{ 
             margin: isMobile ? '10px 10px' : '15px 0'
           }}>
@@ -271,6 +456,10 @@ const BookingPage: React.FC = () => {
               textAlign: 'center'
             }}>
               Spot #{selectedSpot} • {durationOptions.find(opt => opt.value === selectedDuration)?.label} • ${selectedPrice}
+              <br />
+              <span style={{ fontSize: isMobile ? '14px' : '16px', fontWeight: '500' }}>
+                {licensePlate.toUpperCase()} • {email}
+              </span>
               <br />
               <span style={{ fontSize: isMobile ? '14px' : '16px', fontWeight: '500' }}>
                 Ready for checkout
@@ -300,34 +489,40 @@ const BookingPage: React.FC = () => {
         {selectedSpot && selectedDuration && selectedPrice > 0 && (
           <button
             onClick={handleContinueToPayment}
+            disabled={!isFormValid() || isLoading}
             style={{
-              backgroundColor: '#4CAF50',
+              backgroundColor: !isFormValid() || isLoading ? '#ccc' : '#4CAF50',
               color: 'white',
               border: 'none',
               padding: isMobile ? '16px 30px' : '18px 45px',
               borderRadius: '12px',
               fontSize: isMobile ? '18px' : '20px',
               fontWeight: '600',
-              cursor: 'pointer',
+              cursor: !isFormValid() || isLoading ? 'not-allowed' : 'pointer',
               boxShadow: '0 4px 16px rgba(76, 175, 80, 0.3)',
               transition: 'all 0.3s ease',
               marginTop: isMobile ? '15px' : '20px',
               minHeight: isMobile ? '48px' : 'auto',
               width: isMobile ? '90%' : 'auto',
-              maxWidth: isMobile ? '320px' : 'none'
+              maxWidth: isMobile ? '320px' : 'none',
+              opacity: !isFormValid() || isLoading ? 0.7 : 1
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#45a049';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(76, 175, 80, 0.4)';
+              if (isFormValid() && !isLoading) {
+                e.currentTarget.style.backgroundColor = '#45a049';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(76, 175, 80, 0.4)';
+              }
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#4CAF50';
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 16px rgba(76, 175, 80, 0.3)';
+              if (isFormValid() && !isLoading) {
+                e.currentTarget.style.backgroundColor = '#4CAF50';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(76, 175, 80, 0.3)';
+              }
             }}
           >
-            Continue to Payment
+            {isLoading ? 'Creating Checkout Session...' : 'Continue to Payment'}
           </button>
         )}
 

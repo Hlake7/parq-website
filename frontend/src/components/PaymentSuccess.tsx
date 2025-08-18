@@ -9,6 +9,12 @@ interface BookingDetails {
   spotId: string;
   duration: string;
   amount: number;
+  email: string;
+  phone: string;
+  licensePlate: string;
+  smsReminders: boolean;
+  bookingDate: string;
+  customerEmail: string;
 }
 
 const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => {
@@ -156,6 +162,13 @@ const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => 
               <p><strong>Parking Spot:</strong> #{bookingDetails.spotId}</p>
               <p><strong>Duration:</strong> {getDurationLabel(bookingDetails.duration)}</p>
               <p><strong>Amount Paid:</strong> ${bookingDetails.amount}</p>
+              <p><strong>License Plate:</strong> {bookingDetails.licensePlate}</p>
+              <p><strong>Email:</strong> {bookingDetails.email}</p>
+              <p><strong>Phone:</strong> {bookingDetails.phone}</p>
+              {bookingDetails.smsReminders && (
+                <p><strong>SMS Reminders:</strong> <span style={{ color: '#4CAF50' }}>Enabled</span></p>
+              )}
+              <p><strong>Booking Date:</strong> {new Date(bookingDetails.bookingDate).toLocaleString()}</p>
               <p><strong>Status:</strong> <span style={{ color: '#4CAF50' }}>Confirmed</span></p>
             </div>
           </div>

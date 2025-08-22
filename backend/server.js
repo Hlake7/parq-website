@@ -53,8 +53,8 @@ app.post('/api/create-payment', async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/`,
+      success_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/book/lumber-building/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/book/lumber-building`,
       metadata: {
         spotId: spotId.toString(),
         duration: duration,

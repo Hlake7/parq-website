@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ParkingMap } from './index';
 import { ParkingSpot } from '../types/parking';
+import './BusinessPages.css';
 
 const BookingPage: React.FC = () => {
   // Manually positioned parking lot coordinates perfectly aligned with aerial photo
@@ -168,22 +170,58 @@ const BookingPage: React.FC = () => {
   };
 
   return (
-    <div className="App">
-      <header className="App-header" style={{ 
+    <div className="booking-page">
+      {/* Navigation */}
+      <nav className="navbar">
+        <div className="nav-container">
+          <Link to="/" className="nav-logo">
+            <span className="logo-text">Parq</span>
+            <span className="logo-tagline">AI</span>
+          </Link>
+          <div className="nav-menu">
+            <Link to="/" className="nav-link">Home</Link>
+            <Link to="/about" className="nav-link">About</Link>
+            <Link to="/services" className="nav-link">Services</Link>
+            <Link to="/contact" className="nav-link">Contact</Link>
+            <Link to="/book/lumber-building" className="nav-link active">Book Now</Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Booking Header */}
+      <div style={{ 
+        marginTop: '100px',
+        padding: isMobile ? '2rem 1rem 1rem' : '3rem 2rem 1rem',
+        backgroundColor: '#f8f9fa',
+        textAlign: 'center',
+        borderBottom: '1px solid #e9ecef'
+      }}>
+        <h1 style={{ 
+          color: '#1a1a1a', 
+          marginBottom: '0.5rem',
+          fontSize: isMobile ? '1.8rem' : '2.5rem', 
+          fontWeight: '700',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>
+          Lumber Building Parking
+        </h1>
+        <p style={{
+          color: '#6c757d',
+          fontSize: isMobile ? '1rem' : '1.1rem',
+          marginBottom: '1rem'
+        }}>
+          Reserve your parking spot with our AI-powered booking system
+        </p>
+      </div>
+
+      <div style={{ 
         padding: isMobile ? '15px' : '20px', 
         backgroundColor: '#f8f9fa', 
         minHeight: '100vh'
       }}>
-        <h1 style={{ 
-          color: '#2c3e50', 
-          marginBottom: isMobile ? '15px' : '10px', 
-          fontSize: isMobile ? '1.8rem' : '2.5rem', 
-          fontWeight: '600',
-          textAlign: 'center',
-          lineHeight: '1.2'
-        }}>
-          Parq - Lumber Building Parking
-        </h1>
         
         <p style={{ 
           fontSize: isMobile ? '16px' : '18px', 
@@ -570,7 +608,7 @@ const BookingPage: React.FC = () => {
             }
           </p>
         </div>
-      </header>
+      </div>
     </div>
   );
 };

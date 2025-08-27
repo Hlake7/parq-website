@@ -72,7 +72,7 @@ const BookingPage: React.FC = () => {
     } else {
       setSelectedPrice(0);
     }
-  }, [selectedDuration]);
+  }, [selectedDuration, durationOptions]);
 
   // Detect mobile device and set responsive canvas size
   useEffect(() => {

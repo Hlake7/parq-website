@@ -218,7 +218,7 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
     }
     // Note: In spotlight mode, unselected spots are completely invisible
     // but their coordinates still exist for potential interaction
-  }, [scaleCoordinates, selectedSpotId, isMobile, animationFrame]);
+  }, [scaleCoordinates, selectedSpotId, isMobile, animationFrame, scale]);
 
   // Check if point is inside polygon (ray casting algorithm)
   const isPointInPolygon = useCallback((point: CanvasCoordinates, polygon: CanvasCoordinates[]): boolean => {
@@ -232,47 +232,6 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
     return inside;
   }, []);
 
-  // Find spot at given coordinates with enhanced touch target area for mobile
-  const findSpotAtCoordinates = useCallback((x: number, y: number): ParkingSpot | null => {
-    // Check if click is within the image bounds
-    if (imageLoaded && backgroundImageRef.current) {
-      const { offsetX, offsetY, width: imgWidth, height: imgHeight } = imageDrawDimensions;
-      const scaledOffsetX = offsetX * scale + panX;
-      const scaledOffsetY = offsetY * scale + panY;
-      const scaledImgWidth = imgWidth * scale;
-      const scaledImgHeight = imgHeight * scale;
-      
-      if (x < scaledOffsetX || x > scaledOffsetX + scaledImgWidth || 
-          y < scaledOffsetY || y > scaledOffsetY + scaledImgHeight) {
-        return null; // Click is outside the image area
-      }
-    }
-    
-    for (const spot of parkingSpots) {
-      const scaledCoords = scaleCoordinates(spot.coordinates);
-      
-      // For mobile, expand touch target area
-      if (isMobile) {
-        // Calculate center of spot
-        const centerX = scaledCoords.reduce((sum, coord) => sum + coord.x, 0) / scaledCoords.length;
-        const centerY = scaledCoords.reduce((sum, coord) => sum + coord.y, 0) / scaledCoords.length;
-        
-        // Check if touch is within expanded radius (minimum 44px touch target)
-        const touchRadius = Math.max(22, 15 * scale);
-        const distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
-        
-        if (distance <= touchRadius) {
-          return spot;
-        }
-      } else {
-        // Desktop - use precise polygon detection
-        if (isPointInPolygon({ x, y }, scaledCoords)) {
-          return spot;
-        }
-      }
-    }
-    return null;
-  }, [parkingSpots, scaleCoordinates, isPointInPolygon, imageLoaded, imageDrawDimensions, isMobile, scale, panX, panY]);
 
   // Get mouse/touch coordinates relative to canvas
   const getCanvasCoordinates = useCallback((
@@ -350,7 +309,7 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
       const state = getSpotState(spot);
       drawParkingSpot(ctx, spot, state);
     });
-  }, [imageLoaded, imageError, backgroundImage, imageDrawDimensions, width, height, parkingSpots, getSpotState, drawParkingSpot, scale, panX, panY, animationFrame]);
+  }, [imageLoaded, imageError, backgroundImage, imageDrawDimensions, width, height, parkingSpots, getSpotState, drawParkingSpot, scale, panX, panY]);
 
   // Re-render when dependencies change
   useEffect(() => {

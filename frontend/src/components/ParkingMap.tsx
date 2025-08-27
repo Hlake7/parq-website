@@ -218,19 +218,7 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
     }
     // Note: In spotlight mode, unselected spots are completely invisible
     // but their coordinates still exist for potential interaction
-  }, [scaleCoordinates, selectedSpotId, isMobile, animationFrame, scale]);
-
-  // Check if point is inside polygon (ray casting algorithm)
-  const isPointInPolygon = useCallback((point: CanvasCoordinates, polygon: CanvasCoordinates[]): boolean => {
-    let inside = false;
-    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-      if (((polygon[i].y > point.y) !== (polygon[j].y > point.y)) &&
-          (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) {
-        inside = !inside;
-      }
-    }
-    return inside;
-  }, []);
+  }, [scaleCoordinates, selectedSpotId, scale]);
 
 
   // Get mouse/touch coordinates relative to canvas

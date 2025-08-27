@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ParkingMap } from './index';
 import { ParkingSpot } from '../types/parking';
@@ -57,12 +57,12 @@ const BookingPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Parking duration options with pricing
-  const durationOptions = [
+  const durationOptions = useMemo(() => [
     { value: '1', label: '1 Hour', price: 5 },
     { value: '2', label: '2 Hours', price: 9 },
     { value: '4', label: '4 Hours', price: 16 },
     { value: '8', label: 'All Day (8 Hours)', price: 25 }
-  ];
+  ], []);
 
   // Update price when duration changes
   useEffect(() => {

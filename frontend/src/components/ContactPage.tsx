@@ -182,26 +182,7 @@ const ContactPage: React.FC = () => {
                 <div className="contact-icon">📧</div>
                 <div className="contact-details">
                   <h4>Email</h4>
-                  <p>hello@parq-ai.com</p>
-                  <p>support@parq-ai.com</p>
-                </div>
-              </div>
-
-              <div className="contact-item">
-                <div className="contact-icon">📞</div>
-                <div className="contact-details">
-                  <h4>Phone</h4>
-                  <p>+1 (555) 123-4567</p>
-                  <p>Mon-Fri, 9 AM - 6 PM PST</p>
-                </div>
-              </div>
-
-              <div className="contact-item">
-                <div className="contact-icon">🏢</div>
-                <div className="contact-details">
-                  <h4>Office</h4>
-                  <p>123 Innovation Drive<br />
-                  San Francisco, CA 94107</p>
+                  <p>pleaseparq@gmail.com</p>
                 </div>
               </div>
 

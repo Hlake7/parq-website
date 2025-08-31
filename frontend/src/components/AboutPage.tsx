@@ -111,33 +111,6 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="team-section">
-        <div className="container">
-          <h2 className="section-title">Leadership Team</h2>
-          <p className="team-intro">
-            Our team combines decades of experience in AI, computer vision, 
-            and property management to deliver cutting-edge solutions.
-          </p>
-          <div className="team-grid">
-            <div className="team-member">
-              <div className="member-photo"></div>
-              <h3>CEO & Co-Founder</h3>
-              <p>15+ years in AI and machine learning, former tech lead at major autonomous vehicle company.</p>
-            </div>
-            <div className="team-member">
-              <div className="member-photo"></div>
-              <h3>CTO & Co-Founder</h3>
-              <p>Computer vision expert with PhD from Stanford, published researcher in real-time object detection.</p>
-            </div>
-            <div className="team-member">
-              <div className="member-photo"></div>
-              <h3>VP of Product</h3>
-              <p>Former property management executive, deep understanding of real estate operational challenges.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Values Section */}
       <section className="values-section">

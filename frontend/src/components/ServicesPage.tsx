@@ -195,7 +195,7 @@ const ServicesPage: React.FC = () => {
         <div className="container">
           <h2 className="section-title">Investment Options</h2>
           <div className="pricing-grid">
-            <a href="mailto:pleaseparq@gmail.com?subject=Interest%20in%20Parq%20AI%20Starter%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Starter%20plan%20for%20my%20property.%20Here%20are%20some%20details%3A%0A%0AProperty%20Name%3A%20%0ANumber%20of%20Parking%20Spots%3A%20%0ALocation%3A%20%0ACurrent%20Parking%20Challenges%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20pricing%20and%20next%20steps.%0A%0AThanks%21" className="pricing-card">
+            <a href="mailto:parqitai@gmail.com?subject=Interest%20in%20Parq%20AI%20Starter%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Starter%20plan%20for%20my%20property.%20Here%20are%20some%20details%3A%0A%0AProperty%20Name%3A%20%0ANumber%20of%20Parking%20Spots%3A%20%0ALocation%3A%20%0ACurrent%20Parking%20Challenges%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20pricing%20and%20next%20steps.%0A%0AThanks%21" className="pricing-card">
               <h3>Starter</h3>
               <div className="price">Contact for Pricing</div>
               <p>Perfect for small properties and pilot programs</p>
@@ -207,7 +207,7 @@ const ServicesPage: React.FC = () => {
                 <li>Business hours support</li>
               </ul>
             </a>
-            <a href="mailto:pleaseparq@gmail.com?subject=Interest%20in%20Parq%20AI%20Professional%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Professional%20plan%20for%20my%20property.%20Here%20are%20some%20details%3A%0A%0AProperty%20Name%3A%20%0ANumber%20of%20Parking%20Spots%3A%20%0ALocation%3A%20%0ACurrent%20Parking%20Challenges%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20pricing%20and%20next%20steps.%0A%0AThanks%21" className="pricing-card featured">
+            <a href="mailto:parqitai@gmail.com?subject=Interest%20in%20Parq%20AI%20Professional%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Professional%20plan%20for%20my%20property.%20Here%20are%20some%20details%3A%0A%0AProperty%20Name%3A%20%0ANumber%20of%20Parking%20Spots%3A%20%0ALocation%3A%20%0ACurrent%20Parking%20Challenges%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20pricing%20and%20next%20steps.%0A%0AThanks%21" className="pricing-card featured">
               <h3>Professional</h3>
               <div className="price">Contact for Pricing</div>
               <p>Comprehensive solution for most properties</p>
@@ -219,7 +219,7 @@ const ServicesPage: React.FC = () => {
                 <li>24/7 support</li>
               </ul>
             </a>
-            <a href="mailto:pleaseparq@gmail.com?subject=Interest%20in%20Parq%20AI%20Enterprise%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Enterprise%20plan%20for%20my%20property%20portfolio.%20Here%20are%20some%20details%3A%0A%0ACompany%20Name%3A%20%0ANumber%20of%20Properties%3A%20%0ATotal%20Parking%20Spots%3A%20%0ALocation(s)%3A%20%0ACurrent%20Parking%20Management%20Solution%3A%20%0ASpecific%20Requirements%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20a%20custom%20quote%20and%20implementation%20timeline.%0A%0AThanks%21" className="pricing-card">
+            <a href="mailto:parqitai@gmail.com?subject=Interest%20in%20Parq%20AI%20Enterprise%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Enterprise%20plan%20for%20my%20property%20portfolio.%20Here%20are%20some%20details%3A%0A%0ACompany%20Name%3A%20%0ANumber%20of%20Properties%3A%20%0ATotal%20Parking%20Spots%3A%20%0ALocation(s)%3A%20%0ACurrent%20Parking%20Management%20Solution%3A%20%0ASpecific%20Requirements%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20a%20custom%20quote%20and%20implementation%20timeline.%0A%0AThanks%21" className="pricing-card">
               <h3>Enterprise</h3>
               <div className="price">Custom Quote</div>
               <p>Scalable solution for large properties and portfolios</p>

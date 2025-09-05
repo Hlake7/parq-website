@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './BusinessPages.css';
 
 const ContactPage: React.FC = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,6 +15,14 @@ const ContactPage: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -51,12 +60,51 @@ const ContactPage: React.FC = () => {
             <span className="logo-text">Parq</span>
             <span className="logo-tagline">AI</span>
           </Link>
-          <div className="nav-menu">
+          
+          {/* Desktop Menu */}
+          <div className="nav-menu desktop-menu">
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/contact" className="nav-link active">Contact</Link>
             <Link to="/book/lumber-building" className="nav-cta">Book Now</Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="mobile-menu-button"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            <span className="hamburger-icon">☰</span>
+          </button>
+
+          {/* Mobile Menu Overlay */}
+          <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'active' : ''}`}>
+            <div className="mobile-menu">
+              <div className="mobile-menu-header">
+                <Link to="/" className="mobile-nav-logo" onClick={closeMobileMenu}>
+                  <span className="logo-text">Parq</span>
+                  <span className="logo-tagline">AI</span>
+                </Link>
+                <button 
+                  className="mobile-menu-close"
+                  onClick={closeMobileMenu}
+                  aria-label="Close mobile menu"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="mobile-nav-links">
+                <Link to="/" className="mobile-nav-link" onClick={closeMobileMenu}>Home</Link>
+                <Link to="/about" className="mobile-nav-link" onClick={closeMobileMenu}>About</Link>
+                <Link to="/services" className="mobile-nav-link" onClick={closeMobileMenu}>Services</Link>
+                <Link to="/contact" className="mobile-nav-link" onClick={closeMobileMenu}>Contact</Link>
+                <Link to="/privacy" className="mobile-nav-link" onClick={closeMobileMenu}>Privacy Policy</Link>
+                <Link to="/terms" className="mobile-nav-link" onClick={closeMobileMenu}>Terms of Service</Link>
+                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Book Now</Link>
+              </div>
+            </div>
           </div>
         </div>
       </nav>

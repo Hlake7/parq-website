@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './BusinessPages.css';
 
 const AboutPage: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -11,6 +12,11 @@ const AboutPage: React.FC = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleScheduleDemoClick = () => {
+    navigate('/contact');
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -29,7 +35,7 @@ const AboutPage: React.FC = () => {
             <Link to="/about" className="nav-link active">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
-            <Link to="/book/lumber-building" className="nav-cta">Book Now</Link>
+            <Link to="/book/lumber-building" className="nav-cta">Demo</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -64,7 +70,7 @@ const AboutPage: React.FC = () => {
                 <Link to="/contact" className="mobile-nav-link" onClick={closeMobileMenu}>Contact</Link>
                 <Link to="/privacy" className="mobile-nav-link" onClick={closeMobileMenu}>Privacy Policy</Link>
                 <Link to="/terms" className="mobile-nav-link" onClick={closeMobileMenu}>Terms of Service</Link>
-                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Book Now</Link>
+                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Demo</Link>
               </div>
             </div>
           </div>
@@ -188,9 +194,9 @@ const AboutPage: React.FC = () => {
           <div className="cta-content">
             <h2>Ready to Transform Your Parking?</h2>
             <p>Let's discuss how Parq AI can increase your revenue and reduce operational overhead.</p>
-            <Link to="/contact" className="btn-primary large">
+            <button onClick={handleScheduleDemoClick} className="btn-primary large">
               Schedule a Demo
-            </Link>
+            </button>
           </div>
         </div>
       </section>

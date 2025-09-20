@@ -67,7 +67,7 @@ const ContactPage: React.FC = () => {
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/contact" className="nav-link active">Contact</Link>
-            <Link to="/book/lumber-building" className="nav-cta">Book Now</Link>
+            <Link to="/book/lumber-building" className="nav-cta">Demo</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -102,7 +102,7 @@ const ContactPage: React.FC = () => {
                 <Link to="/contact" className="mobile-nav-link" onClick={closeMobileMenu}>Contact</Link>
                 <Link to="/privacy" className="mobile-nav-link" onClick={closeMobileMenu}>Privacy Policy</Link>
                 <Link to="/terms" className="mobile-nav-link" onClick={closeMobileMenu}>Terms of Service</Link>
-                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Book Now</Link>
+                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Demo</Link>
               </div>
             </div>
           </div>

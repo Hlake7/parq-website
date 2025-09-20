@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './BusinessPages.css';
 
 const ServicesPage: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -11,6 +12,16 @@ const ServicesPage: React.FC = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleScheduleDemoClick = () => {
+    navigate('/contact');
+    window.scrollTo(0, 0);
+  };
+
+  const handleServiceCardClick = () => {
+    navigate('/contact');
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -29,7 +40,7 @@ const ServicesPage: React.FC = () => {
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link active">Services</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
-            <Link to="/book/lumber-building" className="nav-cta">Book Now</Link>
+            <Link to="/book/lumber-building" className="nav-cta">Demo</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -64,7 +75,7 @@ const ServicesPage: React.FC = () => {
                 <Link to="/contact" className="mobile-nav-link" onClick={closeMobileMenu}>Contact</Link>
                 <Link to="/privacy" className="mobile-nav-link" onClick={closeMobileMenu}>Privacy Policy</Link>
                 <Link to="/terms" className="mobile-nav-link" onClick={closeMobileMenu}>Terms of Service</Link>
-                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Book Now</Link>
+                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Demo</Link>
               </div>
             </div>
           </div>
@@ -242,9 +253,9 @@ const ServicesPage: React.FC = () => {
       {/* Pricing Section */}
       <section className="pricing-section">
         <div className="container">
-          <h2 className="section-title">Investment Options</h2>
+          <h2 className="section-title">Service Options</h2>
           <div className="pricing-grid">
-            <a href="mailto:parqitai@gmail.com?subject=Interest%20in%20Parq%20AI%20Starter%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Starter%20plan%20for%20my%20property.%20Here%20are%20some%20details%3A%0A%0AProperty%20Name%3A%20%0ANumber%20of%20Parking%20Spots%3A%20%0ALocation%3A%20%0ACurrent%20Parking%20Challenges%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20pricing%20and%20next%20steps.%0A%0AThanks%21" className="pricing-card">
+            <div onClick={handleServiceCardClick} className="pricing-card" style={{ cursor: 'pointer' }}>
               <h3>Starter</h3>
               <div className="price">Contact for Pricing</div>
               <p>Perfect for small properties and pilot programs</p>
@@ -255,8 +266,8 @@ const ServicesPage: React.FC = () => {
                 <li>Standard analytics</li>
                 <li>Business hours support</li>
               </ul>
-            </a>
-            <a href="mailto:parqitai@gmail.com?subject=Interest%20in%20Parq%20AI%20Professional%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Professional%20plan%20for%20my%20property.%20Here%20are%20some%20details%3A%0A%0AProperty%20Name%3A%20%0ANumber%20of%20Parking%20Spots%3A%20%0ALocation%3A%20%0ACurrent%20Parking%20Challenges%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20pricing%20and%20next%20steps.%0A%0AThanks%21" className="pricing-card featured">
+            </div>
+            <div onClick={handleServiceCardClick} className="pricing-card" style={{ cursor: 'pointer' }}>
               <h3>Professional</h3>
               <div className="price">Contact for Pricing</div>
               <p>Comprehensive solution for most properties</p>
@@ -267,8 +278,8 @@ const ServicesPage: React.FC = () => {
                 <li>Full analytics dashboard</li>
                 <li>24/7 support</li>
               </ul>
-            </a>
-            <a href="mailto:parqitai@gmail.com?subject=Interest%20in%20Parq%20AI%20Enterprise%20Plan&body=Hi%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20the%20Enterprise%20plan%20for%20my%20property%20portfolio.%20Here%20are%20some%20details%3A%0A%0ACompany%20Name%3A%20%0ANumber%20of%20Properties%3A%20%0ATotal%20Parking%20Spots%3A%20%0ALocation(s)%3A%20%0ACurrent%20Parking%20Management%20Solution%3A%20%0ASpecific%20Requirements%3A%20%0A%0APlease%20contact%20me%20to%20discuss%20a%20custom%20quote%20and%20implementation%20timeline.%0A%0AThanks%21" className="pricing-card">
+            </div>
+            <div onClick={handleServiceCardClick} className="pricing-card" style={{ cursor: 'pointer' }}>
               <h3>Enterprise</h3>
               <div className="price">Custom Quote</div>
               <p>Scalable solution for large properties and portfolios</p>
@@ -279,7 +290,7 @@ const ServicesPage: React.FC = () => {
                 <li>Advanced reporting</li>
                 <li>Dedicated account manager</li>
               </ul>
-            </a>
+            </div>
           </div>
           <div className="pricing-note">
             <p>All plans include hardware, installation, training, and ongoing maintenance. 
@@ -294,9 +305,9 @@ const ServicesPage: React.FC = () => {
           <div className="cta-content">
             <h2>Ready to See Parq AI in Action?</h2>
             <p>Schedule a personalized demo to see how our AI technology can transform your parking operations.</p>
-            <Link to="/contact" className="btn-primary large">
+            <button onClick={handleScheduleDemoClick} className="btn-primary large">
               Schedule Demo
-            </Link>
+            </button>
           </div>
         </div>
       </section>

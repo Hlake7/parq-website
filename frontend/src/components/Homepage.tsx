@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './BusinessPages.css';
 
 const Homepage: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -11,6 +12,11 @@ const Homepage: React.FC = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleGetStartedClick = () => {
+    navigate('/contact');
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -29,7 +35,7 @@ const Homepage: React.FC = () => {
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
-            <Link to="/book/lumber-building" className="nav-cta">Book Now</Link>
+            <Link to="/book/lumber-building" className="nav-cta">Demo</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -64,7 +70,7 @@ const Homepage: React.FC = () => {
                 <Link to="/contact" className="mobile-nav-link" onClick={closeMobileMenu}>Contact</Link>
                 <Link to="/privacy" className="mobile-nav-link" onClick={closeMobileMenu}>Privacy Policy</Link>
                 <Link to="/terms" className="mobile-nav-link" onClick={closeMobileMenu}>Terms of Service</Link>
-                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Book Now</Link>
+                <Link to="/book/lumber-building" className="mobile-nav-cta" onClick={closeMobileMenu}>Demo</Link>
               </div>
             </div>
           </div>
@@ -139,9 +145,9 @@ const Homepage: React.FC = () => {
           <div className="cta-content">
             <h2>Ready to Revolutionize Your Parking?</h2>
             <p>Join forward-thinking property owners who've already increased their parking revenue with Parq AI.</p>
-            <Link to="/contact" className="btn-primary large">
+            <button onClick={handleGetStartedClick} className="btn-primary large">
               Get Started Today
-            </Link>
+            </button>
           </div>
         </div>
       </section>

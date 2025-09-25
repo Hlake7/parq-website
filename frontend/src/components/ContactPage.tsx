@@ -230,7 +230,7 @@ const ContactPage: React.FC = () => {
                 <div className="contact-icon">📧</div>
                 <div className="contact-details">
                   <h4>Email</h4>
-                  <p>parqitai@gmail.com , pleaseparq@gmail.com</p>
+                  <p>parqitai@gmail.com pleaseparq@gmail.com</p>
                 </div>
               </div>
 

@@ -540,7 +540,7 @@ const BookingPage: React.FC = () => {
                     lineHeight: '1.4'
                   }}
                 >
-                  I would like to receive SMS updates from Parqit/Parq-AI
+                  I agree to receive an SMS alert from Parqit 15 minutes before my parking session expires. Message & data rates may apply. Reply STOP to opt-out.
                 </label>
               </div>
             </div>

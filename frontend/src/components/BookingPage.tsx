@@ -126,16 +126,39 @@ const BookingPage: React.FC = () => {
     console.log('Duration selected:', value);
   };
 
+  // Handle phone input with validation
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Remove all non-numeric characters
+    const numericValue = value.replace(/\D/g, '');
+    // Limit to 10 digits
+    const limitedValue = numericValue.slice(0, 10);
+    // Format as (XXX) XXX-XXXX
+    let formattedValue = limitedValue;
+    if (limitedValue.length >= 6) {
+      formattedValue = `(${limitedValue.slice(0, 3)}) ${limitedValue.slice(3, 6)}-${limitedValue.slice(6)}`;
+    } else if (limitedValue.length >= 3) {
+      formattedValue = `(${limitedValue.slice(0, 3)}) ${limitedValue.slice(3)}`;
+    }
+    setPhone(formattedValue);
+  };
+
   // Validate form
   const isFormValid = () => {
-    return selectedSpot && selectedDuration && selectedPrice > 0 && 
-           email.trim() !== '' && phone.trim() !== '' && licensePlate.trim() !== '';
+    const phoneDigits = phone.replace(/\D/g, '');
+    return selectedSpot && selectedDuration && selectedPrice > 0 &&
+           email.trim() !== '' && phoneDigits.length === 10 && licensePlate.trim() !== '';
   };
 
   // Handle continue to payment
   const handleContinueToPayment = async () => {
     if (!isFormValid()) {
-      alert('Please fill in all required fields.');
+      const phoneDigits = phone.replace(/\D/g, '');
+      if (phoneDigits.length !== 10) {
+        alert('Please enter a valid 10-digit phone number.');
+      } else {
+        alert('Please fill in all required fields.');
+      }
       return;
     }
 
@@ -194,7 +217,7 @@ const BookingPage: React.FC = () => {
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
-            <Link to="/book/lumber-building" className="nav-link active">Book Now</Link>
+            <Link to="/book/lumber-building" className="nav-link active">Demo</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -376,7 +399,7 @@ const BookingPage: React.FC = () => {
         {/* Contact Information */}
         {selectedSpot && selectedDuration && (
           <div style={{
-            margin: isMobile ? '20px 10px' : '30px 0',
+            margin: isMobile ? '20px 10px' : '30px auto',
             maxWidth: isMobile ? '100%' : '400px',
             width: '100%'
           }}>
@@ -441,7 +464,7 @@ const BookingPage: React.FC = () => {
                 <input
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={handlePhoneChange}
                   placeholder="(555) 123-4567"
                   style={{
                     width: '100%',
@@ -517,7 +540,7 @@ const BookingPage: React.FC = () => {
                     lineHeight: '1.4'
                   }}
                 >
-                  I agree to receive an SMS alert from Parqit-AI 15 minutes before my parking session expires. Message & data rates may apply. Reply STOP to opt-out.
+                  I agree to receive an SMS alert from Parqit 15 minutes before my parking session expires. Message & data rates may apply. Reply STOP to opt-out.
                 </label>
               </div>
             </div>
@@ -573,6 +596,7 @@ const BookingPage: React.FC = () => {
 
         {/* Continue Button */}
         {selectedSpot && selectedDuration && selectedPrice > 0 && (
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           <button
             onClick={handleContinueToPayment}
             disabled={!isFormValid() || isLoading}
@@ -610,16 +634,18 @@ const BookingPage: React.FC = () => {
           >
             {isLoading ? 'Creating Checkout Session...' : 'Continue to Payment'}
           </button>
+          </div>
         )}
 
         {/* Footer Info */}
-        <div style={{ 
-          marginTop: isMobile ? '25px' : '40px', 
-          fontSize: isMobile ? '13px' : '14px', 
+        <div style={{
+          marginTop: isMobile ? '25px' : '40px',
+          fontSize: isMobile ? '13px' : '14px',
           color: '#6c757d',
           maxWidth: isMobile ? '95%' : '600px',
           lineHeight: '1.6',
-          padding: isMobile ? '0 10px' : '0'
+          padding: isMobile ? '0 10px' : '0',
+          margin: isMobile ? '25px 10px 0' : '40px auto 0'
         }}>
           <div style={{ 
             display: 'flex', 

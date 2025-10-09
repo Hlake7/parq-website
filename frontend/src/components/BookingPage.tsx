@@ -374,7 +374,7 @@ const BookingPage: React.FC = () => {
         )}
 
         {/* Contact Information */}
-        {selectedSpot && selectedDuration && (
+        {/*selectedSpot && selectedDuration && ( */ }
           <div style={{
             margin: isMobile ? '20px 10px' : '30px 0',
             maxWidth: isMobile ? '100%' : '400px',
@@ -522,7 +522,7 @@ const BookingPage: React.FC = () => {
               </div>
             </div>
           </div>
-        )}
+        {/*)}*/}
 
         {/* Selection Status */}
         {selectedSpot && selectedDuration && isFormValid() && (

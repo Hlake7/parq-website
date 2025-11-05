@@ -33,7 +33,8 @@ const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => 
           throw new Error('No session ID found');
         }
 
-        const response = await fetch(`http://localhost:3001/api/payment-session/${sessionId}`);
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+        const response = await fetch(`${apiUrl}/api/payment-session/${sessionId}`);
         const data = await response.json();
         
         if (response.ok) {

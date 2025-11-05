@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lumber Building Parking - Reserve Your Spot</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3748;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #6c757d;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(8px, 2vw, 20px);
+            margin-bottom: 20px;
+            padding: 15px 10px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .step-circle {
+            width: clamp(32px, 8vw, 40px);
+            height: clamp(32px, 8vw, 40px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: clamp(12px, 3vw, 16px);
+            transition: all 0.3s ease;
+        }
+
+        .step-circle.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .step-circle.completed {
+            background: #48bb78;
+            color: white;
+        }
+
+        .step-circle.pending {
+            background: #e2e8f0;
+            color: #a0aec0;
+        }
+
+        .step-label {
+            font-size: clamp(11px, 2.5vw, 14px);
+            font-weight: 600;
+            color: #4a5568;
+            display: none;
+        }
+
+        .step-arrow {
+            color: #cbd5e0;
+            font-size: clamp(14px, 3vw, 20px);
+        }
+
+        @media (min-width: 480px) {
+            .step-label {
+                display: block;
+            }
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: clamp(20px, 4vw, 30px);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title-icon {
+            width: clamp(24px, 6vw, 30px);
+            height: clamp(24px, 6vw, 30px);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(14px, 3.5vw, 18px);
+        }
+
+        /* Spot Selector */
+        .spot-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 100%;
+        }
+
+        .spot-selector label {
+            font-size: clamp(14px, 3.5vw, 16px);
+            font-weight: 600;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        .spot-selector select {
+            width: 100%;
+            font-size: clamp(16px, 4vw, 18px);
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background-color: white;
+            color: #2d3748;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232d3748' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        /* Map Container */
+        .map-container {
+            text-align: center;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .map-wrapper {
+            display: inline-block;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        #parkingCanvas {
+            display: block;
+            cursor: pointer;
+            touch-action: pan-x pan-y;
+        }
+
+        @media (max-width: 768px) {
+            #parkingCanvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        .map-legend {
+            margin-top: 15px;
+            padding: 12px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(12px, 3vw, 14px);
+            font-weight: 600;
+        }
+
+        @media (min-width: 480px) {
+            .map-legend {
+                flex-direction: row;
+                gap: 20px;
+            }
+        }
+
+        /* Duration Tiles */
+        .duration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 480px) {
+            .duration-grid {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                gap: 16px;
+            }
+        }
+
+        .duration-tile {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 3px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .duration-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .duration-tile:active {
+            transform: scale(0.97);
+        }
+
+        .duration-tile.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .duration-tile.selected::before {
+            transform: scaleX(1);
+            background: white;
+        }
+
+        .duration-label {
+            font-size: clamp(16px, 4vw, 20px);
+            font-weight: 800;
+            color: #2d3748;
+        }
+
+        .duration-tile.selected .duration-label {
+            color: white;
+        }
+
+        .duration-price {
+            font-size: clamp(14px, 3.5vw, 17px);
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .duration-tile.selected .duration-price {
+            color: white;
+        }
+
+        /* Form Fields */
+        .form-grid {
+            display: grid;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-field label {
+            font-size: clamp(13px, 3vw, 15px);
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .form-field input {
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-field input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            background: #f7fafc;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        .checkbox-field input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .checkbox-field label {
+            font-size: clamp(12px, 3vw, 14px);
+            color: #4a5568;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        /* Promo Code */
+        .promo-section {
+            margin-top: 20px;
+        }
+
+        .promo-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .promo-input-group input {
+            flex: 1;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            outline: none;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .promo-btn {
+            padding: 14px 24px;
+            font-size: clamp(14px, 3.5vw, 16px);
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .promo-btn:active {
+            transform: scale(0.97);
+        }
+
+        .promo-applied {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 14px 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+
+        .promo-remove-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: clamp(12px, 3vw, 14px);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: clamp(20px, 4vw, 30px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .summary-title {
+            font-size: clamp(1.2rem, 4vw, 1.4rem);
+            font-weight: 800;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .time-display {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .time-label {
+            font-size: clamp(11px, 2.5vw, 12px);
+            font-weight: 700;
+            color: #718096;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .time-content {
+            font-size: clamp(13px, 3vw, 15px);
+            color: #2d3748;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .time-arrow {
+            color: #667eea;
+            font-weight: 800;
+            margin: 6px 0;
+        }
+
+        .cost-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: clamp(14px, 3.5vw, 17px);
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .cost-row.discount {
+            color: #48bb78;
+            font-weight: 700;
+        }
+
+        .cost-row.total {
+            border-top: 3px solid #cbd5e0;
+            margin-top: 10px;
+            padding-top: 16px;
+            font-size: clamp(1.3rem, 5vw, 1.5rem);
+            font-weight: 800;
+            color: #2d3748;
+        }
+
+        .cost-row.total .amount {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Checkout Button */
+        .checkout-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 16px;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .checkout-btn:active {
+            transform: scale(0.98);
+        }
+
+        @media (min-width: 480px) {
+            .checkout-btn {
+                width: auto;
+            }
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Stripe Payment Element Styles */
+        #payment-element {
+            margin-bottom: 24px;
+        }
+
+        #payment-message {
+            color: #df1b41;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: #fef2f2;
+            border: 1px solid #fee2e2;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        #payment-message.success {
+            color: #059669;
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .checkout-section {
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Lumber Building Parking</h1>
+            <p>Reserve your parking spot with our AI-powered booking system</p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="step">
+                <div class="step-circle active" id="step1-circle">1</div>
+                <div class="step-label">Spot</div>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-circle pending" id="step2-circle">2</div>
+                <div class="step-label">Duration</div>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-circle pending" id="step3-circle">3</div>
+                <div class="step-label">Details</div>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-circle pending" id="step4-circle">4</div>
+                <div class="step-label">Confirm</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Spot Selection -->
+        <div class="section-card" id="step1-section">
+            <div class="section-title">
+                <span>Select Your Parking Spot</span>
+            </div>
+            <p style="text-align: center; color: #6c757d; margin-bottom: 20px; font-size: clamp(13px, 3vw, 15px);">
+                Choose your spot to see the exact space highlighted on the map
+            </p>
+
+            <div class="spot-selector">
+                <label for="spotSelector">Spot Number:</label>
+                <select id="spotSelector">
+                    <option value="">Choose a spot</option>
+                </select>
+            </div>
+
+            <!-- Map (appears after selection) -->
+            <div class="map-container hidden" id="mapContainer">
+                <div class="map-wrapper">
+                    <canvas id="parkingCanvas"></canvas>
+                </div>
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <span style="color: #2196F3; font-size: 18px;">■</span>
+                        <span>Spot #<span id="selectedSpotNum">-</span></span>
+                    </div>
+                    <div class="legend-item">
+                        <span style="color: #4CAF50; font-size: 18px;">■</span>
+                        <span>Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Duration Selection -->
+        <div class="section-card hidden" id="step2-section">
+            <div class="section-title">
+                <div class="section-title-icon">⏱️</div>
+                <span>Select Duration</span>
+            </div>
+
+            <div class="duration-grid">
+                <div class="duration-tile" data-duration="0.5" data-price="2.50" data-label="30 min">
+                    <div class="duration-label">30 min</div>
+                    <div class="duration-price">$2.50</div>
+                </div>
+                <div class="duration-tile" data-duration="1" data-price="5.00" data-label="1 hour">
+                    <div class="duration-label">1 hour</div>
+                    <div class="duration-price">$5.00</div>
+                </div>
+                <div class="duration-tile" data-duration="2" data-price="10.00" data-label="2 hours">
+                    <div class="duration-label">2 hours</div>
+                    <div class="duration-price">$10.00</div>
+                </div>
+                <div class="duration-tile" data-duration="4" data-price="20.00" data-label="4 hours">
+                    <div class="duration-label">4 hours</div>
+                    <div class="duration-price">$20.00</div>
+                </div>
+                <div class="duration-tile" data-duration="6" data-price="30.00" data-label="6 hours">
+                    <div class="duration-label">6 hours</div>
+                    <div class="duration-price">$30.00</div>
+                </div>
+                <div class="duration-tile" data-duration="8" data-price="40.00" data-label="8 hours">
+                    <div class="duration-label">8 hours</div>
+                    <div class="duration-price">$40.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Contact Information -->
+        <div class="section-card hidden" id="step3-section">
+            <div class="section-title">
+                <div class="section-title-icon">📧</div>
+                <span>Contact Information</span>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-field">
+                    <label>Email Address *</label>
+                    <input type="email" id="emailInput" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="form-field">
+                    <label>Phone Number *</label>
+                    <input type="tel" id="phoneInput" placeholder="(555) 123-4567" required>
+                </div>
+
+                <div class="form-field">
+                    <label>License Plate *</label>
+                    <input type="text" id="licensePlateInput" placeholder="ABC-1234" style="text-transform: uppercase;" required>
+                </div>
+
+                <div class="checkbox-field">
+                    <input type="checkbox" id="smsReminders" checked>
+                    <label for="smsReminders">
+                        I agree to receive SMS alerts from Parqit, LLC. Messaging and data rates may apply.
+                    </label>
+                </div>
+            </div>
+
+            <!-- Promo Code -->
+            <div class="promo-section">
+                <h3 style="font-size: clamp(15px, 3.5vw, 18px); font-weight: 700; color: #2d3748; margin-bottom: 12px;">
+                    🎁 Promo Code
+                </h3>
+
+                <div class="promo-input-group" id="promoInput">
+                    <input type="text" id="promoCode" placeholder="ENTER CODE">
+                    <button class="promo-btn" onclick="applyPromo()">Apply</button>
+                </div>
+
+                <div class="promo-applied hidden" id="promoApplied">
+                    <div>
+                        <div style="font-weight: 700; font-size: clamp(14px, 3.5vw, 16px);" id="promoCodeText">-</div>
+                        <div style="font-size: clamp(12px, 3vw, 14px); opacity: 0.9;" id="promoDiscountText">-</div>
+                    </div>
+                    <button class="promo-remove-btn" onclick="removePromo()">Remove</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Summary & Checkout -->
+        <div class="section-card hidden" id="step4-section">
+            <div class="section-title">
+                <div class="section-title-icon">📋</div>
+                <span>Reservation Summary</span>
+            </div>
+
+            <div class="summary-box">
+                <h3 class="summary-title">Your Parking Reservation</h3>
+
+                <div class="time-display">
+                    <div class="time-label">PARKING TIME</div>
+                    <div class="time-content">
+                        <div><strong>Start:</strong> <span id="startTime">-</span></div>
+                        <div class="time-arrow">↓</div>
+                        <div><strong>End:</strong> <span id="endTime">-</span></div>
+                    </div>
+                </div>
+
+                <div class="cost-breakdown">
+                    <div class="cost-row">
+                        <span>Spot</span>
+                        <span id="summarySpot">-</span>
+                    </div>
+
+                    <div class="cost-row">
+                        <span>Duration</span>
+                        <span id="summaryDuration">-</span>
+                    </div>
+
+                    <div class="cost-row">
+                        <span>Base Price</span>
+                        <span id="summaryBasePrice">$0.00</span>
+                    </div>
+
+                    <div class="cost-row discount hidden" id="discountRow">
+                        <span>Discount</span>
+                        <span id="discountAmount">-$0.00</span>
+                    </div>
+
+                    <div class="cost-row total">
+                        <span>Total</span>
+                        <span class="amount" id="totalAmount">$0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-section">
+                <div id="payment-message" class="hidden"></div>
+                <button class="checkout-btn" id="submit-payment">
+                    <span id="button-text">Complete Checkout</span>
+                    <span id="spinner" class="spinner hidden"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ALL 34 parking spot coordinates from production
+        const parkingSpots = {
+            1: { id: 1, coordinates: [[11.497222014268198, 111.45364583333333], [105.6972220142682, 111.45364583333333], [107.00555534760154, 148.08697916666665], [11.497222014268198, 149.3953125]], isAvailable: true },
+            2: { id: 2, coordinates: [[11.497222014268203, 158.55364583333335], [108.31388868093487, 155.93697916666665], [110.93055534760154, 197.80364583333332], [14.391666666666652, 197.69166666666666]], isAvailable: true },
+            3: { id: 3, coordinates: [[11.497222014268193, 206.96197916666665], [109.6222220142682, 206.96197916666665], [109.6222220142682, 248.8286458333333], [12.805555347601532, 248.82864583333333]], isAvailable: true },
+            4: { id: 4, coordinates: [[11.497222014268203, 254.06197916666662], [113.5472220142682, 255.37031249999998], [113.5472220142682, 298.54531249999997], [12.805555347601533, 301.16197916666664]], isAvailable: true },
+            5: { id: 5, coordinates: [[10.188888680934864, 302.4703125], [107.00555534760154, 301.16197916666664], [105.6972220142682, 344.33697916666665], [10.188888680934864, 346.9536458333333]], isAvailable: true },
+            6: { id: 6, coordinates: [[11.497222014268196, 350.8786458333333], [104.38888868093488, 348.2619791666666], [105.6972220142682, 392.74531249999995], [11.497222014268198, 394.05364583333323]], isAvailable: true },
+            7: { id: 7, coordinates: [[14.113888680934863, 399.28697916666664], [104.38888868093488, 399.28697916666664], [104.38888868093488, 438.53697916666664], [13.00833333333333, 441.37499999999994]], isAvailable: true },
+            8: { id: 8, coordinates: [[7.572222014268198, 442.4619791666666], [103.08055534760153, 443.7703125], [105.6972220142682, 484.32864583333327], [8.333333333333329, 484.3083333333332]], isAvailable: true },
+            9: { id: 9, coordinates: [[12.805555347601532, 489.5619791666666], [105.69722201426819, 489.5619791666666], [107.00555534760153, 528.8119791666666], [12.805555347601532, 531.4286458333333]], isAvailable: true },
+            10: { id: 10, coordinates: [[12.805555347601532, 535.3536458333333], [107.00555534760154, 532.7369791666666], [108.31388868093487, 577.2203125], [12.805555347601532, 579.8369791666667]], isAvailable: true },
+            11: { id: 11, coordinates: [[107.00555534760154, 625.6286458333333], [12.805555347601532, 628.2453125], [12.805555347601508, 582.4536458333333], [107.00555534760154, 578.5286458333334]], isAvailable: true },
+            12: { id: 12, coordinates: [[109.6222220142682, 675.3453125], [14.113888680934865, 676.6536458333333], [13.024999999999974, 631.975], [108.31388868093487, 629.5536458333332]], isAvailable: true },
+            13: { id: 13, coordinates: [[110.93055534760154, 721.1369791666666], [11.497222014268198, 725.0619791666666], [12.805555347601548, 680.5786458333332], [109.62222201426822, 677.9619791666665]], isAvailable: true },
+            14: { id: 14, coordinates: [[110.93055534760154, 770.8536458333333], [10.188888680934864, 773.4703125], [8.88055534760153, 731.6036458333333], [110.93055534760154, 727.6786458333332]], isAvailable: true },
+            15: { id: 15, coordinates: [[144.94722201426822, 18.561979166666667], [147.56388868093487, 108.83697916666667], [107.00555534760154, 106.22031249999999], [101.77222201426821, 17.253645833333334]], isAvailable: true },
+            16: { id: 16, coordinates: [[192.04722201426821, 17.253645833333334], [194.6638886809349, 111.45364583333333], [151.38333333333333, 107.84166666666667], [147.56388868093487, 17.253645833333334]], isAvailable: true },
+            17: { id: 17, coordinates: [[241.76388868093488, 19.870312499999997], [241.76388868093488, 112.76197916666666], [199.8972220142682, 108.83697916666667], [198.58888868093487, 19.870312499999997]], isAvailable: true },
+            18: { id: 18, coordinates: [[288.8638886809349, 22.486979166666664], [287.55555534760157, 114.07031249999999], [246.9972220142682, 111.45364583333333], [246.9972220142682, 22.486979166666664]], isAvailable: true },
+            19: { id: 19, coordinates: [[339.8888886809349, 19.870312499999997], [337.2722220142682, 114.07031249999999], [294.0972220142682, 116.68697916666666], [294.0972220142682, 19.870312499999997]], isAvailable: true },
+            20: { id: 20, coordinates: [[385.68055534760157, 17.253645833333334], [385.68055534760157, 112.76197916666666], [343.8138886809349, 107.52864583333333], [345.12222201426823, 14.636979166666666]], isAvailable: true },
+            21: { id: 21, coordinates: [[435.3972220142682, 14.636979166666666], [435.3972220142682, 114.07031249999999], [390.9138886809349, 114.07031249999999], [390.9138886809349, 15.945312499999998]], isAvailable: true },
+            22: { id: 22, coordinates: [[483.80555534760157, 15.945312499999998], [482.49722201426823, 112.76197916666666], [440.63055534760156, 114.07031249999999], [440.63055534760156, 14.636979166666666]], isAvailable: true },
+            23: { id: 23, coordinates: [[530.9055553476016, 17.25364583333333], [530.9055553476016, 112.76197916666666], [487.7305553476016, 111.45364583333333], [487.7305553476016, 17.25364583333333]], isAvailable: true },
+            24: { id: 24, coordinates: [[579.313888680935, 14.636979166666663], [578.0055553476016, 112.76197916666666], [534.8305553476016, 111.45364583333333], [537.4472220142683, 15.945312499999996]], isAvailable: true },
+            25: { id: 25, coordinates: [[629.0305553476015, 10.711979166666666], [629.0305553476015, 112.76197916666666], [584.5472220142682, 114.07031249999999], [585.8555553476016, 12.0203125]], isAvailable: true },
+            26: { id: 26, coordinates: [[720.613888680935, 9.403645833333332], [723.2305553476017, 116.68697916666666], [676.1305553476017, 116.68697916666666], [673.513888680935, 9.403645833333332]], isAvailable: true },
+            27: { id: 27, coordinates: [[728.463888680935, 12.0203125], [725.8472220142684, 111.45364583333333], [767.713888680935, 111.45364583333333], [770.3305553476017, 12.0203125]], isAvailable: true },
+            28: { id: 28, coordinates: [[817.4305553476016, 14.636979166666666], [817.4305553476016, 111.45364583333333], [775.563888680935, 111.45364583333333], [775.563888680935, 14.636979166666666]], isAvailable: true },
+            29: { id: 29, coordinates: [[865.838888680935, 14.636979166666666], [865.838888680935, 110.14531249999999], [822.663888680935, 108.83697916666667], [822.663888680935, 15.945312499999986]], isAvailable: true },
+            30: { id: 30, coordinates: [[919.4805553476017, 13.328645833333333], [919.4805553476017, 106.22031249999999], [874.9972220142683, 107.52864583333333], [873.6888886809351, 12.020312500000017]], isAvailable: true },
+            31: { id: 31, coordinates: [[215.59722201426823, 613.8536458333333], [325.49722201426823, 615.1619791666666], [332.0388886809349, 662.2619791666666], [214.2888886809349, 663.5703125]], isAvailable: true },
+            32: { id: 32, coordinates: [[218.21388868093487, 560.2119791666667], [322.88055534760156, 561.5203124999999], [325.49722201426823, 611.2369791666666], [218.21388868093487, 611.2369791666666]], isAvailable: true },
+            33: { id: 33, coordinates: [[220.83055534760155, 510.49531249999995], [324.1888886809349, 511.8036458333333], [326.80555534760157, 558.9036458333333], [220.83055534760155, 557.5953125]], isAvailable: true },
+            34: { id: 34, coordinates: [[219.5222220142682, 463.3953125], [322.88055534760156, 462.08697916666665], [322.88055534760156, 509.1869791666666], [219.5222220142682, 509.1869791666666]], isAvailable: true }
+        };
+
+        // State
+        let state = {
+            selectedSpot: null,
+            selectedDuration: null,
+            selectedPrice: 0,
+            selectedLabel: '',
+            promoCode: null,
+            promoDiscount: 0,
+            startTime: new Date()
+        };
+
+        const canvas = document.getElementById('parkingCanvas');
+        const ctx = canvas.getContext('2d');
+        let animationFrameId = null;
+        let canvasSize = { width: 800, height: 600 };
+
+        // Set canvas size based on device
+        function setCanvasSize() {
+            const isMobile = window.innerWidth <= 768;
+
+            if (isMobile) {
+                const padding = 40;
+                const maxWidth = Math.min(window.innerWidth - padding, 380);
+                const maxHeight = Math.min(window.innerHeight * 0.5, 400);
+                canvasSize = { width: maxWidth, height: maxHeight };
+                canvas.width = maxWidth;
+                canvas.height = maxHeight;
+            } else {
+                canvasSize = { width: 800, height: 600 };
+                canvas.width = 800;
+                canvas.height = 600;
+            }
+
+            if (state.selectedSpot && parkingLotImage.complete) {
+                drawParkingMap();
+            }
+        }
+
+        // Populate dropdown with all 34 spots
+        const spotSelector = document.getElementById('spotSelector');
+        for (let i = 1; i <= 34; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `Spot ${i}`;
+            spotSelector.appendChild(option);
+        }
+
+        // Load parking lot image
+        const parkingLotImage = new Image();
+        let scaleX = 1;
+        let scaleY = 1;
+        let imageDrawDimensions = { width: 0, height: 0, offsetX: 0, offsetY: 0 };
+
+        parkingLotImage.src = 'parking-lot-aerial.png';
+        parkingLotImage.onload = function() {
+            setCanvasSize();
+
+            // Calculate scaling to fit canvas while maintaining aspect ratio (same as production)
+            const imageAspectRatio = parkingLotImage.naturalWidth / parkingLotImage.naturalHeight;
+            const canvasAspectRatio = canvas.width / canvas.height;
+
+            let drawWidth, drawHeight, offsetX, offsetY;
+
+            if (imageAspectRatio > canvasAspectRatio) {
+                // Image is wider than canvas - fit to canvas width
+                drawWidth = canvas.width;
+                drawHeight = canvas.width / imageAspectRatio;
+                offsetX = 0;
+                offsetY = (canvas.height - drawHeight) / 2;
+            } else {
+                // Image is taller than canvas - fit to canvas height
+                drawHeight = canvas.height;
+                drawWidth = canvas.height * imageAspectRatio;
+                offsetX = (canvas.width - drawWidth) / 2;
+                offsetY = 0;
+            }
+
+            imageDrawDimensions = { width: drawWidth, height: drawHeight, offsetX, offsetY };
+
+            // Calculate scaling factors for parking spots based on original image dimensions
+            scaleX = drawWidth / parkingLotImage.naturalWidth;
+            scaleY = drawHeight / parkingLotImage.naturalHeight;
+
+            if (state.selectedSpot) {
+                startAnimation();
+            }
+        };
+
+        // Handle window resize
+        window.addEventListener('resize', setCanvasSize);
+
+        // Initialize canvas size
+        setCanvasSize();
+
+        // Scale coordinates from original image size to canvas size (same as production)
+        function scaleCoordinates(coords) {
+            return coords.map(([x, y]) => [
+                x * scaleX + imageDrawDimensions.offsetX,
+                y * scaleY + imageDrawDimensions.offsetY
+            ]);
+        }
+
+        // Draw parking spot with spotlight effect (same as production)
+        function drawParkingSpot(spot, isSelected) {
+            const coords = scaleCoordinates(spot.coordinates);
+
+            ctx.beginPath();
+            ctx.moveTo(coords[0][0], coords[0][1]);
+            for (let i = 1; i < coords.length; i++) {
+                ctx.lineTo(coords[i][0], coords[i][1]);
+            }
+            ctx.closePath();
+
+            if (isSelected) {
+                const pulseValue = Math.sin(Date.now() / 400) * 0.1 + 0.4;
+
+                ctx.shadowColor = '#2196F3';
+                ctx.shadowBlur = 25;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+
+                ctx.globalAlpha = pulseValue;
+                ctx.fillStyle = '#2196F3';
+                ctx.fill();
+
+                ctx.shadowBlur = 15;
+                ctx.globalAlpha = pulseValue * 0.8;
+                ctx.fill();
+
+                ctx.shadowBlur = 0;
+
+                ctx.globalAlpha = 0.95;
+                ctx.strokeStyle = '#FFFFFF';
+                ctx.lineWidth = 6;
+                ctx.stroke();
+
+                ctx.globalAlpha = 0.9;
+                ctx.strokeStyle = '#1565C0';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.globalAlpha = 1.0;
+            } else {
+                ctx.globalAlpha = 0.15;
+                ctx.fillStyle = '#4CAF50';
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+
+                ctx.strokeStyle = '#2E7D32';
+                ctx.lineWidth = 1;
+                ctx.globalAlpha = 0.6;
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+
+                const centerX = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
+                const centerY = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
+
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 3;
+                ctx.globalAlpha = 0.8;
+                ctx.strokeText(spot.id.toString(), centerX, centerY);
+
+                ctx.globalAlpha = 1.0;
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillText(spot.id.toString(), centerX, centerY);
+            }
+        }
+
+        function drawParkingMap() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw background image with proper scaling and positioning (same as production)
+            if (parkingLotImage.complete) {
+                ctx.drawImage(
+                    parkingLotImage,
+                    imageDrawDimensions.offsetX,
+                    imageDrawDimensions.offsetY,
+                    imageDrawDimensions.width,
+                    imageDrawDimensions.height
+                );
+            }
+
+            const selectedSpot = state.selectedSpot;
+
+            for (let spotId in parkingSpots) {
+                const spot = parkingSpots[spotId];
+                const isSelected = selectedSpot && spotId == selectedSpot;
+
+                if (!selectedSpot || isSelected) {
+                    drawParkingSpot(spot, isSelected);
+                }
+            }
+        }
+
+        function startAnimation() {
+            function animate() {
+                drawParkingMap();
+                animationFrameId = requestAnimationFrame(animate);
+            }
+
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+
+            animate();
+        }
+
+        // Step 1: Spot Selection
+        document.getElementById('spotSelector').addEventListener('change', function(e) {
+            const spotId = e.target.value;
+
+            if (spotId) {
+                state.selectedSpot = spotId;
+                document.getElementById('selectedSpotNum').textContent = spotId;
+                document.getElementById('mapContainer').classList.remove('hidden');
+                document.getElementById('step2-section').classList.remove('hidden');
+
+                updateProgressStep(1, 'completed');
+                updateProgressStep(2, 'active');
+
+                if (parkingLotImage.complete) {
+                    startAnimation();
+                }
+
+                setTimeout(() => {
+                    document.getElementById('step2-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        });
+
+        // Step 2: Duration Selection
+        document.querySelectorAll('.duration-tile').forEach(tile => {
+            tile.addEventListener('click', function() {
+                document.querySelectorAll('.duration-tile').forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+
+                const duration = parseFloat(this.dataset.duration);
+                const price = parseFloat(this.dataset.price);
+                const label = this.dataset.label;
+
+                state.selectedDuration = duration;
+                state.selectedPrice = price;
+                state.selectedLabel = label;
+
+                // Show both Step 3 and Step 4 together
+                document.getElementById('step3-section').classList.remove('hidden');
+                document.getElementById('step4-section').classList.remove('hidden');
+
+                updateProgressStep(2, 'completed');
+                updateProgressStep(3, 'active');
+                updateProgressStep(4, 'active');
+
+                updateSummary();
+
+                setTimeout(() => {
+                    document.getElementById('step3-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            });
+        });
+
+        // Step 3: Form validation - just for visual feedback now
+        const emailInput = document.getElementById('emailInput');
+        const phoneInput = document.getElementById('phoneInput');
+        const licensePlateInput = document.getElementById('licensePlateInput');
+
+        function checkFormCompletion() {
+            // Mark step 3 as completed when all fields are filled
+            if (emailInput.value && phoneInput.value && licensePlateInput.value) {
+                updateProgressStep(3, 'completed');
+            }
+        }
+
+        // Phone number formatter
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
+
+            if (value.length > 10) {
+                value = value.slice(0, 10); // Limit to 10 digits
+            }
+
+            let formatted = '';
+            if (value.length > 0) {
+                formatted = '(' + value.substring(0, 3);
+                if (value.length >= 4) {
+                    formatted += ') ' + value.substring(3, 6);
+                    if (value.length >= 7) {
+                        formatted += '-' + value.substring(6, 10);
+                    }
+                }
+            }
+
+            e.target.value = formatted;
+            checkFormCompletion();
+        });
+
+        emailInput.addEventListener('input', checkFormCompletion);
+        licensePlateInput.addEventListener('input', checkFormCompletion);
+
+        // Promo code functions
+        const validPromoCodes = {
+            'SAVE10': 0.10,
+            'SAVE20': 0.20,
+            'WELCOME': 0.15,
+            'FREEPARKING': 0.50
+        };
+
+        function applyPromo() {
+            const code = document.getElementById('promoCode').value.trim().toUpperCase();
+            const discount = validPromoCodes[code];
+
+            if (discount) {
+                state.promoCode = code;
+                state.promoDiscount = discount;
+
+                document.getElementById('promoCodeText').textContent = code + ' Applied';
+                document.getElementById('promoDiscountText').textContent = (discount * 100) + '% discount';
+                document.getElementById('promoInput').classList.add('hidden');
+                document.getElementById('promoApplied').classList.remove('hidden');
+
+                updateSummary();
+            } else {
+                alert('Invalid promo code');
+            }
+        }
+
+        function removePromo() {
+            state.promoCode = null;
+            state.promoDiscount = 0;
+
+            document.getElementById('promoCode').value = '';
+            document.getElementById('promoInput').classList.remove('hidden');
+            document.getElementById('promoApplied').classList.add('hidden');
+
+            updateSummary();
+        }
+
+        // Update summary
+        function updateSummary() {
+            if (!state.selectedDuration) return;
+
+            const endTime = new Date(state.startTime);
+            endTime.setMinutes(endTime.getMinutes() + (state.selectedDuration * 60));
+
+            document.getElementById('startTime').textContent =
+                state.startTime.toLocaleDateString('en-US', { weekday: 'short' }) + ' at ' +
+                state.startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+            document.getElementById('endTime').textContent =
+                endTime.toLocaleDateString('en-US', { weekday: 'short' }) + ' at ' +
+                endTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+            document.getElementById('summarySpot').textContent = '#' + state.selectedSpot;
+            document.getElementById('summaryDuration').textContent = state.selectedLabel;
+            document.getElementById('summaryBasePrice').textContent = '$' + state.selectedPrice.toFixed(2);
+
+            if (state.promoCode) {
+                const discount = state.selectedPrice * state.promoDiscount;
+                const finalPrice = state.selectedPrice - discount;
+
+                document.getElementById('discountRow').classList.remove('hidden');
+                document.getElementById('discountAmount').textContent = '-$' + discount.toFixed(2);
+                document.getElementById('totalAmount').textContent = '$' + finalPrice.toFixed(2);
+
+                // Store final price in state for Stripe
+                state.finalPrice = finalPrice;
+            } else {
+                document.getElementById('discountRow').classList.add('hidden');
+                document.getElementById('totalAmount').textContent = '$' + state.selectedPrice.toFixed(2);
+
+                // Store final price in state for Stripe
+                state.finalPrice = state.selectedPrice;
+            }
+        }
+
+        // Update progress steps
+        function updateProgressStep(stepNum, status) {
+            const circle = document.getElementById(`step${stepNum}-circle`);
+            circle.className = 'step-circle ' + status;
+        }
+
+        // Checkout handler - removed (now using Stripe payment integration below)
+
+        // Click on canvas to select spot
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const canvasX = x * scaleX;
+            const canvasY = y * scaleY;
+
+            for (let spotId in parkingSpots) {
+                const coords = parkingSpots[spotId].coordinates;
+                let inside = false;
+
+                for (let i = 0, j = coords.length - 1; i < coords.length; j = i++) {
+                    const xi = coords[i][0], yi = coords[i][1];
+                    const xj = coords[j][0], yj = coords[j][1];
+                    const intersect = ((yi > canvasY) !== (yj > canvasY))
+                        && (canvasX < (xj - xi) * (canvasY - yi) / (yj - yi) + xi);
+                    if (intersect) inside = !inside;
+                }
+
+                if (inside) {
+                    document.getElementById('spotSelector').value = spotId;
+                    document.getElementById('spotSelector').dispatchEvent(new Event('change'));
+                    break;
+                }
+            }
+        });
+
+        // Prevent zoom on double-tap for mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // ===== STRIPE CHECKOUT INTEGRATION =====
+
+        // Initialize Stripe with your publishable key
+        const stripe = Stripe('pk_test_51QSGqKRxWCDjEGxW8wz2IjYOF84JchzmMOtJEuWJWlCe8PogRBGWEopnbQaLXtIVnqfb6Z1fwZGONKqCWQKBRzhz00RNaX0rJP');
+
+        // Enable the payment button when form is complete
+        function enablePaymentButton() {
+            document.getElementById('submit-payment').disabled = false;
+        }
+
+        // Handle payment submission - redirect to Stripe Checkout
+        document.getElementById('submit-payment').addEventListener('click', handleSubmitPayment);
+
+        async function handleSubmitPayment(e) {
+            e.preventDefault();
+            setLoading(true);
+
+            try {
+                const email = document.getElementById('emailInput').value;
+                const phone = document.getElementById('phoneInput').value.replace(/\D/g, ''); // Strip formatting
+                const licensePlate = document.getElementById('licensePlateInput').value;
+                const smsConsent = document.getElementById('smsReminders').checked ? 'yes' : 'no';
+
+                // Call Azure Function to create Stripe Checkout Session
+                const response = await fetch('https://stripewebhookpp.azurewebsites.net/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: Math.round(state.finalPrice * 100), // Convert to cents
+                        space_number: state.selectedSpot,
+                        license_plate: licensePlate,
+                        email: email,
+                        phone: phone,
+                        sms_consent: smsConsent,
+                        duration: state.selectedLabel,
+                        success_url: window.location.origin + '/checkout/success.html',
+                        cancel_url: window.location.href
+                    })
+                });
+
+                // Check if response is OK
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Server error:', response.status, errorText);
+                    showMessage(`Server error: ${response.status}. Please try again.`);
+                    setLoading(false);
+                    return;
+                }
+
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                if (data.error) {
+                    showMessage(data.error);
+                    setLoading(false);
+                    return;
+                }
+
+                if (!data.url) {
+                    console.error('No URL in response:', data);
+                    showMessage('Invalid response from server. Please try again.');
+                    setLoading(false);
+                    return;
+                }
+
+                console.log('Stripe Checkout Session created:', data.sessionId);
+
+                // Redirect to Stripe Checkout with all data pre-filled
+                window.location.href = data.url;
+
+            } catch (error) {
+                console.error('Error details:', error);
+                showMessage('Failed to create checkout session: ' + error.message);
+                setLoading(false);
+            }
+        }
+
+        // Show messages
+        function showMessage(messageText) {
+            const messageContainer = document.getElementById('payment-message');
+            messageContainer.classList.remove('hidden');
+            messageContainer.textContent = messageText;
+
+            setTimeout(() => {
+                messageContainer.classList.add('hidden');
+                messageContainer.textContent = '';
+            }, 5000);
+        }
+
+        // Show loading spinner
+        function setLoading(isLoading) {
+            const submitButton = document.getElementById('submit-payment');
+            const buttonText = document.getElementById('button-text');
+            const spinner = document.getElementById('spinner');
+
+            if (isLoading) {
+                submitButton.disabled = true;
+                buttonText.textContent = 'Redirecting to Checkout...';
+                spinner.classList.remove('hidden');
+            } else {
+                submitButton.disabled = false;
+                buttonText.textContent = 'Complete Payment';
+                spinner.classList.add('hidden');
+            }
+        }
+
+        // Payment button is always enabled since Step 4 shows immediately after duration selection
+    </script>
+</body>
+</html>

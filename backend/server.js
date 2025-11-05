@@ -18,21 +18,27 @@ app.get('/health', (req, res) => {
 // Create Stripe Checkout session
 app.post('/api/create-payment', async (req, res) => {
   try {
-    const { spotId, duration, price, email, phone, licensePlate, smsReminders } = req.body;
+    const { spotId, duration, price, email, phone, licensePlate, smsReminders, promoCode, promoDiscount } = req.body;
 
     // Validate input
     if (!spotId || !duration || !price || !email || !phone || !licensePlate) {
-      return res.status(400).json({ 
-        error: 'Missing required fields: spotId, duration, price, email, phone, licensePlate' 
+      return res.status(400).json({
+        error: 'Missing required fields: spotId, duration, price, email, phone, licensePlate'
       });
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ 
-        error: 'Invalid email address' 
+      return res.status(400).json({
+        error: 'Invalid email address'
       });
+    }
+
+    // Build product description
+    let description = `Lumber Building Parking - ${getDurationLabel(duration)}\nLicense Plate: ${licensePlate}\nPhone: ${phone}`;
+    if (promoCode) {
+      description += `\nPromo Code: ${promoCode} (${(promoDiscount * 100).toFixed(0)}% off)`;
     }
 
     // Create Stripe checkout session
@@ -45,9 +51,9 @@ app.post('/api/create-payment', async (req, res) => {
             currency: 'usd',
             product_data: {
               name: `Parking Spot #${spotId}`,
-              description: `Lumber Building Parking - ${getDurationLabel(duration)}\nLicense Plate: ${licensePlate}\nPhone: ${phone}`,
+              description: description,
             },
-            unit_amount: price * 100, // Stripe expects cents
+            unit_amount: Math.round(price * 100), // Stripe expects cents, round to handle decimals
           },
           quantity: 1,
         },
@@ -62,6 +68,8 @@ app.post('/api/create-payment', async (req, res) => {
         phone: phone,
         licensePlate: licensePlate.toUpperCase(),
         smsReminders: smsReminders ? 'yes' : 'no',
+        promoCode: promoCode || '',
+        promoDiscount: promoDiscount ? (promoDiscount * 100).toFixed(0) + '%' : '0%',
         bookingDate: new Date().toISOString(),
       },
     });
@@ -69,9 +77,9 @@ app.post('/api/create-payment', async (req, res) => {
     res.json({ url: session.url });
   } catch (error) {
     console.error('Error creating payment session:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Failed to create payment session',
-      details: error.message 
+      details: error.message
     });
   }
 });
@@ -106,12 +114,14 @@ app.get('/api/payment-session/:sessionId', async (req, res) => {
 // Helper function to get duration label
 function getDurationLabel(duration) {
   const durationMap = {
-    '1': '1 Hour',
-    '2': '2 Hours', 
-    '4': '4 Hours',
-    '8': 'All Day (8 Hours)'
+    '0.5': '30 minutes',
+    '1': '1 hour',
+    '2': '2 hours',
+    '4': '4 hours',
+    '6': '6 hours',
+    '8': '8 hours'
   };
-  return durationMap[duration] || `${duration} Hours`;
+  return durationMap[duration] || `${duration} hours`;
 }
 
 // Start server

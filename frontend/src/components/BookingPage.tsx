@@ -49,13 +49,21 @@ const BookingPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
-  
+
   // New form fields
   const [email, setEmail] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [licensePlate, setLicensePlate] = useState<string>('');
   const [smsReminders, setSmsReminders] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // Promo code state
+  const [promoCode, setPromoCode] = useState<string>('');
+  const [appliedPromo, setAppliedPromo] = useState<{code: string; discount: number} | null>(null);
+  const [promoError, setPromoError] = useState<string>('');
+
+  // Start time for the reservation
+  const [startTime] = useState<Date>(new Date());
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -65,23 +73,79 @@ const BookingPage: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // Parking duration options with pricing
+  // Parking duration options with pricing (base rate: $5/hour)
   const durationOptions = useMemo(() => [
-    { value: '1', label: '1 Hour', price: 5 },
-    { value: '2', label: '2 Hours', price: 9 },
-    { value: '4', label: '4 Hours', price: 16 },
-    { value: '8', label: 'All Day (8 Hours)', price: 25 }
+    { value: '0.5', label: '30 min', hours: 0.5, price: 2.5 },
+    { value: '1', label: '1 hour', hours: 1, price: 5 },
+    { value: '2', label: '2 hours', hours: 2, price: 10 },
+    { value: '4', label: '4 hours', hours: 4, price: 20 },
+    { value: '6', label: '6 hours', hours: 6, price: 30 },
+    { value: '8', label: '8 hours', hours: 8, price: 40 }
   ], []);
 
-  // Update price when duration changes
-  useEffect(() => {
-    if (selectedDuration) {
-      const option = durationOptions.find(opt => opt.value === selectedDuration);
-      setSelectedPrice(option?.price || 0);
-    } else {
-      setSelectedPrice(0);
+  // Promo codes configuration
+  const validPromoCodes = useMemo(() => ({
+    'SAVE10': 0.10,  // 10% off
+    'SAVE20': 0.20,  // 20% off
+    'WELCOME': 0.15, // 15% off
+    'FREEPARKING': 0.50 // 50% off
+  }), []);
+
+  // Calculate final price with promo code discount
+  const calculateFinalPrice = useMemo(() => {
+    if (!selectedDuration) return 0;
+    const option = durationOptions.find(opt => opt.value === selectedDuration);
+    const basePrice = option?.price || 0;
+
+    if (appliedPromo) {
+      const discount = basePrice * appliedPromo.discount;
+      return basePrice - discount;
     }
-  }, [selectedDuration, durationOptions]);
+
+    return basePrice;
+  }, [selectedDuration, durationOptions, appliedPromo]);
+
+  // Calculate end time based on duration
+  const getEndTime = useMemo(() => {
+    if (!selectedDuration) return null;
+    const option = durationOptions.find(opt => opt.value === selectedDuration);
+    if (!option) return null;
+
+    const endTime = new Date(startTime);
+    endTime.setMinutes(endTime.getMinutes() + (option.hours * 60));
+    return endTime;
+  }, [selectedDuration, durationOptions, startTime]);
+
+  // Update price when duration or promo changes
+  useEffect(() => {
+    setSelectedPrice(calculateFinalPrice);
+  }, [calculateFinalPrice]);
+
+  // Handle promo code application
+  const handleApplyPromo = () => {
+    const code = promoCode.trim().toUpperCase();
+    if (!code) {
+      setPromoError('Please enter a promo code');
+      return;
+    }
+
+    const discount = validPromoCodes[code as keyof typeof validPromoCodes];
+    if (discount) {
+      setAppliedPromo({ code, discount });
+      setPromoError('');
+      console.log(`Promo code ${code} applied: ${discount * 100}% off`);
+    } else {
+      setPromoError('Invalid promo code');
+      setAppliedPromo(null);
+    }
+  };
+
+  // Remove promo code
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoCode('');
+    setPromoError('');
+  };
 
   // Detect mobile device and set responsive canvas size
   useEffect(() => {
@@ -177,17 +241,19 @@ const BookingPage: React.FC = () => {
           email: email.trim(),
           phone: phone.trim(),
           licensePlate: licensePlate.trim().toUpperCase(),
-          smsReminders
+          smsReminders,
+          promoCode: appliedPromo?.code || null,
+          promoDiscount: appliedPromo?.discount || 0
         }),
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       console.log('Payment session created:', data);
-      
+
       if (data.url) {
         window.location.href = data.url; // Redirect to Stripe Checkout
       } else {
@@ -350,49 +416,110 @@ const BookingPage: React.FC = () => {
           </select>
         </div>
 
-        {/* Duration Selector */}
+        {/* Parking Map - Shows immediately after spot selection */}
         {selectedSpot && (
-          <div style={{ 
-            margin: isMobile ? '15px 10px' : '20px 0',
+          <div style={{
+            marginTop: isMobile ? '20px' : '30px',
+            marginBottom: isMobile ? '20px' : '30px',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '15px'
+            justifyContent: 'center',
+            width: '100%'
           }}>
-            <label style={{
-              fontSize: isMobile ? '16px' : '18px',
+            <ParkingMap
+              backgroundImage="/parking-lot-aerial.png"
+              parkingSpots={parkingSpots}
+              selectedSpotId={selectedSpot}
+              width={canvasSize.width}
+              height={canvasSize.height}
+              isMobile={isMobile}
+            />
+          </div>
+        )}
+
+        {/* Duration Cards */}
+        {selectedSpot && (
+          <div style={{
+            margin: isMobile ? '20px 10px' : '30px auto',
+            maxWidth: '900px',
+            padding: isMobile ? '0 10px' : '0 20px'
+          }}>
+            <h3 style={{
+              fontSize: isMobile ? '18px' : '22px',
               fontWeight: '600',
-              color: '#2c3e50',
-              textAlign: 'center'
+              color: '#2d3748',
+              textAlign: 'center',
+              marginBottom: '20px'
             }}>
-              Select Parking Duration:
-            </label>
-            
-            <select
-              value={selectedDuration}
-              onChange={(e) => handleDurationSelect(e.target.value)}
-              style={{
-                fontSize: isMobile ? '18px' : '16px',
-                padding: isMobile ? '12px 20px' : '10px 16px',
-                borderRadius: '8px',
-                border: '2px solid #ddd',
-                backgroundColor: 'white',
-                color: '#2c3e50',
-                fontWeight: '500',
-                minWidth: isMobile ? '200px' : '180px',
-                minHeight: isMobile ? '48px' : '40px',
-                cursor: 'pointer',
-                outline: 'none',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-              }}
-            >
-              <option value="">Choose duration</option>
-              {durationOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label} - ${option.price}
-                </option>
-              ))}
-            </select>
+              Select Parking Duration
+            </h3>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+              gap: isMobile ? '12px' : '16px',
+              maxWidth: '100%'
+            }}>
+              {durationOptions.map(option => {
+                const isSelected = selectedDuration === option.value;
+                return (
+                  <div
+                    key={option.value}
+                    onClick={() => handleDurationSelect(option.value)}
+                    style={{
+                      background: isSelected
+                        ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                        : 'white',
+                      border: isSelected
+                        ? '2px solid #667eea'
+                        : '2px solid #e2e8f0',
+                      borderRadius: '12px',
+                      padding: isMobile ? '16px 12px' : '20px 16px',
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: isSelected
+                        ? '0 8px 24px rgba(102, 126, 234, 0.3)'
+                        : '0 2px 8px rgba(0,0,0,0.08)',
+                      transform: isSelected ? 'translateY(-2px)' : 'translateY(0)',
+                      minHeight: isMobile ? '90px' : '100px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      gap: '8px'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.borderColor = '#667eea';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.15)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.borderColor = '#e2e8f0';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                      }
+                    }}
+                  >
+                    <div style={{
+                      fontSize: isMobile ? '16px' : '18px',
+                      fontWeight: '700',
+                      color: isSelected ? 'white' : '#2d3748'
+                    }}>
+                      {option.label}
+                    </div>
+                    <div style={{
+                      fontSize: isMobile ? '14px' : '16px',
+                      fontWeight: '600',
+                      color: isSelected ? 'white' : '#4a5568'
+                    }}>
+                      ${option.price.toFixed(2)}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
@@ -531,7 +658,7 @@ const BookingPage: React.FC = () => {
                     cursor: 'pointer'
                   }}
                 />
-                <label 
+                <label
                   htmlFor="smsReminders"
                   style={{
                     fontSize: isMobile ? '14px' : '15px',
@@ -545,95 +672,296 @@ const BookingPage: React.FC = () => {
               </div>
             </div>
           </div>
-        {/*)}*/}
 
-        {/* Selection Status */}
-        {selectedSpot && selectedDuration && isFormValid() && (
-          <div style={{ 
-            margin: isMobile ? '10px 10px' : '15px 0'
-          }}>
+            {/* Promo Code Section */}
             <div style={{
-              backgroundColor: '#e8f5e8',
-              color: '#2e7d32',
-              border: '2px solid #4caf50',
-              padding: isMobile ? '12px 20px' : '15px 25px',
-              borderRadius: '12px',
-              fontSize: isMobile ? '16px' : '18px',
-              fontWeight: '600',
-              marginBottom: '15px',
-              boxShadow: '0 2px 8px rgba(76, 175, 80, 0.15)',
-              textAlign: 'center'
+              marginTop: '25px',
+              padding: isMobile ? '0 10px' : '0'
             }}>
-              Spot #{selectedSpot} • {durationOptions.find(opt => opt.value === selectedDuration)?.label} • ${selectedPrice}
-              <br />
-              <span style={{ fontSize: isMobile ? '14px' : '16px', fontWeight: '500' }}>
-                {licensePlate.toUpperCase()} • {email}
-              </span>
-              <br />
-              <span style={{ fontSize: isMobile ? '14px' : '16px', fontWeight: '500' }}>
-                Ready for checkout
-              </span>
+              <h3 style={{
+                fontSize: isMobile ? '16px' : '18px',
+                fontWeight: '600',
+                color: '#2d3748',
+                marginBottom: '12px'
+              }}>
+                Promo Code
+              </h3>
+
+              {!appliedPromo ? (
+                <div style={{
+                  display: 'flex',
+                  gap: '10px',
+                  alignItems: 'flex-start'
+                }}>
+                  <div style={{ flex: 1 }}>
+                    <input
+                      type="text"
+                      value={promoCode}
+                      onChange={(e) => {
+                        setPromoCode(e.target.value.toUpperCase());
+                        setPromoError('');
+                      }}
+                      placeholder="Enter promo code"
+                      style={{
+                        width: '100%',
+                        fontSize: isMobile ? '16px' : '14px',
+                        padding: isMobile ? '12px 15px' : '10px 12px',
+                        borderRadius: '8px',
+                        border: promoError ? '2px solid #e53e3e' : '2px solid #e2e8f0',
+                        backgroundColor: 'white',
+                        color: '#2d3748',
+                        outline: 'none',
+                        textTransform: 'uppercase',
+                        minHeight: isMobile ? '48px' : '40px'
+                      }}
+                    />
+                    {promoError && (
+                      <p style={{
+                        color: '#e53e3e',
+                        fontSize: '14px',
+                        marginTop: '4px',
+                        marginBottom: 0
+                      }}>
+                        {promoError}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={handleApplyPromo}
+                    style={{
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      color: 'white',
+                      border: 'none',
+                      padding: isMobile ? '12px 20px' : '10px 20px',
+                      borderRadius: '8px',
+                      fontSize: isMobile ? '16px' : '14px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      minHeight: isMobile ? '48px' : '40px',
+                      whiteSpace: 'nowrap',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    Apply
+                  </button>
+                </div>
+              ) : (
+                <div style={{
+                  background: 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)',
+                  color: 'white',
+                  padding: isMobile ? '12px 15px' : '12px 16px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <div>
+                    <div style={{ fontWeight: '600', fontSize: isMobile ? '15px' : '16px' }}>
+                      {appliedPromo.code} Applied
+                    </div>
+                    <div style={{ fontSize: isMobile ? '13px' : '14px', opacity: 0.9 }}>
+                      {(appliedPromo.discount * 100).toFixed(0)}% discount
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleRemovePromo}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.2)',
+                      color: 'white',
+                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      cursor: 'pointer',
+                      fontWeight: '600'
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Reservation Summary */}
+            <div style={{
+              marginTop: '25px',
+              background: 'linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)',
+              border: '2px solid #e2e8f0',
+              borderRadius: '12px',
+              padding: isMobile ? '20px 15px' : '24px 20px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+            }}>
+              <h3 style={{
+                fontSize: isMobile ? '18px' : '20px',
+                fontWeight: '700',
+                color: '#2d3748',
+                marginBottom: '16px',
+                textAlign: 'center'
+              }}>
+                Reservation Summary
+              </h3>
+
+              {/* Time Display */}
+              {getEndTime && (
+                <div style={{
+                  background: 'white',
+                  padding: isMobile ? '12px' : '14px',
+                  borderRadius: '8px',
+                  marginBottom: '16px',
+                  border: '1px solid #e2e8f0'
+                }}>
+                  <div style={{
+                    fontSize: isMobile ? '13px' : '14px',
+                    color: '#718096',
+                    fontWeight: '600',
+                    marginBottom: '6px',
+                    textAlign: 'center'
+                  }}>
+                    PARKING TIME
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? '14px' : '15px',
+                    color: '#2d3748',
+                    fontWeight: '500',
+                    lineHeight: '1.6',
+                    textAlign: 'center'
+                  }}>
+                    <div>
+                      <strong>Start:</strong> {startTime.toLocaleDateString('en-US', { weekday: 'short' })} at {startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                    </div>
+                    <div style={{ margin: '4px 0', color: '#667eea', fontWeight: '600' }}>→</div>
+                    <div>
+                      <strong>End:</strong> {getEndTime.toLocaleDateString('en-US', { weekday: 'short' })} at {getEndTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Cost Breakdown */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: isMobile ? '15px' : '16px',
+                  color: '#4a5568'
+                }}>
+                  <span>Spot #{selectedSpot}</span>
+                  <span style={{ fontWeight: '500' }}>
+                    {durationOptions.find(opt => opt.value === selectedDuration)?.label}
+                  </span>
+                </div>
+
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: isMobile ? '15px' : '16px',
+                  color: '#4a5568'
+                }}>
+                  <span>Base Price</span>
+                  <span style={{ fontWeight: '500' }}>
+                    ${durationOptions.find(opt => opt.value === selectedDuration)?.price.toFixed(2)}
+                  </span>
+                </div>
+
+                {appliedPromo && (
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: isMobile ? '15px' : '16px',
+                    color: '#48bb78',
+                    fontWeight: '600'
+                  }}>
+                    <span>Discount ({appliedPromo.code})</span>
+                    <span>
+                      -${((durationOptions.find(opt => opt.value === selectedDuration)?.price || 0) * appliedPromo.discount).toFixed(2)}
+                    </span>
+                  </div>
+                )}
+
+                <div style={{
+                  borderTop: '2px solid #e2e8f0',
+                  marginTop: '8px',
+                  paddingTop: '12px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: isMobile ? '18px' : '20px',
+                  fontWeight: '700',
+                  color: '#2d3748'
+                }}>
+                  <span>Total</span>
+                  <span style={{
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}>
+                    ${selectedPrice.toFixed(2)}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Parking Map */}
-        <div style={{ 
-          marginBottom: isMobile ? '20px' : '30px',
-          display: 'flex',
-          justifyContent: 'center',
-          width: '100%'
-        }}>
-          <ParkingMap
-            backgroundImage="/parking-lot-aerial.png"
-            parkingSpots={parkingSpots}
-            selectedSpotId={selectedSpot}
-            width={canvasSize.width}
-            height={canvasSize.height}
-            isMobile={isMobile}
-          />
-        </div>
-
         {/* Continue Button */}
         {selectedSpot && selectedDuration && selectedPrice > 0 && (
-          <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <button
-            onClick={handleContinueToPayment}
-            disabled={!isFormValid() || isLoading}
-            style={{
-              backgroundColor: !isFormValid() || isLoading ? '#ccc' : '#4CAF50',
-              color: 'white',
-              border: 'none',
-              padding: isMobile ? '16px 30px' : '18px 45px',
-              borderRadius: '12px',
-              fontSize: isMobile ? '18px' : '20px',
-              fontWeight: '600',
-              cursor: !isFormValid() || isLoading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 4px 16px rgba(76, 175, 80, 0.3)',
-              transition: 'all 0.3s ease',
-              marginTop: isMobile ? '15px' : '20px',
-              minHeight: isMobile ? '48px' : 'auto',
-              width: isMobile ? '90%' : 'auto',
-              maxWidth: isMobile ? '320px' : 'none',
-              opacity: !isFormValid() || isLoading ? 0.7 : 1
-            }}
-            onMouseOver={(e) => {
-              if (isFormValid() && !isLoading) {
-                e.currentTarget.style.backgroundColor = '#45a049';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(76, 175, 80, 0.4)';
-              }
-            }}
-            onMouseOut={(e) => {
-              if (isFormValid() && !isLoading) {
-                e.currentTarget.style.backgroundColor = '#4CAF50';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(76, 175, 80, 0.3)';
-              }
-            }}
-          >
-            {isLoading ? 'Creating Checkout Session...' : 'Continue to Payment'}
-          </button>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            padding: isMobile ? '20px 10px' : '30px 20px'
+          }}>
+            <button
+              onClick={handleContinueToPayment}
+              disabled={!isFormValid() || isLoading}
+              style={{
+                background: !isFormValid() || isLoading
+                  ? '#cbd5e0'
+                  : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                border: 'none',
+                padding: isMobile ? '16px 40px' : '20px 60px',
+                borderRadius: '12px',
+                fontSize: isMobile ? '18px' : '22px',
+                fontWeight: '700',
+                cursor: !isFormValid() || isLoading ? 'not-allowed' : 'pointer',
+                boxShadow: !isFormValid() || isLoading
+                  ? 'none'
+                  : '0 8px 24px rgba(102, 126, 234, 0.4)',
+                transition: 'all 0.3s ease',
+                minHeight: isMobile ? '54px' : '60px',
+                width: isMobile ? '90%' : 'auto',
+                maxWidth: isMobile ? '400px' : '500px',
+                opacity: !isFormValid() || isLoading ? 0.6 : 1,
+                letterSpacing: '0.5px'
+              }}
+              onMouseOver={(e) => {
+                if (isFormValid() && !isLoading) {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 12px 32px rgba(102, 126, 234, 0.5)';
+                }
+              }}
+              onMouseOut={(e) => {
+                if (isFormValid() && !isLoading) {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(102, 126, 234, 0.4)';
+                }
+              }}
+            >
+              {isLoading ? 'Processing...' : 'Continue to Checkout'}
+            </button>
           </div>
         )}
 

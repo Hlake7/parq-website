@@ -758,7 +758,7 @@
 
                 <div class="promo-input-group" id="promoInput">
                     <input type="text" id="promoCode" placeholder="ENTER CODE">
-                    <button class="promo-btn" onclick="applyPromo()">Apply</button>
+                    <button type="button" class="promo-btn" onclick="applyPromo()">Apply</button>
                 </div>
 
                 <div class="promo-applied hidden" id="promoApplied">
@@ -766,7 +766,7 @@
                         <div style="font-weight: 700; font-size: clamp(14px, 3.5vw, 16px);" id="promoCodeText">-</div>
                         <div style="font-size: clamp(12px, 3vw, 14px); opacity: 0.9;" id="promoDiscountText">-</div>
                     </div>
-                    <button class="promo-remove-btn" onclick="removePromo()">Remove</button>
+                    <button type="button" class="promo-remove-btn" onclick="removePromo()">Remove</button>
                 </div>
             </div>
         </div>
@@ -820,7 +820,7 @@
 
             <div class="checkout-section">
                 <div id="payment-message" class="hidden"></div>
-                <button class="checkout-btn" id="submit-payment">
+                <button type="button" class="checkout-btn" id="submit-payment">
                     <span id="button-text">Complete Checkout</span>
                     <span id="spinner" class="spinner hidden"></span>
                 </button>
@@ -1168,12 +1168,26 @@
         emailInput.addEventListener('input', checkFormCompletion);
         licensePlateInput.addEventListener('input', checkFormCompletion);
 
+        // Prevent Enter key from triggering button clicks in all input fields
+        [emailInput, phoneInput, licensePlateInput, document.getElementById('promoCode')].forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    // If it's the promo code field, apply the promo
+                    if (this.id === 'promoCode') {
+                        applyPromo();
+                    }
+                }
+            });
+        });
+
         // Promo code functions
         const validPromoCodes = {
             'SAVE10': 0.10,
             'SAVE20': 0.20,
             'WELCOME': 0.15,
-            'FREEPARKING': 0.50
+            'FREEPARKING': 0.50,
+            'THXPARQ': 1.00
         };
 
         function applyPromo() {
@@ -1315,7 +1329,63 @@
                 const licensePlate = document.getElementById('licensePlateInput').value;
                 const smsConsent = document.getElementById('smsReminders').checked ? 'yes' : 'no';
 
-                // Call Azure Function to create Stripe Checkout Session
+                // Handle free parking (100% discount) separately
+                if (state.finalPrice === 0) {
+                    console.log('Creating free reservation with data:', {
+                        space_number: state.selectedSpot,
+                        license_plate: licensePlate,
+                        email: email,
+                        phone: phone,
+                        sms_consent: smsConsent,
+                        duration: state.selectedLabel,
+                        promo_code: state.promoCode
+                    });
+
+                    // Create free reservation directly without Stripe
+                    const response = await fetch('https://stripewebhookpp.azurewebsites.net/api/create-free-reservation', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            space_number: state.selectedSpot,
+                            license_plate: licensePlate,
+                            email: email,
+                            phone: phone,
+                            sms_consent: smsConsent,
+                            duration: state.selectedLabel,
+                            promo_code: state.promoCode,
+                            amount: 0
+                        })
+                    });
+
+                    console.log('Free reservation response status:', response.status);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Server error:', response.status, errorText);
+                        showMessage(`Server error: ${response.status}. Please try again.`);
+                        setLoading(false);
+                        return;
+                    }
+
+                    const data = await response.json();
+                    console.log('Free reservation response data:', data);
+
+                    if (data.error) {
+                        showMessage(data.error);
+                        setLoading(false);
+                        return;
+                    }
+
+                    // Redirect to success page for free reservation
+                    const redirectUrl = '/checkout/success.html';
+                    console.log('Redirecting to:', redirectUrl);
+                    window.location.href = redirectUrl;
+                    return;
+                }
+
+                // Regular paid parking flow via Stripe
                 const response = await fetch('https://stripewebhookpp.azurewebsites.net/api/create-checkout-session', {
                     method: 'POST',
                     headers: {
@@ -1329,7 +1399,7 @@
                         phone: phone,
                         sms_consent: smsConsent,
                         duration: state.selectedLabel,
-                        success_url: window.location.origin + '/checkout/success.html',
+                        success_url: '../success.html',
                         cancel_url: window.location.href
                     })
                 });
@@ -1370,8 +1440,6 @@
                 setLoading(false);
             }
         }
-
-        // Show messages
         function showMessage(messageText) {
             const messageContainer = document.getElementById('payment-message');
             messageContainer.classList.remove('hidden');

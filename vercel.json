@@ -11,6 +11,10 @@
     {
       "src": "backend/server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "public-checkout/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -20,19 +24,19 @@
     },
     {
       "src": "/checkout/lumber-building/?$",
-      "dest": "/frontend/build/checkout/lumber-building/index.html"
+      "dest": "/public-checkout/lumber-building/index.html"
     },
     {
       "src": "/checkout/lumber-building/index.html",
-      "dest": "/frontend/build/checkout/lumber-building/index.html"
+      "dest": "/public-checkout/lumber-building/index.html"
     },
     {
       "src": "/checkout/lumber-building/parking-lot-aerial.png",
-      "dest": "/frontend/build/checkout/lumber-building/parking-lot-aerial.png"
+      "dest": "/public-checkout/lumber-building/parking-lot-aerial.png"
     },
     {
       "src": "/checkout/success.html",
-      "dest": "/frontend/build/checkout/success.html"
+      "dest": "/public-checkout/success.html"
     },
     {
       "src": "/static/(.*)",

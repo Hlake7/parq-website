@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reservation Confirmed - Lumber Building Parking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3748;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .checkmark-circle {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .checkmark {
+            width: 50px;
+            height: 50px;
+            stroke: white;
+            stroke-width: 3;
+            stroke-linecap: round;
+            fill: none;
+            animation: drawCheck 0.5s ease-out 0.3s forwards;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+
+        @keyframes drawCheck {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .next-steps {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .next-steps h3 {
+            color: #c53030;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-steps li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #4a5568;
+        }
+
+        .next-steps li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .success-container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .checkmark-circle {
+                width: 80px;
+                height: 80px;
+            }
+
+            .checkmark {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="checkmark-circle">
+            <svg class="checkmark" viewBox="0 0 52 52">
+                <path d="M14 27l7.5 7.5L38 18"/>
+            </svg>
+        </div>
+
+        <h1>Reservation Confirmed!</h1>
+        <p class="subtitle">Your parking spot has been successfully reserved</p>
+
+        <div class="info-box">
+            <div class="info-item">
+                <span class="info-label">Location</span>
+                <span class="info-value">Lumber Building</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Confirmation</span>
+                <span class="info-value">Check your email</span>
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h3>What's Next?</h3>
+            <ul>
+                <li>Check your email for reservation details and receipt</li>
+                <li>If you opted in, you'll receive SMS reminders</li>
+                <li>Your parking spot is ready for your arrival</li>
+                <li>Keep your confirmation handy for check-in</li>
+            </ul>
+        </div>
+
+        <a href="/" class="btn">Return to Homepage</a>
+    </div>
+
+    <script>
+        // Optional: Parse URL parameters to show reservation details
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+
+        if (sessionId) {
+            console.log('Stripe Session ID:', sessionId);
+        }
+    </script>
+</body>
+</html>

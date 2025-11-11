@@ -13,7 +13,15 @@
       "use": "@vercel/node"
     },
     {
-      "src": "public-checkout/**",
+      "src": "public-checkout/lumber-building/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public-checkout/lumber-building/parking-lot-aerial.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public-checkout/success.html",
       "use": "@vercel/static"
     }
   ],

@@ -24,19 +24,23 @@
     },
     {
       "src": "/checkout/lumber-building/?$",
-      "dest": "/public-checkout/lumber-building/index.html"
+      "dest": "/public-checkout/lumber-building/index.html",
+      "continue": false
     },
     {
       "src": "/checkout/lumber-building/index.html",
-      "dest": "/public-checkout/lumber-building/index.html"
+      "dest": "/public-checkout/lumber-building/index.html",
+      "continue": false
     },
     {
       "src": "/checkout/lumber-building/parking-lot-aerial.png",
-      "dest": "/public-checkout/lumber-building/parking-lot-aerial.png"
+      "dest": "/public-checkout/lumber-building/parking-lot-aerial.png",
+      "continue": false
     },
     {
       "src": "/checkout/success.html",
-      "dest": "/public-checkout/success.html"
+      "dest": "/public-checkout/success.html",
+      "continue": false
     },
     {
       "src": "/static/(.*)",

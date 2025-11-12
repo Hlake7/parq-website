@@ -13,6 +13,10 @@
       "destination": "/public/checkout/lumber-building/index.html"
     },
     {
+      "source": "/checkout/lumber-building/parking-lot-aerial.png",
+      "destination": "/public/checkout/lumber-building/parking-lot-aerial.png"
+    },
+    {
       "source": "/checkout/success.html",
       "destination": "/public/checkout/success.html"
     },

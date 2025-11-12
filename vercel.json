@@ -3,26 +3,6 @@
     {
       "source": "/api/:path*",
       "destination": "/backend/server.js"
-    },
-    {
-      "source": "/checkout/lumber-building",
-      "destination": "/public/checkout/lumber-building/index.html"
-    },
-    {
-      "source": "/checkout/lumber-building/",
-      "destination": "/public/checkout/lumber-building/index.html"
-    },
-    {
-      "source": "/checkout/lumber-building/parking-lot-aerial.png",
-      "destination": "/public/checkout/lumber-building/parking-lot-aerial.png"
-    },
-    {
-      "source": "/checkout/success.html",
-      "destination": "/public/checkout/success.html"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/frontend/build/:path*"
     }
   ],
   "buildCommand": "cd frontend && npm install && npm run build",

@@ -51,11 +51,11 @@
       "dest": "/frontend/build/parking-lot-aerial.png"
     },
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|json))",
+      "src": "^/(?!checkout/).*\\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|json)$",
       "dest": "/frontend/build/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "^/(?!checkout/).*$",
       "dest": "/frontend/build/index.html"
     }
   ],

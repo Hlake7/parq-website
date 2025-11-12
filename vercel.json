@@ -1,40 +1,27 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
+      "source": "/api/:path*",
+      "destination": "/backend/server.js"
     },
     {
-      "src": "backend/server.js",
-      "use": "@vercel/node"
+      "source": "/checkout/lumber-building",
+      "destination": "/public/checkout/lumber-building/index.html"
+    },
+    {
+      "source": "/checkout/lumber-building/",
+      "destination": "/public/checkout/lumber-building/index.html"
+    },
+    {
+      "source": "/checkout/success.html",
+      "destination": "/public/checkout/success.html"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/frontend/build/:path*"
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/backend/server.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/checkout/lumber-building/?$",
-      "dest": "/public/checkout/lumber-building/index.html"
-    },
-    {
-      "src": "/checkout/success.html",
-      "dest": "/public/checkout/success.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/build/index.html"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/build",
+  "installCommand": "cd frontend && npm install && cd ../backend && npm install"
 }

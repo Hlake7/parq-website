@@ -672,7 +672,6 @@ const BookingPage: React.FC = () => {
                 </label>
               </div>
             </div>
-          </div>
 
             {/* Promo Code Section */}
             <div style={{

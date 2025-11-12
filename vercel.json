@@ -19,43 +19,18 @@
       "dest": "/backend/server.js"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/checkout/lumber-building/?$",
       "dest": "/public/checkout/lumber-building/index.html"
-    },
-    {
-      "src": "/checkout/lumber-building/index.html",
-      "dest": "/public/checkout/lumber-building/index.html"
-    },
-    {
-      "src": "/checkout/lumber-building/parking-lot-aerial.png",
-      "dest": "/public/checkout/lumber-building/parking-lot-aerial.png"
     },
     {
       "src": "/checkout/success.html",
       "dest": "/public/checkout/success.html"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "/frontend/build/static/$1"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/frontend/build/manifest.json"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/frontend/build/favicon.ico"
-    },
-    {
-      "src": "/parking-lot-aerial.png",
-      "dest": "/frontend/build/parking-lot-aerial.png"
-    },
-    {
-      "src": "^/(?!checkout/).*\\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|json)$",
-      "dest": "/frontend/build/$1"
-    },
-    {
-      "src": "^/(?!checkout/).*$",
+      "src": "/(.*)",
       "dest": "/frontend/build/index.html"
     }
   ],

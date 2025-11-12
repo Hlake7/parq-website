@@ -525,8 +525,7 @@ const BookingPage: React.FC = () => {
         )}
 
         {/* Contact Information */}
-        {/*selectedSpot && selectedDuration && ( */ }
-          <div style={{
+        <div style={{
             margin: isMobile ? '20px 10px' : '30px auto',
             maxWidth: isMobile ? '100%' : '400px',
             width: '100%'
@@ -998,15 +997,15 @@ const BookingPage: React.FC = () => {
               </div>
             )}
           </div>
-          <p style={{ 
-            textAlign: 'center', 
-            margin: 0, 
-            color: '#6c757d', 
+          <p style={{
+            textAlign: 'center',
+            margin: 0,
+            color: '#6c757d',
             fontSize: isMobile ? '13px' : '15px',
             lineHeight: '1.5'
           }}>
-{selectedSpot 
-              ? (isMobile ? 'Your parking space is highlighted above with blue glow and clear boundaries' : 'Your selected parking space is highlighted on the aerial map with bright blue fill and clear boundaries') 
+            {selectedSpot
+              ? (isMobile ? 'Your parking space is highlighted above with blue glow and clear boundaries' : 'Your selected parking space is highlighted on the aerial map with bright blue fill and clear boundaries')
               : (isMobile ? 'Choose your spot number to highlight the exact parking space' : 'Select your parking spot number to highlight the exact parking space boundaries on the aerial map')
             }
           </p>

@@ -525,7 +525,8 @@ const BookingPage: React.FC = () => {
         )}
 
         {/* Contact Information */}
-        <div style={{
+        {selectedSpot && selectedDuration && (
+          <div style={{
             margin: isMobile ? '20px 10px' : '30px auto',
             maxWidth: isMobile ? '100%' : '400px',
             width: '100%'

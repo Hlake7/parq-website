@@ -36,17 +36,18 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
   useEffect(() => {
     if (backgroundImage) {
       const img = new Image();
-      
+
       img.onload = () => {
+        console.log('Parking map image loaded successfully:', backgroundImage, 'Size:', img.naturalWidth, 'x', img.naturalHeight);
         setImageLoaded(true);
         setImageError(false);
-        
+
         // Calculate scaling to fit canvas while maintaining aspect ratio
         const imageAspectRatio = img.naturalWidth / img.naturalHeight;
         const canvasAspectRatio = width / height;
-        
+
         let drawWidth, drawHeight, offsetX, offsetY;
-        
+
         if (imageAspectRatio > canvasAspectRatio) {
           // Image is wider than canvas - fit to canvas width
           drawWidth = width;
@@ -60,27 +61,29 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
           offsetX = (width - drawWidth) / 2;
           offsetY = 0;
         }
-        
+
         setImageDrawDimensions({ width: drawWidth, height: drawHeight, offsetX, offsetY });
-        
+
         // Calculate scaling factors for parking spots based on original image dimensions
         setScaleX(drawWidth / img.naturalWidth);
         setScaleY(drawHeight / img.naturalHeight);
       };
-      
-      img.onerror = () => {
-        console.error('Failed to load background image:', backgroundImage);
+
+      img.onerror = (e) => {
+        console.error('Failed to load background image:', backgroundImage, 'Error:', e);
         setImageError(true);
         setImageLoaded(false);
         // Use canvas dimensions as fallback for coordinate scaling
         setScaleX(1);
         setScaleY(1);
       };
-      
+
+      console.log('Attempting to load parking map image:', backgroundImage);
       img.src = backgroundImage;
       backgroundImageRef.current = img;
     } else {
       // No background image - reset states
+      console.log('No background image provided');
       setImageLoaded(false);
       setImageError(false);
       setScaleX(1);
@@ -250,13 +253,19 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
   const render = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
+    if (!canvas || !ctx) {
+      console.log('Canvas or context not available');
+      return;
+    }
 
     // Clear canvas
     ctx.clearRect(0, 0, width, height);
 
+    console.log('Rendering canvas - imageLoaded:', imageLoaded, 'imageError:', imageError, 'backgroundImage:', backgroundImage);
+
     // Draw background (image or fallback) with zoom/pan support
     if (imageLoaded && backgroundImageRef.current) {
+      console.log('Drawing background image with dimensions:', imageDrawDimensions);
       // Draw background image with proper scaling, positioning, zoom and pan
       ctx.drawImage(
         backgroundImageRef.current,
@@ -266,10 +275,11 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
         imageDrawDimensions.height * scale
       );
     } else if (imageError) {
+      console.log('Drawing error state');
       // Draw fallback background if image failed to load
       ctx.fillStyle = '#f0f0f0';
       ctx.fillRect(0, 0, width, height);
-      
+
       // Draw error message
       ctx.fillStyle = '#666';
       ctx.font = '16px Arial';
@@ -277,16 +287,18 @@ const ParkingMap: React.FC<ParkingMapProps> = ({
       ctx.textBaseline = 'middle';
       ctx.fillText('Background image failed to load', width / 2, height / 2);
     } else if (backgroundImage) {
+      console.log('Drawing loading state');
       // Draw loading state
       ctx.fillStyle = '#f8f8f8';
       ctx.fillRect(0, 0, width, height);
-      
+
       ctx.fillStyle = '#999';
       ctx.font = '16px Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('Loading background image...', width / 2, height / 2);
     } else {
+      console.log('Drawing no-image state');
       // No background image - draw light gray background
       ctx.fillStyle = '#f5f5f5';
       ctx.fillRect(0, 0, width, height);

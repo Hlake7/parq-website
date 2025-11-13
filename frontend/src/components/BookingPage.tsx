@@ -370,7 +370,7 @@ const BookingPage: React.FC = () => {
           margin: '0 auto',
           marginBottom: isMobile ? '15px' : '20px'
         }}>
-{isMobile ? 'Choose your parking spot to see the exact space boundaries highlighted' : 'Select your parking spot from the dropdown to see the exact parking space boundaries highlighted in blue'}
+{isMobile ? "View the parking lot map below, then select your spot to highlight it" : "View all available parking spots on the map below, then select your spot from the dropdown to highlight your space in blue"}
         </p>
 
         {/* Spot Selector */}

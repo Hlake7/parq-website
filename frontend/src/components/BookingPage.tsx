@@ -418,7 +418,7 @@ const BookingPage: React.FC = () => {
         </div>
 
         {/* Parking Map - Shows immediately after spot selection */}
-        {selectedSpot && (
+        
           <div style={{
             marginTop: isMobile ? '20px' : '30px',
             marginBottom: isMobile ? '20px' : '30px',
@@ -435,7 +435,7 @@ const BookingPage: React.FC = () => {
               isMobile={isMobile}
             />
           </div>
-        )}
+        
 
         {/* Duration Cards */}
         {selectedSpot && (

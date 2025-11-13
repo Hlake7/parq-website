@@ -656,7 +656,7 @@
                 <span>Select Your Parking Spot</span>
             </div>
             <p style="text-align: center; color: #6c757d; margin-bottom: 20px; font-size: clamp(13px, 3vw, 15px);">
-                Choose your spot to see the exact space highlighted on the map
+                View all available parking spots on the map below, then select your spot to highlight it
             </p>
 
             <div class="spot-selector">
@@ -667,7 +667,7 @@
             </div>
 
             <!-- Map (appears after selection) -->
-            <div class="map-container hidden" id="mapContainer">
+            <div class="map-container" id="mapContainer">
                 <div class="map-wrapper">
                     <canvas id="parkingCanvas"></canvas>
                 </div>
@@ -900,7 +900,7 @@
                 canvas.height = 600;
             }
 
-            if (state.selectedSpot && parkingLotImage.complete) {
+            if (parkingLotImage.complete) {
                 drawParkingMap();
             }
         }
@@ -950,9 +950,9 @@
             scaleX = drawWidth / parkingLotImage.naturalWidth;
             scaleY = drawHeight / parkingLotImage.naturalHeight;
 
-            if (state.selectedSpot) {
-                startAnimation();
-            }
+            // Draw map immediately on load
+            drawParkingMap();
+            startAnimation();
         };
 
         // Handle window resize
@@ -1084,7 +1084,6 @@
             if (spotId) {
                 state.selectedSpot = spotId;
                 document.getElementById('selectedSpotNum').textContent = spotId;
-                document.getElementById('mapContainer').classList.remove('hidden');
                 document.getElementById('step2-section').classList.remove('hidden');
 
                 updateProgressStep(1, 'completed');

@@ -325,18 +325,47 @@ const BookingPage: React.FC = () => {
         </div>
       </nav>
 
+      {/* Demo Warning Banner */}
+      <div style={{
+        marginTop: '80px',
+        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+        padding: isMobile ? '1rem 1rem' : '1.5rem 2rem',
+        textAlign: 'center',
+        borderBottom: '4px solid #b45309',
+        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+      }}>
+        <h2 style={{
+          color: 'white',
+          fontSize: isMobile ? '1.3rem' : '1.8rem',
+          fontWeight: '700',
+          margin: '0 0 0.5rem 0',
+          textTransform: 'uppercase',
+          letterSpacing: '1px'
+        }}>
+          ⚠️ DEMONSTRATION ONLY
+        </h2>
+        <p style={{
+          color: 'white',
+          fontSize: isMobile ? '0.9rem' : '1.1rem',
+          margin: 0,
+          fontWeight: '500',
+          opacity: 0.95
+        }}>
+          This is an example page for illustration purposes. Do not use for actual bookings.
+        </p>
+      </div>
+
       {/* Booking Header */}
-      <div style={{ 
-        marginTop: '100px',
+      <div style={{
         padding: isMobile ? '2rem 1rem 1rem' : '3rem 2rem 1rem',
         backgroundColor: '#f8f9fa',
         textAlign: 'center',
         borderBottom: '1px solid #e9ecef'
       }}>
-        <h1 style={{ 
-          color: '#1a1a1a', 
+        <h1 style={{
+          color: '#1a1a1a',
           marginBottom: '0.5rem',
-          fontSize: isMobile ? '1.8rem' : '2.5rem', 
+          fontSize: isMobile ? '1.8rem' : '2.5rem',
           fontWeight: '700',
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           WebkitBackgroundClip: 'text',

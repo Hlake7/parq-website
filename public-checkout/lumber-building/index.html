@@ -617,9 +617,246 @@
             flex-direction: column;
             align-items: center;
         }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-tagline {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .nav-link.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #2c3e50;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 80%;
+            max-width: 400px;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu-overlay.active .mobile-menu {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .mobile-nav-logo {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #2c3e50;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 0;
+        }
+
+        .mobile-nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            background-color: #f8f9fa;
+        }
+
+        .mobile-nav-cta {
+            margin: 1rem 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu.desktop-menu {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+        }
+
+        body {
+            padding-top: 80px;
+        }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">Parq</span>
+                <span class="logo-tagline">AI</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="nav-menu desktop-menu">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/services" class="nav-link">Services</a>
+                <a href="/contact" class="nav-link">Contact</a>
+                <a href="/book/lumber-building" class="nav-link active">Demo</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu">
+                <span class="hamburger-icon">☰</span>
+            </button>
+
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()">
+                <div class="mobile-menu" onclick="event.stopPropagation()">
+                    <div class="mobile-menu-header">
+                        <a href="/" class="mobile-nav-logo">
+                            <span class="logo-text">Parq</span>
+                            <span class="logo-tagline">AI</span>
+                        </a>
+                        <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close mobile menu">
+                            ✕
+                        </button>
+                    </div>
+                    <div class="mobile-nav-links">
+                        <a href="/" class="mobile-nav-link">Home</a>
+                        <a href="/about" class="mobile-nav-link">About</a>
+                        <a href="/services" class="mobile-nav-link">Services</a>
+                        <a href="/contact" class="mobile-nav-link">Contact</a>
+                        <a href="/privacy" class="mobile-nav-link">Privacy Policy</a>
+                        <a href="/terms" class="mobile-nav-link">Terms of Service</a>
+                        <a href="/book/lumber-building" class="mobile-nav-cta">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
@@ -1184,8 +1421,7 @@
             'SAVE10': 0.10,
             'SAVE20': 0.20,
             'WELCOME': 0.15,
-            'FREEPARKING': 0.50,
-            'THXPARQ': 1.00
+            'FREEPARKING': 0.50
         };
 
         function applyPromo() {
@@ -1467,6 +1703,17 @@
         }
 
         // Payment button is always enabled since Step 4 shows immediately after duration selection
+
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            overlay.classList.remove('active');
+        }
     </script>
 </body>
 </html>

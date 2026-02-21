@@ -1,0 +1,438 @@
+{
+  "brand": "Parq AI",
+  "version": "1.0",
+  "date": "2026-02-19",
+
+  "typefaces": {
+    "headline": {
+      "name": "General Sans",
+      "classification": "Geometric sans-serif",
+      "source": "https://www.fontshare.com/fonts/general-sans",
+      "license": "Fontshare — free for personal and commercial use",
+      "fallback_stack": "'General Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
+      "rationale": "General Sans is a geometric sans-serif with sharp, confident letterforms and clean terminals. It has the authority of a neo-grotesque but with slightly warmer geometry that avoids feeling sterile. Its wide character set and variable font support make it versatile across headline weights. Aligns with the Palantir/Vercel/Linear aesthetic referenced in the strategy brief."
+    },
+    "body": {
+      "name": "Inter",
+      "classification": "Neo-grotesque sans-serif",
+      "source": "https://fonts.google.com/specimen/Inter",
+      "license": "SIL Open Font License 1.1",
+      "fallback_stack": "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+      "rationale": "Inter was designed specifically for computer screens with excellent legibility at small sizes. Its tall x-height, open apertures, and tabular figure support make it ideal for both running text and UI contexts. Near-universal browser support and variable font availability ensure performance. This is the same typeface used by Linear, Vercel, and other enterprise SaaS brands in Parq's aesthetic territory."
+    },
+    "data": {
+      "name": "JetBrains Mono",
+      "classification": "Monospaced",
+      "source": "https://fonts.google.com/specimen/JetBrains+Mono",
+      "license": "SIL Open Font License 1.1",
+      "fallback_stack": "'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace",
+      "rationale": "JetBrains Mono has increased letter height for improved readability, distinct letterforms that prevent character confusion in data contexts (1/l/I, 0/O), and a technical precision that reinforces Parq's AI credibility. Used for metrics, dashboard callouts, detection accuracy figures, and any numerical data displays. Its geometric construction pairs naturally with General Sans headlines."
+    }
+  },
+
+  "type_scale": {
+    "method": "Major Third (1.250) modular scale",
+    "base_size": "16px / 1rem",
+    "scale_ratio": 1.25,
+    "levels": {
+      "display": {
+        "size_px": 61,
+        "size_rem": "3.815rem",
+        "line_height": 1.1,
+        "letter_spacing": "-0.03em",
+        "font": "headline",
+        "weight": 600,
+        "usage": "Hero headlines on landing pages. One per page maximum."
+      },
+      "h1": {
+        "size_px": 49,
+        "size_rem": "3.052rem",
+        "line_height": 1.15,
+        "letter_spacing": "-0.025em",
+        "font": "headline",
+        "weight": 600,
+        "usage": "Primary page titles. Section heroes on marketing pages."
+      },
+      "h2": {
+        "size_px": 39,
+        "size_rem": "2.441rem",
+        "line_height": 1.2,
+        "letter_spacing": "-0.02em",
+        "font": "headline",
+        "weight": 600,
+        "usage": "Major section headings. Pitch deck slide titles."
+      },
+      "h3": {
+        "size_px": 31,
+        "size_rem": "1.953rem",
+        "line_height": 1.25,
+        "letter_spacing": "-0.015em",
+        "font": "headline",
+        "weight": 500,
+        "usage": "Subsection headings. Card titles. Feature names."
+      },
+      "h4": {
+        "size_px": 25,
+        "size_rem": "1.563rem",
+        "line_height": 1.3,
+        "letter_spacing": "-0.01em",
+        "font": "headline",
+        "weight": 500,
+        "usage": "Tertiary headings. Dialog titles. Sidebar section headers."
+      },
+      "h5": {
+        "size_px": 20,
+        "size_rem": "1.25rem",
+        "line_height": 1.4,
+        "letter_spacing": "0em",
+        "font": "headline",
+        "weight": 500,
+        "usage": "Minor headings. List group headers. Eyebrow text (when uppercased)."
+      },
+      "body_large": {
+        "size_px": 18,
+        "size_rem": "1.125rem",
+        "line_height": 1.6,
+        "letter_spacing": "0em",
+        "font": "body",
+        "weight": 400,
+        "usage": "Lead paragraphs. Introductory text. High-emphasis body copy."
+      },
+      "body": {
+        "size_px": 16,
+        "size_rem": "1rem",
+        "line_height": 1.6,
+        "letter_spacing": "0em",
+        "font": "body",
+        "weight": 400,
+        "usage": "Default running text. Descriptions. Form labels."
+      },
+      "body_small": {
+        "size_px": 14,
+        "size_rem": "0.875rem",
+        "line_height": 1.5,
+        "letter_spacing": "0.005em",
+        "font": "body",
+        "weight": 400,
+        "usage": "Secondary text. Table content. Helper text."
+      },
+      "caption": {
+        "size_px": 12,
+        "size_rem": "0.75rem",
+        "line_height": 1.5,
+        "letter_spacing": "0.01em",
+        "font": "body",
+        "weight": 400,
+        "usage": "Image captions. Footnotes. Timestamps. Legal text."
+      },
+      "overline": {
+        "size_px": 12,
+        "size_rem": "0.75rem",
+        "line_height": 1.5,
+        "letter_spacing": "0.1em",
+        "text_transform": "uppercase",
+        "font": "body",
+        "weight": 500,
+        "usage": "Section labels. Category tags. Eyebrow text above headings."
+      },
+      "data_display": {
+        "size_px": 48,
+        "size_rem": "3rem",
+        "line_height": 1.1,
+        "letter_spacing": "-0.02em",
+        "font": "data",
+        "weight": 500,
+        "usage": "Hero statistics: '99.2%', '24/7', '35%'. Large metric callouts."
+      },
+      "data_label": {
+        "size_px": 14,
+        "size_rem": "0.875rem",
+        "line_height": 1.4,
+        "letter_spacing": "0.02em",
+        "font": "data",
+        "weight": 400,
+        "usage": "Metric labels, dashboard values, code-style annotations, inline data."
+      }
+    }
+  },
+
+  "font_weights": {
+    "strategy": "Use weight variation to establish hierarchy. Limit to 3 weights per typeface to maintain visual consistency and minimize font loading.",
+    "headline_weights": {
+      "semibold": {
+        "value": 600,
+        "usage": "Display, H1, H2 — primary headlines that need maximum presence"
+      },
+      "medium": {
+        "value": 500,
+        "usage": "H3, H4, H5 — secondary headings that support hierarchy without competing with primary headlines"
+      }
+    },
+    "body_weights": {
+      "regular": {
+        "value": 400,
+        "usage": "Running text, descriptions, all default body content"
+      },
+      "medium": {
+        "value": 500,
+        "usage": "Emphasis within body text, overlines, labels, navigation items, buttons"
+      },
+      "semibold": {
+        "value": 600,
+        "usage": "Strong emphasis only — use sparingly. Bold CTAs, key stats in running text."
+      }
+    },
+    "data_weights": {
+      "regular": {
+        "value": 400,
+        "usage": "Data labels, inline code, small metric annotations"
+      },
+      "medium": {
+        "value": 500,
+        "usage": "Hero statistics, large metric displays, dashboard primary values"
+      }
+    },
+    "loading_strategy": {
+      "method": "Variable fonts where available; subset to Latin character set",
+      "headline_files": ["GeneralSans-Variable.woff2"],
+      "body_files": ["Inter-Variable.woff2"],
+      "data_files": ["JetBrainsMono-Variable.woff2"],
+      "preload": ["Inter-Variable.woff2", "GeneralSans-Variable.woff2"],
+      "note": "Variable fonts load all weights in a single file, eliminating multiple HTTP requests. Preload the two most critical typefaces. JetBrains Mono can load asynchronously since data displays are typically below the fold."
+    }
+  },
+
+  "responsive_typography": {
+    "strategy": "Fluid typography using CSS clamp() for headlines. Fixed sizes for body text with breakpoint-based adjustments. Headlines scale significantly; body text scales modestly to maintain readability.",
+    "breakpoints": {
+      "mobile": {
+        "max_width": "639px",
+        "viewport_label": "Small phones to large phones"
+      },
+      "tablet": {
+        "min_width": "640px",
+        "max_width": "1023px",
+        "viewport_label": "Tablets and small laptops"
+      },
+      "desktop": {
+        "min_width": "1024px",
+        "viewport_label": "Laptops and monitors"
+      },
+      "wide": {
+        "min_width": "1440px",
+        "viewport_label": "Large monitors — cap maximum sizes here"
+      }
+    },
+    "scale_by_breakpoint": {
+      "display": {
+        "mobile": "32px",
+        "tablet": "44px",
+        "desktop": "61px",
+        "fluid_css": "clamp(2rem, 1.2rem + 3.5vw, 3.815rem)"
+      },
+      "h1": {
+        "mobile": "28px",
+        "tablet": "36px",
+        "desktop": "49px",
+        "fluid_css": "clamp(1.75rem, 1rem + 3vw, 3.052rem)"
+      },
+      "h2": {
+        "mobile": "24px",
+        "tablet": "31px",
+        "desktop": "39px",
+        "fluid_css": "clamp(1.5rem, 0.9rem + 2.4vw, 2.441rem)"
+      },
+      "h3": {
+        "mobile": "22px",
+        "tablet": "26px",
+        "desktop": "31px",
+        "fluid_css": "clamp(1.375rem, 1rem + 1.5vw, 1.953rem)"
+      },
+      "h4": {
+        "mobile": "20px",
+        "tablet": "22px",
+        "desktop": "25px",
+        "fluid_css": "clamp(1.25rem, 1.05rem + 0.8vw, 1.563rem)"
+      },
+      "h5": {
+        "mobile": "18px",
+        "tablet": "19px",
+        "desktop": "20px",
+        "fluid_css": "clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem)"
+      },
+      "body_large": {
+        "mobile": "17px",
+        "tablet": "18px",
+        "desktop": "18px"
+      },
+      "body": {
+        "mobile": "16px",
+        "tablet": "16px",
+        "desktop": "16px",
+        "note": "Body text remains fixed at 16px across all breakpoints. This is the minimum comfortable reading size on all devices."
+      },
+      "body_small": {
+        "mobile": "13px",
+        "tablet": "14px",
+        "desktop": "14px"
+      },
+      "caption": {
+        "mobile": "11px",
+        "tablet": "12px",
+        "desktop": "12px"
+      },
+      "data_display": {
+        "mobile": "32px",
+        "tablet": "40px",
+        "desktop": "48px",
+        "fluid_css": "clamp(2rem, 1.2rem + 3vw, 3rem)"
+      }
+    },
+    "minimum_sizes": {
+      "body_text": "16px — never go below this for running text",
+      "caption_text": "11px — absolute floor for any visible text",
+      "touch_target_label": "14px — minimum for text within interactive elements on mobile"
+    }
+  },
+
+  "readability": {
+    "line_length": {
+      "optimal_characters": "60-75 characters per line",
+      "max_characters": 80,
+      "min_characters": 40,
+      "implementation": "max-width: 65ch on paragraph containers",
+      "note": "Applies to running body text. Headlines and short-form text can span wider."
+    },
+    "paragraph_spacing": {
+      "between_paragraphs": "1.5em (24px at base size)",
+      "after_heading": "0.75em — tighter coupling between heading and its content",
+      "before_heading": "2em — clear visual break before new sections"
+    },
+    "heading_to_body_ratio": {
+      "display_to_body": "3.81:1 — strong visual anchor for hero sections",
+      "h1_to_body": "3.05:1 — commanding page titles",
+      "h2_to_body": "2.44:1 — clear section breaks",
+      "h3_to_body": "1.95:1 — noticeable hierarchy without being loud",
+      "assessment": "The Major Third scale produces moderate, professional ratios. The display and h1 levels create strong anchors for marketing pages, while h3-h5 levels create subtle but clear hierarchy for content-dense UI. This matches the 'confident but restrained' personality — authority without shouting."
+    },
+    "contrast_and_color": {
+      "body_text": "Minimum 7:1 contrast ratio against background (WCAG AAA)",
+      "heading_text": "Minimum 4.5:1 contrast ratio (WCAG AA for large text)",
+      "caption_text": "Minimum 4.5:1 contrast ratio despite smaller size",
+      "note": "Specific color values to be determined by color system. These are minimum ratios to maintain."
+    }
+  },
+
+  "usage_guidelines": {
+    "typeface_roles": {
+      "general_sans": {
+        "use_for": [
+          "All headings (display through h5)",
+          "Navigation items",
+          "Button labels",
+          "The 'Parq' portion of the logo wordmark",
+          "Pitch deck slide titles"
+        ],
+        "never_for": [
+          "Running body text longer than 2 lines",
+          "Data tables or metrics",
+          "Legal text or fine print"
+        ]
+      },
+      "inter": {
+        "use_for": [
+          "All body and paragraph text",
+          "Form inputs and labels",
+          "Table text content",
+          "Tooltip and popover content",
+          "Overline / eyebrow labels",
+          "Footer and secondary navigation",
+          "Pitch deck body text and bullet points"
+        ],
+        "never_for": [
+          "Primary headlines (use General Sans)",
+          "Large statistical callouts (use JetBrains Mono)",
+          "Code snippets or data annotations"
+        ]
+      },
+      "jetbrains_mono": {
+        "use_for": [
+          "Hero statistics (99.2%, 24/7, 35%)",
+          "Dashboard values and metrics",
+          "Data table numerical columns",
+          "Inline code or technical annotations",
+          "The 'AI' portion of the logo wordmark (reinforces technical identity)",
+          "Detection confidence scores",
+          "Pitch deck key metrics"
+        ],
+        "never_for": [
+          "Headings or general headlines",
+          "Body text or descriptions",
+          "Navigation or UI labels",
+          "Paragraphs of any length"
+        ]
+      }
+    },
+    "hierarchy_rules": [
+      "Every page must have exactly one h1. Use display size only for hero sections on primary landing pages.",
+      "Maintain strict heading order: never skip from h2 to h4. Visual hierarchy and semantic hierarchy must align.",
+      "Use weight (medium vs semibold) rather than size to create emphasis within the same heading level.",
+      "Overline labels (small, uppercase, tracked-out) should precede h2 or h3 headings to provide category context without adding a heading level.",
+      "Data callouts use JetBrains Mono at data_display size with a body-weight label beneath in Inter — this creates a visual pattern that instantly signals 'metric' throughout the brand.",
+      "Never use italic for emphasis in headlines. Use weight change or the accent color instead.",
+      "Limit underlines to hyperlinks only. Do not use text-decoration for emphasis."
+    ],
+    "pitch_deck_specifics": {
+      "slide_titles": "General Sans Semibold, 36-44pt equivalent depending on slide type",
+      "slide_body": "Inter Regular, 18-22pt, max 5 bullet points per slide",
+      "key_metrics": "JetBrains Mono Medium, 60-80pt for the number, Inter Regular 16pt for the label beneath",
+      "speaker_notes": "Inter Regular 14pt — notes are for reference, not projection",
+      "general_rules": [
+        "Minimum 24pt for any projected text",
+        "Maximum 6 lines of text per slide for readability at distance",
+        "Use the data_display pattern (large mono number + small label) for all statistical proof points",
+        "Slide headlines should be sentences, not topics — 'Parq reduces enforcement costs by 90%' not 'Cost Reduction'"
+      ]
+    },
+    "website_specifics": {
+      "hero_sections": "Display size (fluid) with tight letter-spacing. Max 8-10 words for the headline. Lead paragraph in body_large.",
+      "feature_sections": "H2 for section title. H4 or H5 for individual feature names. Body for descriptions. Keep descriptions under 3 lines.",
+      "social_proof": "Data display size for the metric in JetBrains Mono. Body_small in Inter for the description beneath.",
+      "navigation": "Inter Medium at body_small size (14px). All caps optional for top nav, sentence case for mobile nav.",
+      "footer": "Inter Regular at body_small (14px). Caption size (12px) for copyright and legal links."
+    }
+  },
+
+  "css_implementation": {
+    "font_face_declarations": [
+      "@font-face { font-family: 'General Sans'; src: url('/fonts/GeneralSans-Variable.woff2') format('woff2-variations'); font-weight: 400 700; font-display: swap; }",
+      "@font-face { font-family: 'Inter'; src: url('/fonts/Inter-Variable.woff2') format('woff2-variations'); font-weight: 400 700; font-display: swap; }",
+      "@font-face { font-family: 'JetBrains Mono'; src: url('/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations'); font-weight: 400 700; font-display: swap; }"
+    ],
+    "css_custom_properties": {
+      "--font-headline": "'General Sans', system-ui, -apple-system, sans-serif",
+      "--font-body": "'Inter', system-ui, -apple-system, sans-serif",
+      "--font-data": "'JetBrains Mono', 'SF Mono', 'Consolas', monospace",
+      "--text-display": "clamp(2rem, 1.2rem + 3.5vw, 3.815rem)",
+      "--text-h1": "clamp(1.75rem, 1rem + 3vw, 3.052rem)",
+      "--text-h2": "clamp(1.5rem, 0.9rem + 2.4vw, 2.441rem)",
+      "--text-h3": "clamp(1.375rem, 1rem + 1.5vw, 1.953rem)",
+      "--text-h4": "clamp(1.25rem, 1.05rem + 0.8vw, 1.563rem)",
+      "--text-h5": "clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem)",
+      "--text-body-lg": "1.125rem",
+      "--text-body": "1rem",
+      "--text-body-sm": "0.875rem",
+      "--text-caption": "0.75rem",
+      "--text-data-display": "clamp(2rem, 1.2rem + 3vw, 3rem)",
+      "--text-data-label": "0.875rem",
+      "--leading-tight": "1.1",
+      "--leading-snug": "1.25",
+      "--leading-normal": "1.5",
+      "--leading-relaxed": "1.6",
+      "--tracking-tight": "-0.03em",
+      "--tracking-snug": "-0.02em",
+      "--tracking-normal": "0em",
+      "--tracking-wide": "0.1em"
+    }
+  }
+}

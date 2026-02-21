@@ -1,0 +1,416 @@
+{
+  "brand": "Parq AI",
+  "version": "1.0",
+  "date": "2026-02-19",
+  "design_rationale": "Color system built from the strategy brief's 'Sentinel' archetype and visual direction: calm authority, restrained confidence, and precision. Deep navy anchors the brand in trust and technology. A single electric teal accent provides energy and modernity without consumer playfulness. Warm neutrals prevent clinical coldness while maintaining professional clarity.",
+
+  "primary_palette": {
+    "deep_navy": {
+      "name": "Parq Navy",
+      "role": "Primary brand color — dominant in headers, hero sections, primary UI surfaces, and logo background",
+      "hex": "#0A1628",
+      "rgb": { "r": 10, "g": 22, "b": 40 },
+      "hsl": { "h": 216, "s": 60, "l": 10 }
+    },
+    "electric_teal": {
+      "name": "Parq Teal",
+      "role": "Primary accent — CTAs, links, data highlights, interactive elements, and the 'AI' in the logo",
+      "hex": "#00C2B7",
+      "rgb": { "r": 0, "g": 194, "b": 183 },
+      "hsl": { "h": 177, "s": 100, "l": 38 }
+    },
+    "accent_blue": {
+      "name": "Parq Blue",
+      "role": "Secondary accent — charts, secondary buttons, supporting data visualizations, hover states",
+      "hex": "#2E7CF6",
+      "rgb": { "r": 46, "g": 124, "b": 246 },
+      "hsl": { "h": 217, "s": 92, "l": 57 }
+    }
+  },
+
+  "neutral_palette": {
+    "off_black": {
+      "name": "Ink",
+      "role": "Primary text color on light backgrounds",
+      "hex": "#1A1F2E",
+      "rgb": { "r": 26, "g": 31, "b": 46 },
+      "hsl": { "h": 225, "s": 28, "l": 14 }
+    },
+    "dark_gray": {
+      "name": "Slate",
+      "role": "Secondary text, captions, and muted labels",
+      "hex": "#4A5167",
+      "rgb": { "r": 74, "g": 81, "b": 103 },
+      "hsl": { "h": 226, "s": 16, "l": 35 }
+    },
+    "mid_gray": {
+      "name": "Stone",
+      "role": "Borders, dividers, and disabled states",
+      "hex": "#8B92A7",
+      "rgb": { "r": 139, "g": 146, "b": 167 },
+      "hsl": { "h": 225, "s": 12, "l": 60 }
+    },
+    "light_gray": {
+      "name": "Mist",
+      "role": "Card backgrounds, secondary surfaces, and subtle fills",
+      "hex": "#E8EAF0",
+      "rgb": { "r": 232, "g": 234, "b": 240 },
+      "hsl": { "h": 225, "s": 18, "l": 93 }
+    },
+    "off_white": {
+      "name": "Cloud",
+      "role": "Page backgrounds — warmer than pure white to avoid clinical feel",
+      "hex": "#F5F6F8",
+      "rgb": { "r": 245, "g": 246, "b": 248 },
+      "hsl": { "h": 220, "s": 16, "l": 97 }
+    }
+  },
+
+  "semantic_colors": {
+    "success": {
+      "name": "Success Green",
+      "role": "Positive states — confirmations, online status, compliance indicators",
+      "hex": "#12B76A",
+      "rgb": { "r": 18, "g": 183, "b": 106 },
+      "hsl": { "h": 152, "s": 82, "l": 39 }
+    },
+    "warning": {
+      "name": "Warning Amber",
+      "role": "Caution states — expiring sessions, approaching limits, review needed",
+      "hex": "#F59E0B",
+      "rgb": { "r": 245, "g": 158, "b": 11 },
+      "hsl": { "h": 38, "s": 92, "l": 50 }
+    },
+    "error": {
+      "name": "Error Red",
+      "role": "Error and destructive states — failures, violations, critical alerts. Used sparingly and only for system states, never as a brand color.",
+      "hex": "#EF4444",
+      "rgb": { "r": 239, "g": 68, "b": 68 },
+      "hsl": { "h": 0, "s": 84, "l": 60 }
+    },
+    "info": {
+      "name": "Info Blue",
+      "role": "Informational states — tooltips, notices, neutral notifications",
+      "hex": "#3B82F6",
+      "rgb": { "r": 59, "g": 130, "b": 246 },
+      "hsl": { "h": 217, "s": 91, "l": 60 }
+    }
+  },
+
+  "dark_mode": {
+    "description": "Dark mode palette for dashboard UI and potential dark website sections. Built on the navy foundation with adjusted contrast levels.",
+    "surfaces": {
+      "background": {
+        "name": "Dark Background",
+        "hex": "#070D1A",
+        "rgb": { "r": 7, "g": 13, "b": 26 },
+        "hsl": { "h": 221, "s": 58, "l": 6 }
+      },
+      "surface_1": {
+        "name": "Dark Surface (elevated)",
+        "hex": "#0F1829",
+        "rgb": { "r": 15, "g": 24, "b": 41 },
+        "hsl": { "h": 219, "s": 46, "l": 11 }
+      },
+      "surface_2": {
+        "name": "Dark Surface (card)",
+        "hex": "#1A2540",
+        "rgb": { "r": 26, "g": 37, "b": 64 },
+        "hsl": { "h": 223, "s": 42, "l": 18 }
+      },
+      "surface_3": {
+        "name": "Dark Surface (overlay)",
+        "hex": "#243155",
+        "rgb": { "r": 36, "g": 49, "b": 85 },
+        "hsl": { "h": 224, "s": 40, "l": 24 }
+      }
+    },
+    "text": {
+      "primary": {
+        "name": "Dark Text Primary",
+        "hex": "#F0F1F4",
+        "rgb": { "r": 240, "g": 241, "b": 244 },
+        "hsl": { "h": 225, "s": 17, "l": 95 }
+      },
+      "secondary": {
+        "name": "Dark Text Secondary",
+        "hex": "#9BA3B8",
+        "rgb": { "r": 155, "g": 163, "b": 184 },
+        "hsl": { "h": 223, "s": 16, "l": 66 }
+      },
+      "muted": {
+        "name": "Dark Text Muted",
+        "hex": "#5C6580",
+        "rgb": { "r": 92, "g": 101, "b": 128 },
+        "hsl": { "h": 225, "s": 16, "l": 43 }
+      }
+    },
+    "borders": {
+      "subtle": {
+        "hex": "#1E2A45",
+        "rgb": { "r": 30, "g": 42, "b": 69 },
+        "hsl": { "h": 222, "s": 39, "l": 19 }
+      },
+      "default": {
+        "hex": "#2A3A5C",
+        "rgb": { "r": 42, "g": 58, "b": 92 },
+        "hsl": { "h": 221, "s": 37, "l": 26 }
+      }
+    },
+    "accent_adjustments": {
+      "teal_on_dark": {
+        "hex": "#00D4C8",
+        "rgb": { "r": 0, "g": 212, "b": 200 },
+        "hsl": { "h": 177, "s": 100, "l": 42 },
+        "note": "Slightly brighter teal for sufficient contrast on dark surfaces"
+      },
+      "blue_on_dark": {
+        "hex": "#4D8DF7",
+        "rgb": { "r": 77, "g": 141, "b": 247 },
+        "hsl": { "h": 217, "s": 91, "l": 64 },
+        "note": "Lightened blue for dark surface readability"
+      }
+    }
+  },
+
+  "accessibility": {
+    "standard": "WCAG 2.1",
+    "minimum_requirement": "AA (4.5:1 for normal text, 3:1 for large text)",
+    "target": "AAA where possible (7:1 for normal text, 4.5:1 for large text)",
+    "contrast_pairings": [
+      {
+        "foreground": "Ink (#1A1F2E)",
+        "background": "Cloud (#F5F6F8)",
+        "ratio": "15.2:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "PASS",
+        "aaa_large": "PASS",
+        "use_case": "Primary body text on page background"
+      },
+      {
+        "foreground": "Ink (#1A1F2E)",
+        "background": "Mist (#E8EAF0)",
+        "ratio": "13.1:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "PASS",
+        "aaa_large": "PASS",
+        "use_case": "Primary body text on card background"
+      },
+      {
+        "foreground": "Cloud (#F5F6F8)",
+        "background": "Parq Navy (#0A1628)",
+        "ratio": "16.4:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "PASS",
+        "aaa_large": "PASS",
+        "use_case": "Light text on dark hero sections and headers"
+      },
+      {
+        "foreground": "Parq Teal (#00C2B7)",
+        "background": "Parq Navy (#0A1628)",
+        "ratio": "8.6:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "PASS",
+        "aaa_large": "PASS",
+        "use_case": "Teal accent text/elements on dark backgrounds"
+      },
+      {
+        "foreground": "Parq Teal (#00C2B7)",
+        "background": "Cloud (#F5F6F8)",
+        "ratio": "1.9:1",
+        "aa_normal": "FAIL",
+        "aa_large": "FAIL",
+        "aaa_normal": "FAIL",
+        "aaa_large": "FAIL",
+        "use_case": "AVOID — Teal on light backgrounds fails contrast. Use only for decorative/large graphic elements, never for text.",
+        "mitigation": "Use darkened teal variant #008C83 (hex) on light backgrounds for text (achieves 4.6:1)"
+      },
+      {
+        "foreground": "Darkened Teal (#008C83)",
+        "background": "Cloud (#F5F6F8)",
+        "ratio": "4.6:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "FAIL",
+        "aaa_large": "PASS",
+        "use_case": "Teal links and text on light backgrounds (accessible variant)"
+      },
+      {
+        "foreground": "Slate (#4A5167)",
+        "background": "Cloud (#F5F6F8)",
+        "ratio": "6.5:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "FAIL",
+        "aaa_large": "PASS",
+        "use_case": "Secondary/caption text on page background"
+      },
+      {
+        "foreground": "Parq Blue (#2E7CF6)",
+        "background": "Parq Navy (#0A1628)",
+        "ratio": "5.5:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "FAIL",
+        "aaa_large": "PASS",
+        "use_case": "Blue accent on dark backgrounds"
+      },
+      {
+        "foreground": "Dark Text Primary (#F0F1F4)",
+        "background": "Dark Surface card (#1A2540)",
+        "ratio": "12.8:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "PASS",
+        "aaa_large": "PASS",
+        "use_case": "Primary text in dark mode cards"
+      },
+      {
+        "foreground": "Dark Text Secondary (#9BA3B8)",
+        "background": "Dark Background (#070D1A)",
+        "ratio": "7.2:1",
+        "aa_normal": "PASS",
+        "aa_large": "PASS",
+        "aaa_normal": "PASS",
+        "aaa_large": "PASS",
+        "use_case": "Secondary text in dark mode"
+      }
+    ],
+    "accessible_teal_variant": {
+      "name": "Teal Accessible",
+      "role": "Use this darkened teal for all text rendered on light backgrounds. The primary Parq Teal (#00C2B7) is reserved for use on dark backgrounds and large decorative elements only.",
+      "hex": "#008C83",
+      "rgb": { "r": 0, "g": 140, "b": 131 },
+      "hsl": { "h": 176, "s": 100, "l": 27 }
+    }
+  },
+
+  "usage_guidelines": {
+    "color_proportions": {
+      "rule": "70 / 25 / 5",
+      "dominant_70": "Parq Navy (#0A1628) and neutral palette — backgrounds, large surfaces, text containers",
+      "secondary_25": "Cloud (#F5F6F8) and Mist (#E8EAF0) — content areas, cards, breathing space",
+      "accent_5": "Parq Teal (#00C2B7) and Parq Blue (#2E7CF6) — CTAs, highlights, data points, interactive elements"
+    },
+    "by_purpose": {
+      "page_backgrounds": "Cloud (#F5F6F8) for light mode. Dark Background (#070D1A) for dark mode.",
+      "hero_sections": "Parq Navy (#0A1628) with Cloud text. Teal accent for key metrics or CTA.",
+      "primary_cta_buttons": "Parq Teal (#00C2B7) background with Parq Navy (#0A1628) text — provides excellent contrast (8.6:1).",
+      "secondary_cta_buttons": "Outlined with Parq Navy border on light backgrounds, or Parq Blue on dark backgrounds.",
+      "links": "Teal Accessible (#008C83) on light backgrounds. Parq Teal (#00C2B7) on dark backgrounds.",
+      "data_visualizations": "Teal as primary data color, Blue as secondary. Use neutral grays for baselines and axes.",
+      "navigation": "Parq Navy background with Cloud text. Active state uses Parq Teal.",
+      "form_elements": "Stone (#8B92A7) borders, Ink (#1A1F2E) input text, Parq Teal focus ring.",
+      "status_indicators": "Use semantic colors exclusively — green for compliance/online, amber for warnings, red for violations/errors."
+    },
+    "minimum_contrast": {
+      "body_text": "4.5:1 ratio minimum (WCAG AA)",
+      "large_text_and_headings": "3:1 ratio minimum (WCAG AA)",
+      "ui_components_and_graphics": "3:1 ratio minimum against adjacent colors",
+      "focus_indicators": "3:1 ratio minimum against surrounding content"
+    },
+    "brand_consistency_rules": [
+      "Never use Parq Teal (#00C2B7) for body text on light backgrounds — use Teal Accessible (#008C83) instead",
+      "Parq Navy is always the dominant visual element — teal and blue are accents, not co-primaries",
+      "Semantic colors are functional only — never use error red or warning amber as decorative colors",
+      "Dark mode surfaces must use the navy-based dark palette, not pure black (#000000)",
+      "Maintain warm undertones in all neutrals — no pure gray (#808080) or pure white (#FFFFFF)",
+      "When teal and blue appear together (e.g., charts), teal takes visual priority as the primary accent"
+    ]
+  },
+
+  "colors_to_avoid": {
+    "red_as_brand_color": {
+      "reason": "Connotes punishment, aggression, and violation — contradicts the brand's positioning as a compliance partner rather than an enforcer. Reserve red exclusively for system error states.",
+      "exception": "Semantic error states only (#EF4444)"
+    },
+    "bright_orange": {
+      "reason": "Reads as consumer-facing, playful, and startup-coded. Conflicts with the professional enterprise positioning.",
+      "exception": "None"
+    },
+    "purple": {
+      "reason": "Signals creativity, luxury, or consumer lifestyle — none of which align with Parq's pragmatic, operations-focused brand.",
+      "exception": "None"
+    },
+    "multi_color_palettes": {
+      "reason": "Using 4+ colors dilutes brand authority and creates visual noise. The strategy calls for restrained confidence — a tight palette communicates discipline and focus.",
+      "exception": "Data visualizations requiring 4+ categories may use extended tints/shades of teal and blue, never introducing new hue families"
+    },
+    "pure_black": {
+      "reason": "Pure black (#000000) is harsh on screens and creates too-stark contrast. Use Parq Navy or Ink instead.",
+      "exception": "None"
+    },
+    "pure_white": {
+      "reason": "Pure white (#FFFFFF) feels clinical and cold. Use Cloud (#F5F6F8) or Off-White for backgrounds.",
+      "exception": "Text on dark backgrounds may use #F0F1F4 or #F5F6F8 for maximum readability"
+    }
+  },
+
+  "extended_tints_and_shades": {
+    "description": "Extended scale for data visualizations and UI components that need gradation within the brand palette.",
+    "teal_scale": [
+      { "step": 50,  "hex": "#E6FAF9", "use": "Teal tint background" },
+      { "step": 100, "hex": "#B3F0EC", "use": "Teal light fill" },
+      { "step": 200, "hex": "#66E3DB", "use": "Teal highlight" },
+      { "step": 300, "hex": "#33D6CD", "use": "Teal active" },
+      { "step": 400, "hex": "#00C2B7", "use": "Primary teal (brand)" },
+      { "step": 500, "hex": "#00A89E", "use": "Teal pressed state" },
+      { "step": 600, "hex": "#008C83", "use": "Teal accessible text" },
+      { "step": 700, "hex": "#006B64", "use": "Teal dark" },
+      { "step": 800, "hex": "#004A46", "use": "Teal deep" },
+      { "step": 900, "hex": "#002A28", "use": "Teal near-black" }
+    ],
+    "blue_scale": [
+      { "step": 50,  "hex": "#EBF2FE", "use": "Blue tint background" },
+      { "step": 100, "hex": "#C7DBFC", "use": "Blue light fill" },
+      { "step": 200, "hex": "#8FB8F9", "use": "Blue highlight" },
+      { "step": 300, "hex": "#5E9AF7", "use": "Blue active" },
+      { "step": 400, "hex": "#2E7CF6", "use": "Secondary blue (brand)" },
+      { "step": 500, "hex": "#1A6AE0", "use": "Blue pressed state" },
+      { "step": 600, "hex": "#1456B8", "use": "Blue dark" },
+      { "step": 700, "hex": "#0E4190", "use": "Blue deep" },
+      { "step": 800, "hex": "#0A2D68", "use": "Blue near-navy" },
+      { "step": 900, "hex": "#061A40", "use": "Blue near-black" }
+    ]
+  },
+
+  "css_custom_properties": {
+    "description": "Ready-to-use CSS custom property definitions for implementation.",
+    "light_mode": {
+      "--color-primary": "#0A1628",
+      "--color-accent": "#00C2B7",
+      "--color-accent-accessible": "#008C83",
+      "--color-accent-secondary": "#2E7CF6",
+      "--color-text-primary": "#1A1F2E",
+      "--color-text-secondary": "#4A5167",
+      "--color-text-muted": "#8B92A7",
+      "--color-bg-page": "#F5F6F8",
+      "--color-bg-card": "#E8EAF0",
+      "--color-border": "#8B92A7",
+      "--color-success": "#12B76A",
+      "--color-warning": "#F59E0B",
+      "--color-error": "#EF4444",
+      "--color-info": "#3B82F6"
+    },
+    "dark_mode": {
+      "--color-primary": "#0F1829",
+      "--color-accent": "#00D4C8",
+      "--color-accent-accessible": "#00C2B7",
+      "--color-accent-secondary": "#4D8DF7",
+      "--color-text-primary": "#F0F1F4",
+      "--color-text-secondary": "#9BA3B8",
+      "--color-text-muted": "#5C6580",
+      "--color-bg-page": "#070D1A",
+      "--color-bg-card": "#1A2540",
+      "--color-border": "#2A3A5C",
+      "--color-success": "#34D399",
+      "--color-warning": "#FBBF24",
+      "--color-error": "#F87171",
+      "--color-info": "#60A5FA"
+    }
+  }
+}

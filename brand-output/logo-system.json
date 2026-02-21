@@ -1,0 +1,630 @@
+{
+  "brand": "Parq AI",
+  "version": "1.0",
+  "date": "2026-02-19",
+
+  "design_rationale": "The logo system is built from three upstream inputs: the Sentinel archetype (vigilant, precise, always-on), the color system (Parq Navy #0A1628 + Parq Teal #00C2B7), and the typography system (General Sans for 'Parq', JetBrains Mono for 'AI'). The strategy brief specifically recommends differentiating 'AI' from 'Parq' through weight, color, or position. All three concepts honor this directive. The visual territory references Palantir, Anduril, Samsara, Linear, Vercel, and Stripe — enterprise technology brands that convey capability through restraint, not decoration.",
+
+  "logo_concepts": [
+    {
+      "concept_number": 1,
+      "name": "Coordinate Grid",
+      "description": "The logomark is a minimal 3x3 grid of intersecting lines forming a coordinate system — a direct reference to the parking spot mapping technology. One node at the grid intersection is highlighted in teal, representing the AI's pinpoint detection capability. The wordmark 'Parq' sits in General Sans Semibold, with 'AI' in JetBrains Mono Medium, colored in Parq Teal and offset slightly to the upper right, suggesting data annotation or a system label.",
+      "conceptual_thinking": "This concept draws directly from the product: Parq AI maps parking lots using polygon coordinates on aerial imagery. The grid represents both the spatial mapping technology and the structured precision of the AI system. A single highlighted node communicates focused intelligence — not watching everything chaotically, but identifying the exact point that matters. The Sentinel watches the grid.",
+      "visual_specification": {
+        "logomark": {
+          "type": "Geometric grid with highlighted node",
+          "construction": "A 3x3 grid formed by 4 lines (2 horizontal, 2 vertical) creating 9 intersection points. Lines are 1.5px stroke weight at standard rendering size (48px mark height). All lines in Parq Navy (#0A1628). The bottom-right intersection node is replaced with a filled circle (3px radius) in Parq Teal (#00C2B7). The remaining 8 intersections have no visible nodes — just the crossing lines.",
+          "proportions": "The grid is a perfect square. Line spacing is equal (grid cell = 12px at 48px mark height). Total mark dimensions: 36x36px at standard size (the grid occupies the inner area with 6px padding implied by the outer line endpoints).",
+          "grid_line_endpoints": "Lines extend 3px beyond the outermost intersections on each end, giving the grid a sense of extending beyond its visible bounds — an infinite coordinate system, cropped."
+        },
+        "wordmark": {
+          "parq": {
+            "font": "General Sans",
+            "weight": 600,
+            "size_relative_to_mark": "The cap height of 'Parq' equals 60% of the logomark height (28.8px when mark is 48px)",
+            "color": "#0A1628",
+            "letter_spacing": "-0.02em",
+            "case": "Sentence case — 'Parq'"
+          },
+          "ai": {
+            "font": "JetBrains Mono",
+            "weight": 500,
+            "size_relative_to_parq": "The cap height of 'AI' is 65% of 'Parq' cap height",
+            "color": "#00C2B7",
+            "letter_spacing": "0.05em",
+            "case": "Uppercase — 'AI'",
+            "position": "Baseline-aligned with 'Parq', separated by a 0.4em space. On the horizontal lockup, 'AI' sits to the right of 'Parq'. The smaller size and monospace font create a natural visual distinction — like a system label or version tag appended to the product name."
+          }
+        }
+      }
+    },
+    {
+      "concept_number": 2,
+      "name": "Sentinel Eye",
+      "description": "The logomark is an abstract geometric eye constructed from two overlapping arcs, forming a lens shape (vesica piscis). A small diamond (rotated square) sits at the center, representing both the AI's focus point and a top-down view of a parking spot. The form suggests watchfulness without literal surveillance imagery — more optical lens than security camera. The wordmark pairs 'Parq' and 'AI' with 'AI' set in teal monospace, separated by a thin vertical rule.",
+      "conceptual_thinking": "The Sentinel archetype is 'a vigilant, always-on protector.' An abstract eye is the most universal symbol for watchfulness, but the strategy brief warns against surveillance imagery. This concept abstracts the eye into pure geometry — two arcs and a diamond — so it reads as a lens, a sensor, or an optical system rather than a human eye. The diamond center doubles as an aerial view of a parking spot (a rotated rectangle). This dual reading connects the 'watching' metaphor to the specific domain without being literal.",
+      "visual_specification": {
+        "logomark": {
+          "type": "Geometric lens with diamond center",
+          "construction": "Two circular arcs mirror each other vertically to form a horizontal lens (vesica piscis). Each arc has a radius of 36px (at 48px mark height), and they overlap to create a lens shape 48px wide and approximately 24px tall. Stroke weight: 2px. Stroke color: Parq Navy (#0A1628). At the geometric center of the lens, a 7x7px square is rotated 45 degrees to form a diamond. The diamond is filled with Parq Teal (#00C2B7), no stroke.",
+          "proportions": "The overall mark fits within a 48x28px bounding box. The lens (eye) has a 2:1 width-to-height ratio. The center diamond is 15% of the lens width.",
+          "optical_adjustments": "The arcs are slightly flattened (not true circular arcs) to make the pointed ends of the lens sharper, giving a more precise, engineered feel rather than organic."
+        },
+        "wordmark": {
+          "parq": {
+            "font": "General Sans",
+            "weight": 600,
+            "size_relative_to_mark": "Cap height of 'Parq' equals 70% of the logomark height (19.6px when mark is 28px tall)",
+            "color": "#0A1628",
+            "letter_spacing": "-0.02em",
+            "case": "Sentence case — 'Parq'"
+          },
+          "separator": {
+            "type": "Thin vertical rule",
+            "dimensions": "1px wide, height matches the x-height of 'Parq'",
+            "color": "#8B92A7",
+            "spacing": "0.5em gap on each side of the rule"
+          },
+          "ai": {
+            "font": "JetBrains Mono",
+            "weight": 500,
+            "size_relative_to_parq": "Same cap height as 'Parq' (unlike Concept 1, they are equal here — the separator provides the visual differentiation instead of size contrast)",
+            "color": "#00C2B7",
+            "letter_spacing": "0.08em",
+            "case": "Uppercase — 'AI'"
+          }
+        }
+      }
+    },
+    {
+      "concept_number": 3,
+      "name": "Precision Polygon",
+      "description": "The logomark is a single four-sided polygon (irregular quadrilateral) with slightly angled sides — a direct abstraction of a parking spot boundary as defined in the codebase. Each corner is marked with a small 'L'-shaped bracket (like coordinate markers on an engineering diagram or a camera viewfinder). The shape is rendered in teal outline on navy, or navy outline on light backgrounds. The wordmark stacks 'Parq' above 'AI', left-aligned, with 'AI' in teal monospace at a smaller size.",
+      "conceptual_thinking": "This is the most product-literal concept. Parq AI's core technology defines parking spots as four-corner coordinate polygons rendered on aerial imagery. This logomark IS that fundamental unit — one parking spot, precisely delineated. The corner brackets reference technical drawing conventions, viewfinder interfaces, and coordinate systems. It says: 'We see the space. We mark the boundaries. We know exactly what's happening.' The stacked wordmark reinforces the vertical precision of the polygon form.",
+      "visual_specification": {
+        "logomark": {
+          "type": "Coordinate-marked polygon",
+          "construction": "A nearly-rectangular quadrilateral, 40px wide by 20px tall at standard size. The top edge is 38px wide (slightly narrower than bottom, creating a subtle perspective effect as if viewed from above). The four corners are at coordinates: top-left (1, 0), top-right (39, 0), bottom-right (40, 20), bottom-left (0, 20). The polygon outline is 1.5px stroke in the mark color (navy or teal depending on background). At each corner, an L-shaped bracket extends 5px along each edge and 5px perpendicular outward. Brackets are 1.5px stroke, same color as the polygon.",
+          "proportions": "Mark bounding box (including brackets): 50x30px. The polygon itself is 40x20px centered within. Width-to-height ratio of the polygon is 2:1.",
+          "perspective_note": "The slight taper (40px bottom vs 38px top) creates a subtle aerial perspective — as if viewing a parking spot from a camera mounted above. This is barely perceptible but creates a more dynamic form than a pure rectangle."
+        },
+        "wordmark": {
+          "parq": {
+            "font": "General Sans",
+            "weight": 600,
+            "size_relative_to_mark": "Cap height equals the full height of the polygon (20px at standard size)",
+            "color": "#0A1628",
+            "letter_spacing": "-0.02em",
+            "case": "Sentence case — 'Parq'"
+          },
+          "ai": {
+            "font": "JetBrains Mono",
+            "weight": 500,
+            "size_relative_to_parq": "Cap height is 55% of 'Parq' cap height (11px at standard size)",
+            "color": "#00C2B7",
+            "letter_spacing": "0.1em",
+            "case": "Uppercase — 'AI'",
+            "position": "Left-aligned with 'Parq', placed directly below with a 4px gap. This creates a stacked arrangement where 'AI' reads as a descriptor or classification tag beneath the brand name."
+          }
+        }
+      }
+    }
+  ],
+
+  "primary_recommendation": {
+    "selected_concept": "1-diamond",
+    "concept_name": "Coordinate Grid — Diamond Variant",
+    "variant_note": "The standard Coordinate Grid logomark rotated 45 degrees to form a diamond orientation. This adds visual dynamism and distinction while retaining all the geometric and conceptual strengths of the original grid.",
+    "preferred_background": "Dark (Parq Navy #0A1628) — selected by stakeholder as the primary presentation context",
+    "approved_date": "2026-02-20",
+    "rationale": [
+      "Most versatile across all sizes — the grid scales down cleanly to favicon size (the highlighted node remains legible even at 16x16) while the other concepts lose detail at small sizes.",
+      "The 45-degree rotation transforms the grid from a standard tech motif into a distinctive diamond form — more dynamic, more ownable, and visually differentiated from competitors.",
+      "Strongest brand uniqueness — a diamond-oriented coordinate grid with a single highlighted point of detection is highly distinctive in the parking/PropTech space.",
+      "Most aligned with the Sentinel archetype — the grid represents the always-on surveillance system, and the single teal node is the moment of detection.",
+      "Strongest geometric cohesion with the typography system — the grid's perpendicular lines echo the geometric construction of General Sans and the structured grid of JetBrains Mono.",
+      "The grid motif can extend into the broader brand system as a background pattern, section divider, or data visualization framework — giving it system-level utility beyond the logo itself."
+    ],
+    "alternate_concepts_retained": ["Open Spot", "Precision Polygon"],
+    "rejected_concepts": ["Sentinel Eye"]
+  },
+
+  "lockup_variations": {
+    "horizontal": {
+      "name": "Primary Horizontal Lockup",
+      "description": "Logomark to the left, 'Parq' wordmark centered vertically beside it, 'AI' to the right of 'Parq' at smaller size and baseline-aligned.",
+      "proportions": "Total width approximately 4.5x the logomark width. Mark occupies ~22% of the total width. A gap of 0.75x the mark width separates the mark from the wordmark.",
+      "minimum_width": "120px (below this, use icon-only)",
+      "preferred_use": "Website header, email signatures, pitch deck title slides, horizontal space-rich contexts"
+    },
+    "stacked": {
+      "name": "Stacked Lockup",
+      "description": "Logomark centered above the wordmark. 'Parq' on the first line, 'AI' on the second line, both center-aligned beneath the mark.",
+      "proportions": "Total height approximately 2.5x the mark height. The mark-to-wordmark gap is 0.5x the mark height. 'AI' is separated from 'Parq' by 0.25x the 'Parq' cap height.",
+      "minimum_height": "80px",
+      "preferred_use": "Social media avatars (when larger), app splash screens, centered layout contexts, slide backgrounds"
+    },
+    "icon_only": {
+      "name": "Logomark Only",
+      "description": "The coordinate grid mark used alone, without any wordmark text.",
+      "minimum_size": "24px (below 24px, use simplified favicon version)",
+      "preferred_use": "Favicons, app icons, watermarks, social media avatars, loading states, compact UI elements"
+    },
+    "wordmark_only": {
+      "name": "Wordmark Only",
+      "description": "'Parq AI' typeset without the logomark. 'Parq' in General Sans Semibold, 'AI' in JetBrains Mono Medium in Parq Teal. Used when the logomark cannot be reproduced clearly (very small sizes, single-color text contexts).",
+      "minimum_width": "60px",
+      "preferred_use": "Inline text references, footer credits, contexts where the mark would be too small to read"
+    }
+  },
+
+  "clear_space": {
+    "rule": "Minimum clear space around the logo on all sides equals the height of the capital 'P' in the wordmark (the cap height). For the icon-only mark, clear space equals 25% of the mark's height on all sides.",
+    "horizontal_lockup_clear_space": {
+      "unit": "1x cap height of 'P'",
+      "all_sides": "Equal on top, bottom, left, and right"
+    },
+    "stacked_lockup_clear_space": {
+      "unit": "1x cap height of 'P'",
+      "all_sides": "Equal on top, bottom, left, and right"
+    },
+    "icon_clear_space": {
+      "unit": "25% of mark height",
+      "all_sides": "Equal on top, bottom, left, and right"
+    },
+    "note": "Clear space is the absolute minimum. When possible, exceed the clear space for stronger visual presence. The logo should never feel cramped."
+  },
+
+  "minimum_sizes": {
+    "horizontal_lockup": {
+      "print": "30mm wide",
+      "digital": "120px wide"
+    },
+    "stacked_lockup": {
+      "print": "20mm wide",
+      "digital": "80px tall"
+    },
+    "icon_only": {
+      "print": "8mm",
+      "digital": "24px"
+    },
+    "wordmark_only": {
+      "print": "20mm wide",
+      "digital": "60px wide"
+    }
+  },
+
+  "svg_descriptions": {
+    "concept_1_coordinate_grid": {
+      "viewBox": "0 0 200 48",
+      "description": "Full horizontal lockup: logomark + Parq AI wordmark",
+      "elements": [
+        {
+          "id": "grid-lines",
+          "type": "group",
+          "description": "4 grid lines forming the 3x3 coordinate system",
+          "children": [
+            {
+              "element": "line",
+              "x1": 6, "y1": 9, "x2": 6, "y2": 39,
+              "stroke": "#0A1628",
+              "stroke_width": 1.5,
+              "stroke_linecap": "round",
+              "description": "Left vertical line"
+            },
+            {
+              "element": "line",
+              "x1": 18, "y1": 9, "x2": 18, "y2": 39,
+              "stroke": "#0A1628",
+              "stroke_width": 1.5,
+              "stroke_linecap": "round",
+              "description": "Center vertical line"
+            },
+            {
+              "element": "line",
+              "x1": 30, "y1": 9, "x2": 30, "y2": 39,
+              "stroke": "#0A1628",
+              "stroke_width": 1.5,
+              "stroke_linecap": "round",
+              "description": "Right vertical line"
+            },
+            {
+              "element": "line",
+              "x1": 0, "y1": 15, "x2": 36, "y2": 15,
+              "stroke": "#0A1628",
+              "stroke_width": 1.5,
+              "stroke_linecap": "round",
+              "description": "Top horizontal line"
+            },
+            {
+              "element": "line",
+              "x1": 0, "y1": 27, "x2": 36, "y2": 27,
+              "stroke": "#0A1628",
+              "stroke_width": 1.5,
+              "stroke_linecap": "round",
+              "description": "Bottom horizontal line"
+            }
+          ],
+          "note": "Lines extend 6px beyond the outer intersections (e.g., top horizontal starts at x=0 and extends to x=36, passing through intersections at x=6, x=18, x=30). This creates the effect of an infinite coordinate space cropped to view."
+        },
+        {
+          "id": "detection-node",
+          "element": "circle",
+          "cx": 30,
+          "cy": 27,
+          "r": 3,
+          "fill": "#00C2B7",
+          "stroke": "none",
+          "description": "Teal highlighted node at the bottom-right grid intersection — the point of detection"
+        },
+        {
+          "id": "wordmark-parq",
+          "element": "text",
+          "x": 52,
+          "y": 32,
+          "font_family": "General Sans",
+          "font_weight": 600,
+          "font_size": 28,
+          "letter_spacing": "-0.02em",
+          "fill": "#0A1628",
+          "content": "Parq",
+          "description": "Brand name in General Sans Semibold"
+        },
+        {
+          "id": "wordmark-ai",
+          "element": "text",
+          "x": 127,
+          "y": 32,
+          "font_family": "JetBrains Mono",
+          "font_weight": 500,
+          "font_size": 18,
+          "letter_spacing": "0.05em",
+          "fill": "#00C2B7",
+          "content": "AI",
+          "description": "Technology descriptor in JetBrains Mono Medium, Parq Teal"
+        }
+      ]
+    },
+
+    "concept_1_icon_only": {
+      "viewBox": "0 0 48 48",
+      "description": "Standalone coordinate grid logomark (no wordmark)",
+      "elements": [
+        {
+          "id": "grid-lines",
+          "type": "group",
+          "children": [
+            { "element": "line", "x1": 12, "y1": 3, "x2": 12, "y2": 45, "stroke": "#0A1628", "stroke_width": 1.5, "stroke_linecap": "round" },
+            { "element": "line", "x1": 24, "y1": 3, "x2": 24, "y2": 45, "stroke": "#0A1628", "stroke_width": 1.5, "stroke_linecap": "round" },
+            { "element": "line", "x1": 36, "y1": 3, "x2": 36, "y2": 45, "stroke": "#0A1628", "stroke_width": 1.5, "stroke_linecap": "round" },
+            { "element": "line", "x1": 3, "y1": 12, "x2": 45, "y2": 12, "stroke": "#0A1628", "stroke_width": 1.5, "stroke_linecap": "round" },
+            { "element": "line", "x1": 3, "y1": 24, "x2": 45, "y2": 24, "stroke": "#0A1628", "stroke_width": 1.5, "stroke_linecap": "round" },
+            { "element": "line", "x1": 3, "y1": 36, "x2": 45, "y2": 36, "stroke": "#0A1628", "stroke_width": 1.5, "stroke_linecap": "round" }
+          ],
+          "note": "Centered in 48x48 viewBox. 3 vertical lines at x=12,24,36 and 3 horizontal lines at y=12,24,36. Each line extends 9px beyond the outer intersections."
+        },
+        {
+          "id": "detection-node",
+          "element": "circle",
+          "cx": 36,
+          "cy": 36,
+          "r": 3.5,
+          "fill": "#00C2B7",
+          "stroke": "none",
+          "description": "Teal detection node at bottom-right intersection"
+        }
+      ]
+    },
+
+    "concept_2_sentinel_eye": {
+      "viewBox": "0 0 220 48",
+      "description": "Full horizontal lockup: lens mark + separator + Parq AI wordmark",
+      "elements": [
+        {
+          "id": "lens-upper-arc",
+          "element": "path",
+          "d": "M 0 14 Q 24 0 48 14",
+          "stroke": "#0A1628",
+          "stroke_width": 2,
+          "fill": "none",
+          "stroke_linecap": "round",
+          "description": "Upper arc of the lens — a quadratic bezier forming the top of the eye shape"
+        },
+        {
+          "id": "lens-lower-arc",
+          "element": "path",
+          "d": "M 0 14 Q 24 28 48 14",
+          "stroke": "#0A1628",
+          "stroke_width": 2,
+          "fill": "none",
+          "stroke_linecap": "round",
+          "description": "Lower arc of the lens — mirrors the upper arc to complete the vesica piscis"
+        },
+        {
+          "id": "focus-diamond",
+          "element": "rect",
+          "x": 20.5,
+          "y": 10.5,
+          "width": 7,
+          "height": 7,
+          "rx": 0.5,
+          "transform": "rotate(45 24 14)",
+          "fill": "#00C2B7",
+          "stroke": "none",
+          "description": "Teal diamond at the center of the lens — rotated 45-degree square"
+        },
+        {
+          "id": "wordmark-parq",
+          "element": "text",
+          "x": 64,
+          "y": 22,
+          "font_family": "General Sans",
+          "font_weight": 600,
+          "font_size": 24,
+          "fill": "#0A1628",
+          "content": "Parq"
+        },
+        {
+          "id": "separator",
+          "element": "line",
+          "x1": 134,
+          "y1": 7,
+          "x2": 134,
+          "y2": 22,
+          "stroke": "#8B92A7",
+          "stroke_width": 1,
+          "description": "Thin vertical rule separating Parq from AI"
+        },
+        {
+          "id": "wordmark-ai",
+          "element": "text",
+          "x": 146,
+          "y": 22,
+          "font_family": "JetBrains Mono",
+          "font_weight": 500,
+          "font_size": 24,
+          "letter_spacing": "0.08em",
+          "fill": "#00C2B7",
+          "content": "AI"
+        }
+      ]
+    },
+
+    "concept_3_precision_polygon": {
+      "viewBox": "0 0 200 60",
+      "description": "Full lockup: polygon mark to the left, stacked wordmark to the right",
+      "elements": [
+        {
+          "id": "parking-polygon",
+          "element": "polygon",
+          "points": "11 5, 49 5, 50 25, 10 25",
+          "stroke": "#0A1628",
+          "stroke_width": 1.5,
+          "fill": "none",
+          "stroke_linejoin": "miter",
+          "description": "Slightly tapered quadrilateral — 38px top edge, 40px bottom edge, 20px height. Subtle aerial perspective."
+        },
+        {
+          "id": "bracket-top-left",
+          "element": "path",
+          "d": "M 5 5 L 11 5 M 11 5 L 11 10",
+          "stroke": "#0A1628",
+          "stroke_width": 1.5,
+          "fill": "none",
+          "stroke_linecap": "square",
+          "description": "Top-left L-bracket coordinate marker"
+        },
+        {
+          "id": "bracket-top-right",
+          "element": "path",
+          "d": "M 55 5 L 49 5 M 49 5 L 49 10",
+          "stroke": "#0A1628",
+          "stroke_width": 1.5,
+          "fill": "none",
+          "stroke_linecap": "square",
+          "description": "Top-right L-bracket coordinate marker"
+        },
+        {
+          "id": "bracket-bottom-right",
+          "element": "path",
+          "d": "M 56 25 L 50 25 M 50 25 L 50 20",
+          "stroke": "#0A1628",
+          "stroke_width": 1.5,
+          "fill": "none",
+          "stroke_linecap": "square",
+          "description": "Bottom-right L-bracket coordinate marker"
+        },
+        {
+          "id": "bracket-bottom-left",
+          "element": "path",
+          "d": "M 4 25 L 10 25 M 10 25 L 10 20",
+          "stroke": "#0A1628",
+          "stroke_width": 1.5,
+          "fill": "none",
+          "stroke_linecap": "square",
+          "description": "Bottom-left L-bracket coordinate marker"
+        },
+        {
+          "id": "wordmark-parq",
+          "element": "text",
+          "x": 72,
+          "y": 22,
+          "font_family": "General Sans",
+          "font_weight": 600,
+          "font_size": 24,
+          "letter_spacing": "-0.02em",
+          "fill": "#0A1628",
+          "content": "Parq"
+        },
+        {
+          "id": "wordmark-ai",
+          "element": "text",
+          "x": 72,
+          "y": 38,
+          "font_family": "JetBrains Mono",
+          "font_weight": 500,
+          "font_size": 13,
+          "letter_spacing": "0.1em",
+          "fill": "#00C2B7",
+          "content": "AI"
+        }
+      ]
+    }
+  },
+
+  "color_applications": {
+    "on_light_backgrounds": {
+      "background_colors": ["#F5F6F8", "#E8EAF0", "#FFFFFF"],
+      "logomark_color": "#0A1628",
+      "parq_text_color": "#0A1628",
+      "ai_text_color": "#00C2B7",
+      "detection_node_color": "#00C2B7",
+      "separator_color": "#8B92A7",
+      "note": "Primary application. The navy-on-light combination provides maximum contrast and authority."
+    },
+    "on_dark_backgrounds": {
+      "background_colors": ["#0A1628", "#070D1A", "#0F1829"],
+      "logomark_color": "#F0F1F4",
+      "parq_text_color": "#F0F1F4",
+      "ai_text_color": "#00D4C8",
+      "detection_node_color": "#00D4C8",
+      "separator_color": "#5C6580",
+      "note": "Use the brightened teal (#00D4C8) on dark backgrounds per the color system's dark mode accent adjustment. Grid lines and 'Parq' text switch to the light text primary (#F0F1F4)."
+    },
+    "on_parq_navy_background": {
+      "background": "#0A1628",
+      "logomark_color": "#F5F6F8",
+      "parq_text_color": "#F5F6F8",
+      "ai_text_color": "#00C2B7",
+      "detection_node_color": "#00C2B7",
+      "note": "The standard Parq Teal (#00C2B7) achieves 8.6:1 contrast on Parq Navy, so no adjustment is needed here."
+    },
+    "monochrome_versions": {
+      "black": {
+        "all_elements": "#0A1628",
+        "detection_node": "#0A1628",
+        "use_case": "Single-color print, embossing, engraving, low-fidelity reproduction"
+      },
+      "white": {
+        "all_elements": "#F5F6F8",
+        "detection_node": "#F5F6F8",
+        "use_case": "Reversed single-color on dark or photographic backgrounds"
+      },
+      "single_teal": {
+        "all_elements": "#00C2B7",
+        "detection_node": "#00C2B7",
+        "use_case": "Brand accent applications, promotional materials where teal is the hero color"
+      }
+    }
+  },
+
+  "usage_rules": {
+    "do": [
+      "Always maintain the specified clear space around the logo",
+      "Use the correct lockup variation for the context (horizontal for wide spaces, stacked for square/vertical, icon for compact)",
+      "Use the correct color version for the background (light mark on dark, dark mark on light)",
+      "Ensure the logo appears on a solid or near-solid background — avoid busy imagery behind the mark",
+      "When co-branding, give the Parq AI logo at least equal prominence and never alter its proportions"
+    ],
+    "dont": [
+      "Never stretch, compress, rotate, or skew the logo — maintain original proportions at all times",
+      "Never change the logo colors outside of the defined color applications (light, dark, monochrome)",
+      "Never add drop shadows, glows, gradients, or other effects to the logo",
+      "Never outline or stroke the wordmark text — it must remain filled",
+      "Never rearrange the relationship between the mark and wordmark (e.g., mark on the right, text on the left in the horizontal lockup)",
+      "Never set the 'AI' text in the same font as 'Parq' — the typographic differentiation (General Sans vs JetBrains Mono) is a core brand element",
+      "Never make 'AI' the same color as 'Parq' — the teal differentiation is mandatory",
+      "Never place the logo on a red, orange, or purple background — these violate the color system",
+      "Never reproduce the logo below minimum size requirements",
+      "Never add a tagline, URL, or other text inside the clear space zone",
+      "Never use the detection node (teal circle) separately as a standalone brand element — it only has meaning within the grid context"
+    ]
+  },
+
+  "favicon_and_app_icons": {
+    "design_approach": "At very small sizes (below 32px), the full 3-line grid becomes indistinct. The favicon simplifies to the essential brand signal: a 2x2 grid (2 lines crossing to form 4 quadrants) with the teal detection node at the bottom-right intersection. This preserves the coordinate-grid concept while remaining legible at 16x16.",
+    "simplified_mark": {
+      "description": "Two perpendicular lines crossing at center, forming a plus/crosshair shape. Teal filled circle at the bottom-right quadrant where the lines would intersect if extended to a 2x2 grid. The result reads as a precise targeting or coordinate indicator.",
+      "construction_at_32px": {
+        "vertical_line": { "x1": 16, "y1": 4, "x2": 16, "y2": 28, "stroke": "#0A1628", "stroke_width": 2 },
+        "horizontal_line": { "x1": 4, "y1": 16, "x2": 28, "y2": 16, "stroke": "#0A1628", "stroke_width": 2 },
+        "detection_node": { "cx": 22, "cy": 22, "r": 4, "fill": "#00C2B7" },
+        "note": "The node is offset to the bottom-right of center, maintaining the asymmetry of the full mark. The node is proportionally larger at this size (25% of mark width vs 8% in the full mark) to ensure visibility."
+      }
+    },
+    "size_specifications": {
+      "favicon_16x16": {
+        "format": "ICO or SVG",
+        "simplification": "Minimal — just the cross and node. Lines are 1.5px stroke. Node radius 2.5px. Remove any detail that bleeds at this size.",
+        "background": "Transparent or Parq Navy (#0A1628) fill with white lines and teal node"
+      },
+      "favicon_32x32": {
+        "format": "PNG or SVG",
+        "simplification": "Simplified 2-line cross with detection node as described above",
+        "background": "Transparent or Parq Navy with inverted colors"
+      },
+      "apple_touch_icon_180x180": {
+        "format": "PNG",
+        "design": "Full 3x3 coordinate grid mark on Parq Navy (#0A1628) background. 20px padding on all sides. Grid lines in #F0F1F4, detection node in #00C2B7. Rounded corners applied by iOS automatically.",
+        "background": "#0A1628"
+      },
+      "android_chrome_192x192": {
+        "format": "PNG",
+        "design": "Same as 180x180 but at 192px. Parq Navy background with light grid and teal node.",
+        "background": "#0A1628"
+      },
+      "android_chrome_512x512": {
+        "format": "PNG",
+        "design": "Full 3x3 coordinate grid at high fidelity. Parq Navy background. Can include slightly more grid line detail (line extensions, additional subtle outer gridlines at 20% opacity). Detection node rendered with subtle radial glow (10% opacity, 2x node radius).",
+        "background": "#0A1628"
+      },
+      "og_image_1200x630": {
+        "format": "PNG",
+        "design": "Full horizontal lockup centered on Parq Navy background. Logo at approximately 40% of the image width. Ample clear space. This is used for social media link previews.",
+        "background": "#0A1628"
+      }
+    }
+  },
+
+  "brand_pattern_extension": {
+    "description": "The coordinate grid from the logomark can be extended into a repeating brand pattern for use in backgrounds, section dividers, and presentation slides.",
+    "grid_pattern": {
+      "construction": "Repeat the 3-line grid at regular intervals across a surface. All lines at 5% opacity in the foreground color (navy on light, white on dark). Randomly place 1-3 teal detection nodes across the visible grid at full opacity. The effect should feel like a live monitoring interface — mostly quiet grid, occasional points of activity.",
+      "applications": [
+        "Website hero section background (subtle, behind text)",
+        "Pitch deck slide backgrounds",
+        "Business card reverse side",
+        "Report cover pages and headers"
+      ]
+    }
+  },
+
+  "file_deliverables": {
+    "note": "The following files should be produced from this specification. File generation is outside the scope of this JSON specification but is documented for the production pipeline.",
+    "svg_files": [
+      "parq-logo-horizontal-light.svg",
+      "parq-logo-horizontal-dark.svg",
+      "parq-logo-stacked-light.svg",
+      "parq-logo-stacked-dark.svg",
+      "parq-logo-icon-light.svg",
+      "parq-logo-icon-dark.svg",
+      "parq-logo-wordmark-light.svg",
+      "parq-logo-wordmark-dark.svg",
+      "parq-logo-mono-black.svg",
+      "parq-logo-mono-white.svg"
+    ],
+    "png_files": [
+      "parq-favicon-16.png",
+      "parq-favicon-32.png",
+      "parq-apple-touch-icon-180.png",
+      "parq-android-chrome-192.png",
+      "parq-android-chrome-512.png",
+      "parq-og-image-1200x630.png"
+    ],
+    "other": [
+      "favicon.ico (multi-resolution: 16, 32, 48)",
+      "site.webmanifest"
+    ]
+  }
+}

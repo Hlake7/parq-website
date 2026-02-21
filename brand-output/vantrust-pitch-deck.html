@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parq AI — VanTrust Real Estate Partnership</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0A1628; --navy-deep: #070D1A; --navy-surface: #0F1829;
+      --navy-card: #1A2540; --navy-overlay: #243155;
+      --teal: #00C2B7; --teal-bright: #00D4C8; --teal-accessible: #008C83;
+      --blue: #2E7CF6; --ink: #1A1F2E; --slate: #4A5167;
+      --stone: #8B92A7; --mist: #E8EAF0; --cloud: #F5F6F8;
+      --success: #12B76A; --warning: #F59E0B; --error: #EF4444;
+      --font-headline: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-data: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: var(--font-body); color: var(--cloud); background: var(--navy-deep); overflow: hidden; }
+
+    /* ===== SLIDE ENGINE ===== */
+    .deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+    .slide {
+      position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 60px 80px; opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none; z-index: 0;
+    }
+    .slide.active { opacity: 1; transform: translateY(0); pointer-events: all; z-index: 10; }
+    .slide.exiting { opacity: 0; transform: translateY(-30px); pointer-events: none; z-index: 5; }
+    .bg-navy { background: var(--navy); }
+    .bg-deep { background: var(--navy-deep); }
+    .grid-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(245,246,248,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(245,246,248,0.03) 1px, transparent 1px);
+      background-size: 60px 60px; pointer-events: none;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    .overline { font-size: 14px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+    h1 { font-family: var(--font-headline); font-size: clamp(36px,4.5vw,64px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; max-width: 900px; text-align: center; }
+    h2 { font-family: var(--font-headline); font-size: clamp(28px,3.5vw,48px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; max-width: 850px; }
+    .subtitle { font-size: clamp(17px,1.5vw,22px); line-height: 1.6; color: var(--stone); max-width: 640px; text-align: center; margin-top: 16px; }
+    .text-teal { color: var(--teal); }
+
+    .slide-content { width: 100%; max-width: 1100px; display: flex; flex-direction: column; }
+    .slide-content.center { align-items: center; text-align: center; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; width: 100%; max-width: 1100px; }
+
+    /* ===== CARDS ===== */
+    .card { background: var(--navy-card); border: 1px solid rgba(245,246,248,0.06); border-radius: 12px; padding: 24px; }
+    .card-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .card-row svg { flex-shrink: 0; }
+    .card-title { font-weight: 600; font-size: 16px; color: var(--cloud); }
+    .card-text { font-size: 15px; color: var(--stone); line-height: 1.5; }
+    .card-stack { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ===== PRICING ===== */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; max-width: 920px; margin-top: 36px; }
+    .pricing-card { border-radius: 16px; padding: 36px 28px; display: flex; flex-direction: column; position: relative; transition: transform 0.3s ease; }
+    .pricing-card:hover { transform: translateY(-4px); }
+    .pricing-premium { background: var(--navy-card); border: 1px solid rgba(245,246,248,0.08); }
+    .pricing-recommended { background: linear-gradient(135deg, rgba(0,194,183,0.08), rgba(0,194,183,0.02)); border: 1.5px solid var(--teal); box-shadow: 0 0 40px rgba(0,194,183,0.08); }
+    .pricing-badge { position: absolute; top: -12px; left: 28px; background: var(--warning); color: var(--navy); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 16px; border-radius: 20px; box-shadow: 0 0 16px rgba(245,158,11,0.3); }
+    .pricing-name { font-size: 14px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--stone); margin-bottom: 6px; }
+    .pricing-headline { font-family: var(--font-headline); font-size: 22px; font-weight: 600; color: var(--cloud); letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.3; }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+    .pricing-features li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--stone); line-height: 1.4; }
+    .pricing-features li svg { flex-shrink: 0; }
+    .pricing-cta { margin-top: 24px; padding: 13px 22px; border-radius: 8px; font-family: var(--font-body); font-size: 15px; font-weight: 500; border: none; cursor: pointer; text-align: center; }
+    .cta-primary { background: var(--teal); color: var(--navy); }
+    .cta-secondary { background: transparent; color: var(--stone); border: 1px solid rgba(245,246,248,0.12); }
+
+    /* ===== STEPS ===== */
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 40px; width: 100%; max-width: 1000px; }
+    .step { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .step-num { font-family: var(--font-data); font-size: 15px; font-weight: 500; color: var(--teal); width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--teal); display: flex; align-items: center; justify-content: center; }
+    .step h4 { font-size: 18px; font-weight: 600; color: var(--cloud); }
+    .step p { font-size: 15px; color: var(--stone); line-height: 1.5; }
+
+    /* ===== CAPABILITY GRID ===== */
+    .capability-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px; width: 100%; max-width: 1000px; }
+    .capability-card { background: var(--navy-card); border: 1px solid rgba(245,246,248,0.06); border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; gap: 8px; }
+    .capability-card h4 { font-size: 16px; font-weight: 600; color: var(--cloud); }
+    .capability-card p { font-size: 14px; color: var(--stone); line-height: 1.5; }
+    .capability-card .tag { display: inline-flex; font-size: 11px; font-weight: 500; color: var(--teal); background: rgba(0,194,183,0.08); padding: 2px 8px; border-radius: 10px; width: fit-content; }
+    .icon-circle { width: 44px; height: 44px; border-radius: 50%; background: rgba(0,194,183,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .icon-circle svg { width: 20px; height: 20px; stroke: var(--teal); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== VALUES GRID ===== */
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px; width: 100%; max-width: 960px; }
+    .value-card { background: var(--navy-card); border: 1px solid rgba(245,246,248,0.06); border-radius: 12px; padding: 24px 20px; }
+    .value-card h4 { font-size: 16px; font-weight: 600; color: var(--cloud); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .value-card h4 svg { width: 18px; height: 18px; stroke: var(--teal); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .value-card p { font-size: 15px; color: var(--stone); line-height: 1.5; }
+
+    /* ===== NAV ===== */
+    .slide-nav { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 8px; background: rgba(10,22,40,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(245,246,248,0.08); border-radius: 40px; padding: 8px 20px; }
+    .slide-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--stone); opacity: 0.3; transition: all 0.3s ease; cursor: pointer; }
+    .slide-dot.active { background: var(--teal); opacity: 1; width: 20px; border-radius: 3px; }
+    .slide-counter { font-family: var(--font-data); font-size: 12px; color: var(--stone); margin-left: 12px; padding-left: 12px; border-left: 1px solid rgba(245,246,248,0.1); }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-body); font-weight: 500; font-size: 16px; padding: 14px 28px; border-radius: 8px; border: 1.5px solid transparent; cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
+    .btn-teal { background: var(--teal); color: var(--navy); }
+    .btn-teal:hover { background: var(--teal-bright); }
+
+    .tailored-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-data); font-size: 13px; color: var(--teal); background: rgba(0,194,183,0.08); border: 1px solid rgba(0,194,183,0.15); border-radius: 20px; padding: 6px 16px; margin-bottom: 20px; }
+    .watermark { position: fixed; top: 32px; right: 32px; z-index: 100; opacity: 0.5; }
+    .confidential { position: fixed; top: 32px; left: 32px; z-index: 100; font-family: var(--font-data); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); opacity: 0.5; display: flex; align-items: center; gap: 6px; }
+    .confidential::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); opacity: 0.6; }
+
+    @keyframes pulse-node { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .node-pulse { animation: pulse-node 2.5s ease-in-out infinite; }
+
+    /* ===== ANIMATIONS (fully JS-driven) ===== */
+    [data-anim] { opacity: 0; transform: translateY(20px); }
+
+    .keyboard-hint { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); font-family: var(--font-data); font-size: 11px; color: var(--stone); opacity: 0; transition: opacity 0.5s; z-index: 100; }
+    .keyboard-hint.show { opacity: 0.5; }
+    kbd { display: inline-block; padding: 2px 8px; border: 1px solid rgba(245,246,248,0.15); border-radius: 4px; font-family: var(--font-data); font-size: 11px; margin: 0 2px; }
+  </style>
+</head>
+<body>
+
+<div class="watermark">
+  <svg width="100" height="28" viewBox="0 0 200 48" fill="none">
+    <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+      <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="30" cy="18" r="3" fill="#00C2B7" class="node-pulse"/>
+    </g>
+    <text x="52" y="32" font-family="Inter,sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+    <text x="127" y="32" font-family="JetBrains Mono,monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+  </svg>
+</div>
+<div class="confidential">Prepared for VanTrust Real Estate</div>
+
+<div class="deck">
+
+  <!-- 1: TITLE -->
+  <div class="slide bg-deep grid-bg active" data-slide="0">
+    <div class="slide-content center">
+      <div data-anim="1">
+        <svg width="200" height="56" viewBox="0 0 200 48" fill="none" style="margin-bottom:32px;">
+          <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+            <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="30" cy="18" r="3" fill="#00C2B7" class="node-pulse"/>
+          </g>
+          <text x="52" y="32" font-family="Inter,sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+          <text x="127" y="32" font-family="JetBrains Mono,monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+        </svg>
+      </div>
+      <h1 data-anim="2">A parking revenue partnership<br>with <span class="text-teal">VanTrust</span></h1>
+      <p class="subtitle" data-anim="3">Built around your infrastructure, your properties,<br>and how you want to operate.</p>
+      <div style="margin-top:40px;display:flex;gap:24px;align-items:center;" data-anim="4">
+        <span style="font-family:var(--font-data);font-size:13px;color:var(--stone);">February 2026</span>
+        <span style="width:1px;height:16px;background:rgba(245,246,248,0.15);"></span>
+        <span style="font-family:var(--font-data);font-size:13px;color:var(--stone);">Confidential</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2: THE COST PROBLEM -->
+  <div class="slide bg-navy grid-bg" data-slide="1">
+    <div class="slide-content center">
+      <div class="overline" data-anim="1">The Opportunity</div>
+      <h1 data-anim="2">Turn your lot into revenue<br>without adding&nbsp;headcount.</h1>
+      <p class="subtitle" data-anim="3">Traditional options require staff, contracts, and management overhead.<br>Parq automates the entire flow &mdash; so you collect without the&nbsp;cost.</p>
+    </div>
+  </div>
+
+  <!-- 3: FAST ACTIVATION -->
+  <div class="slide bg-deep" data-slide="2">
+    <div class="split">
+      <div>
+        <div class="tailored-tag" data-anim="1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Fast Activation
+        </div>
+        <h2 data-anim="2">Your lot can be live<br>in a matter of&nbsp;days.</h2>
+        <p style="color:var(--stone);margin-top:16px;font-size:17px;line-height:1.6;" data-anim="3">
+          Your cameras are already in place. We connect to them, map your spots, build a branded booking page, and activate payments &mdash; fast.
+        </p>
+      </div>
+      <div class="card-stack" data-anim="4">
+        <div class="card">
+          <div class="card-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span class="card-title">We map your lot</span>
+          </div>
+          <p class="card-text">Aerial imagery + camera feeds. Every spot becomes a bookable coordinate.</p>
+        </div>
+        <div class="card">
+          <div class="card-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <span class="card-title">Visitors book & pay</span>
+          </div>
+          <p class="card-text">QR signage points to your branded page. Select a spot, pay instantly via Stripe.</p>
+        </div>
+        <div class="card">
+          <div class="card-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            <span class="card-title">Revenue flows to you</span>
+          </div>
+          <p class="card-text">Automatic deposits on your schedule. Clean monthly statements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4: ALIGNED INCENTIVES -->
+  <div class="slide bg-navy grid-bg" data-slide="3">
+    <div class="slide-content center">
+      <div class="overline" data-anim="1">Everyone Wins</div>
+      <h2 style="text-align:center;" data-anim="2">Aligned incentives across<br>every&nbsp;party.</h2>
+      <div class="steps" data-anim="3">
+        <div class="step">
+          <div class="icon-circle" style="margin:0 auto;"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <h4>Property Owner</h4>
+          <p>New revenue from an underused asset. No staff. No capital&nbsp;outlay. Deposits on your&nbsp;schedule.</p>
+        </div>
+        <div class="step">
+          <div class="icon-circle" style="margin:0 auto;"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <h4>Visitors</h4>
+          <p>Clear signage. Fair pricing. A simple, mobile-friendly booking experience they actually&nbsp;prefer.</p>
+        </div>
+        <div class="step">
+          <div class="icon-circle" style="margin:0 auto;">
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none" style="width:28px;height:28px;stroke:none;">
+              <g transform="translate(18,18) rotate(45) translate(-12,-8)">
+                <line x1="4" y1="0" x2="4" y2="16" stroke="#F5F6F8" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="12" y1="0" x2="12" y2="16" stroke="#F5F6F8" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="20" y1="0" x2="20" y2="16" stroke="#F5F6F8" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="0" y1="4" x2="24" y2="4" stroke="#F5F6F8" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="0" y1="12" x2="24" y2="12" stroke="#F5F6F8" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="20" cy="12" r="2" fill="#00C2B7" class="node-pulse"/>
+              </g>
+            </svg>
+          </div>
+          <h4>Parq</h4>
+          <p>We earn when the lot earns. Our success is directly tied to yours &mdash; that's the&nbsp;model.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5: FULL PLATFORM -->
+  <div class="slide bg-deep grid-bg" data-slide="4">
+    <div class="slide-content center">
+      <div class="overline" data-anim="1">The Parq Platform</div>
+      <h2 style="text-align:center;" data-anim="2">Full-suite parking intelligence</h2>
+      <div class="capability-grid" data-anim="3">
+        <div class="capability-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+          <h4>Vision Monitoring</h4>
+          <p>Real-time occupancy detection using your installed cameras.</p>
+          <div class="tag">Uses your cameras</div>
+        </div>
+        <div class="capability-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+          <h4>Payments & Booking</h4>
+          <p>Stripe-powered checkout with interactive spot selection and QR entry.</p>
+        </div>
+        <div class="capability-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+          <h4>Smart Alerts</h4>
+          <p>Configurable notifications for capacity, occupancy, and activity patterns.</p>
+        </div>
+        <div class="capability-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div>
+          <h4>Revenue Reporting</h4>
+          <p>Property-level dashboards with utilization trends and pricing insights.</p>
+        </div>
+        <div class="capability-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h4>Parking Enforcement</h4>
+          <p>Violation detection, permit validation, and enforcement workflows.</p>
+        </div>
+        <div class="capability-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <h4>Portfolio View</h4>
+          <p>Multi-property dashboard with roll-up reporting across your lots.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6: THE PIVOT + TWO TIERS -->
+  <div class="slide bg-deep grid-bg" data-slide="5">
+    <div class="slide-content center">
+      <div class="overline" data-anim="1">Our Recommendation</div>
+      <h2 style="text-align:center;" data-anim="2">You want to get paid, not run<br>a full security&nbsp;detail.</h2>
+      <div class="pricing-grid" data-anim="3">
+        <!-- Intelligence (decoy) -->
+        <div class="pricing-card pricing-premium">
+          <div class="pricing-name">Parq Intelligence</div>
+          <div class="pricing-headline">Full compliance &<br>analytics suite</div>
+          <ul class="pricing-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B92A7" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>Everything in Revenue, plus:</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B92A7" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>24/7 vision-based violation detection</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B92A7" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>Automated enforcement workflows</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B92A7" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>Utilization heatmaps & analytics</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B92A7" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>Permit management</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B92A7" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>Dedicated account manager</li>
+          </ul>
+          <button class="pricing-cta cta-secondary">For enforcement-heavy operations</button>
+        </div>
+        <!-- Revenue (the real offer) -->
+        <div class="pricing-card pricing-recommended">
+          <div class="pricing-badge">Recommended for VanTrust</div>
+          <div class="pricing-name">Parq Revenue</div>
+          <div class="pricing-headline">Monetize your lot.<br>We handle the&nbsp;rest.</div>
+          <ul class="pricing-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="color:var(--cloud);">Interactive spot booking & payments</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="color:var(--cloud);">Branded property booking pages</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="color:var(--cloud);">Automated revenue deposits</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="color:var(--cloud);">Monthly revenue statements</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="color:var(--cloud);">Upgrade to Intelligence anytime</span></li>
+          </ul>
+          <button class="pricing-cta cta-primary">Start generating revenue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7: WHY REVENUE -->
+  <div class="slide bg-navy" data-slide="6">
+    <div class="split">
+      <div>
+        <div class="overline" data-anim="1">Why Parq Revenue</div>
+        <h2 data-anim="2">Less overhead.<br>Same outcome.</h2>
+        <p style="color:var(--stone);margin-top:16px;font-size:17px;line-height:1.6;" data-anim="3">
+          No violation alerts. No heatmaps. Just a clean system that charges non-tenant parkers and sends you the&nbsp;money.
+        </p>
+      </div>
+      <div class="card-stack" data-anim="4">
+        <div class="card">
+          <div class="card-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            <span class="card-title">Aligned incentives</span>
+          </div>
+          <p class="card-text">No setup fees. No minimums. We earn when you earn.</p>
+        </div>
+        <div class="card">
+          <div class="card-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            <span class="card-title">Portfolio-ready</span>
+          </div>
+          <p class="card-text">Start with one lot. Grow to another in days. Each property gets its own booking page.</p>
+        </div>
+        <div class="card">
+          <div class="card-row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            <span class="card-title">Room to grow</span>
+          </div>
+          <p class="card-text">Upgrade to Intelligence anytime. No migration, no disruption.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8: TRUST & PARTNERSHIP -->
+  <div class="slide bg-deep grid-bg" data-slide="7">
+    <div class="slide-content center">
+      <div class="overline" data-anim="1">The Partnership</div>
+      <h2 style="text-align:center;" data-anim="2">Built on trust. In it for the long&nbsp;run.</h2>
+      <div class="values-grid" data-anim="3">
+        <div class="value-card">
+          <h4><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>Dedicated attention</h4>
+          <p>Small team, meaningful relationships. VanTrust gets real time and care, not a ticket&nbsp;number.</p>
+        </div>
+        <div class="value-card">
+          <h4><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Direct line</h4>
+          <p>No portals. No chatbots. Questions answered by the people who build your&nbsp;system.</p>
+        </div>
+        <div class="value-card">
+          <h4><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Stripe-secured payments</h4>
+          <p>Same infrastructure as Amazon, Google, and Shopify. PCI compliant. We never store card details.</p>
+        </div>
+        <div class="value-card">
+          <h4><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Your data, your control</h4>
+          <p>Encrypted storage. Minimal collection. No third-party sharing. You own it &mdash; we process&nbsp;it.</p>
+        </div>
+        <div class="value-card">
+          <h4><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Quarterly reviews</h4>
+          <p>Scheduled check-ins to review performance and plan expansion across your portfolio.</p>
+        </div>
+        <div class="value-card">
+          <h4><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Transparent by default</h4>
+          <p>You see how your system works, how data flows, and where everything goes. No black&nbsp;boxes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9: TIMELINE -->
+  <div class="slide bg-navy grid-bg" data-slide="8">
+    <div class="slide-content center">
+      <div class="overline" data-anim="1">Getting Started</div>
+      <h2 style="text-align:center;" data-anim="2">From handshake to&nbsp;live.</h2>
+      <div class="steps" data-anim="3">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4>Week 1</h4>
+          <p><strong style="color:var(--cloud);">Setup & Mapping</strong><br>Connect cameras, digitize spots, build your branded booking page.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4>Week 2</h4>
+          <p><strong style="color:var(--cloud);">Review & Launch</strong><br>You approve the page. Set up signs. Activate payments. You're&nbsp;live.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4>Ongoing</h4>
+          <p><strong style="color:var(--cloud);">Partnership & Growth</strong><br>Monthly deposits. Quarterly reviews. Expand when you're&nbsp;ready.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10: THE ASK -->
+  <div class="slide bg-deep grid-bg" data-slide="9">
+    <div class="slide-content center">
+      <div data-anim="1">
+        <svg width="200" height="56" viewBox="0 0 200 48" fill="none" style="margin-bottom:24px;">
+          <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+            <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="30" cy="18" r="3" fill="#00C2B7" class="node-pulse"/>
+          </g>
+          <text x="52" y="32" font-family="Inter,sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+          <text x="127" y="32" font-family="JetBrains Mono,monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+        </svg>
+      </div>
+      <h1 data-anim="2">Let's pick a property<br>and <span class="text-teal">get started</span>.</h1>
+      <p class="subtitle" data-anim="3">We'll handle setup and keep you in the loop at every&nbsp;step.</p>
+      <div style="margin-top:48px;" data-anim="4">
+        <a href="https://parqai.com" target="_blank" style="font-family:var(--font-data);font-size:15px;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,194,183,0.3);padding-bottom:2px;">parqai.com</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<div class="slide-nav">
+  <div class="slide-dot active" data-goto="0"></div>
+  <div class="slide-dot" data-goto="1"></div>
+  <div class="slide-dot" data-goto="2"></div>
+  <div class="slide-dot" data-goto="3"></div>
+  <div class="slide-dot" data-goto="4"></div>
+  <div class="slide-dot" data-goto="5"></div>
+  <div class="slide-dot" data-goto="6"></div>
+  <div class="slide-dot" data-goto="7"></div>
+  <div class="slide-dot" data-goto="8"></div>
+  <div class="slide-dot" data-goto="9"></div>
+  <span class="slide-counter"><span id="current-slide">1</span> / 10</span>
+</div>
+
+<div class="keyboard-hint show" id="keyboard-hint">
+  Press <kbd>&rarr;</kbd> or <kbd>Space</kbd> to advance &middot; <kbd>&larr;</kbd> to go back
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.slide-dot');
+  const counter = document.getElementById('current-slide');
+  const hint = document.getElementById('keyboard-hint');
+  let current = 0;
+  let transitioning = false;
+
+  function animateSlide(slide) {
+    const els = slide.querySelectorAll('[data-anim]');
+    // 1. Force hidden state with no transition
+    els.forEach(el => {
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+    });
+    // 2. Force browser to paint the hidden state
+    void slide.offsetWidth;
+    // 3. Enable transitions and animate to visible, staggered by data-anim value
+    els.forEach(el => {
+      const delay = parseInt(el.dataset.anim) * 0.15;
+      el.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1) ' + delay + 's, transform 0.5s cubic-bezier(0.16,1,0.3,1) ' + delay + 's';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+  }
+
+  function resetSlide(slide) {
+    slide.querySelectorAll('[data-anim]').forEach(el => {
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+    });
+  }
+
+  function goToSlide(n) {
+    if (n === current || n < 0 || n >= slides.length || transitioning) return;
+    transitioning = true;
+    hint.classList.remove('show');
+
+    resetSlide(slides[current]);
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exiting');
+
+    slides[n].classList.add('active');
+    animateSlide(slides[n]);
+
+    dots[current].classList.remove('active');
+    dots[n].classList.add('active');
+    counter.textContent = n + 1;
+
+    const prev = current;
+    setTimeout(() => {
+      slides[prev].classList.remove('exiting');
+      current = n;
+      transitioning = false;
+    }, 600);
+  }
+
+  // Animate the first slide on page load
+  animateSlide(slides[0]);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); goToSlide(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goToSlide(current - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); goToSlide(0); }
+    else if (e.key === 'End') { e.preventDefault(); goToSlide(slides.length - 1); }
+  });
+
+  dots.forEach(dot => { dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.goto))); });
+
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) { dx < 0 ? goToSlide(current + 1) : goToSlide(current - 1); }
+  });
+
+  let wheelTimeout;
+  document.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    clearTimeout(wheelTimeout);
+    wheelTimeout = setTimeout(() => { e.deltaY > 0 ? goToSlide(current + 1) : goToSlide(current - 1); }, 80);
+  }, { passive: false });
+</script>
+
+</body>
+</html>

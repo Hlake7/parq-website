@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parq AI — Brand System Preview</title>
+  <!-- Google Fonts fallback since local font files aren't available yet -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Override @font-face to use Google Fonts for Inter and JetBrains Mono */
+    :root {
+      --color-navy: #0A1628;
+      --color-teal: #00C2B7;
+      --color-teal-accessible: #008C83;
+      --color-blue: #2E7CF6;
+      --color-ink: #1A1F2E;
+      --color-slate: #4A5167;
+      --color-stone: #8B92A7;
+      --color-mist: #E8EAF0;
+      --color-cloud: #F5F6F8;
+      --color-success: #12B76A;
+      --color-warning: #F59E0B;
+      --color-error: #EF4444;
+      --color-info: #3B82F6;
+      --color-teal-50: #E6FAF9;
+      --color-teal-100: #B3F0EC;
+      --color-teal-200: #66E3DB;
+      --color-teal-300: #33D6CD;
+      --color-teal-400: #00C2B7;
+      --color-teal-500: #00A89E;
+      --color-teal-600: #008C83;
+      --color-teal-700: #006B64;
+      --color-teal-800: #004A46;
+      --color-teal-900: #002A28;
+      --font-headline: 'Inter', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-data: 'JetBrains Mono', monospace;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+      --shadow-2: 0 1px 3px rgba(10, 22, 40, 0.06), 0 1px 2px rgba(10, 22, 40, 0.04);
+      --shadow-3: 0 4px 12px rgba(10, 22, 40, 0.08), 0 2px 4px rgba(10, 22, 40, 0.04);
+      --shadow-focus: 0 0 0 3px rgba(0, 194, 183, 0.2);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-ink); background: var(--color-cloud); }
+
+    /* Preview layout */
+    .preview-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--color-navy); padding: 0 32px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(42,58,92,0.5);
+    }
+    .preview-nav a { color: var(--color-cloud); text-decoration: none; font-size: 14px; font-weight: 500; margin-left: 24px; }
+    .preview-nav a:hover { color: var(--color-teal); }
+    .preview-nav .nav-brand { color: var(--color-cloud); font-weight: 600; font-size: 14px; letter-spacing: -0.02em; }
+    .preview-nav .nav-brand span { color: var(--color-teal); font-family: var(--font-data); font-weight: 500; font-size: 12px; letter-spacing: 0.05em; margin-left: 4px; }
+
+    .preview-section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+    .preview-section h2 { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-teal-accessible); margin-bottom: 8px; }
+    .preview-section h3 { font-family: var(--font-headline); font-size: 32px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 40px; color: var(--color-ink); }
+    .section-divider { border: none; border-top: 1px solid var(--color-mist); margin: 0; }
+
+    /* Logo section */
+    .logo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+    .logo-card { border-radius: var(--radius-lg); padding: 48px 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px; }
+    .logo-card.light { background: var(--color-cloud); border: 1px solid var(--color-mist); }
+    .logo-card.dark { background: var(--color-navy); }
+    .logo-card.teal { background: var(--color-teal); }
+    .logo-card-label { font-size: 12px; color: var(--color-stone); margin-top: 16px; text-align: center; }
+    .logo-card.dark .logo-card-label { color: var(--color-stone); }
+
+    /* Color swatches */
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+    .color-swatch { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--color-mist); }
+    .swatch-block { height: 100px; }
+    .swatch-info { padding: 12px 16px; background: white; }
+    .swatch-name { font-weight: 600; font-size: 14px; color: var(--color-ink); }
+    .swatch-hex { font-family: var(--font-data); font-size: 13px; color: var(--color-slate); margin-top: 2px; }
+    .swatch-role { font-size: 12px; color: var(--color-stone); margin-top: 4px; }
+
+    /* Typography preview */
+    .type-row { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--color-mist); }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta { display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }
+    .type-meta span { font-family: var(--font-data); font-size: 12px; color: var(--color-stone); background: var(--color-mist); padding: 2px 8px; border-radius: 4px; }
+
+    /* Component gallery */
+    .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+    .component-card { background: white; border: 1px solid var(--color-mist); border-radius: var(--radius-lg); padding: 32px; }
+    .component-card h4 { font-size: 14px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-stone); margin-bottom: 20px; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-body); font-weight: 500; font-size: 16px; line-height: 1; padding: 12px 24px; border: 1.5px solid transparent; border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
+    .btn-primary { background: var(--color-teal); color: var(--color-navy); border-color: var(--color-teal); }
+    .btn-primary:hover { background: var(--color-teal-500); }
+    .btn-secondary { background: transparent; color: var(--color-navy); border-color: var(--color-navy); }
+    .btn-ghost { background: transparent; color: var(--color-teal-accessible); border-color: transparent; }
+    .btn-sm { padding: 8px 16px; font-size: 14px; }
+    .btn-lg { padding: 16px 32px; font-size: 18px; }
+
+    /* Badges */
+    .badge { display: inline-flex; align-items: center; font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: var(--radius-full); }
+    .badge-accent { background: rgba(0,194,183,0.12); color: var(--color-teal-accessible); }
+    .badge-success { background: rgba(18,183,106,0.12); color: var(--color-success); }
+    .badge-warning { background: rgba(245,158,11,0.12); color: var(--color-warning); }
+    .badge-error { background: rgba(239,68,68,0.12); color: var(--color-error); }
+
+    /* Input */
+    .input { display: block; width: 100%; font-family: var(--font-body); font-size: 16px; color: var(--color-ink); background: var(--color-cloud); border: 1.5px solid var(--color-stone); border-radius: var(--radius-md); padding: 12px 16px; transition: all 0.15s ease; }
+    .input:focus { outline: none; border-color: var(--color-teal); box-shadow: var(--shadow-focus); }
+    .input::placeholder { color: var(--color-stone); }
+
+    /* Metric */
+    .metric { display: flex; flex-direction: column; gap: 4px; }
+    .metric-value { font-family: var(--font-data); font-size: 48px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-teal); }
+    .metric-label { font-size: 14px; color: var(--color-slate); }
+
+    /* Cards demo */
+    .card-elevated { background: white; border: 1px solid var(--color-mist); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-2); }
+    .card-interactive { background: white; border: 1px solid var(--color-mist); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-2); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-interactive:hover { transform: translateY(-2px); box-shadow: var(--shadow-3); }
+
+    /* Hero demo */
+    .hero-demo { background: var(--color-navy); border-radius: var(--radius-lg); padding: 80px 48px; text-align: center; }
+    .hero-demo .overline { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-teal); margin-bottom: 16px; }
+    .hero-demo h1 { font-family: var(--font-headline); font-size: clamp(28px, 4vw, 48px); font-weight: 600; color: var(--color-cloud); letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 20px; }
+    .hero-demo p { font-size: 18px; color: var(--color-stone); max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+    .hero-demo .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* Dark mode toggle */
+    .theme-toggle { background: transparent; border: 1px solid rgba(245,246,248,0.2); color: var(--color-cloud); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: var(--font-data); }
+    .theme-toggle:hover { border-color: var(--color-teal); color: var(--color-teal); }
+
+    /* Scale section */
+    .teal-scale, .blue-scale { display: flex; border-radius: var(--radius-lg); overflow: hidden; height: 60px; }
+    .teal-scale div, .blue-scale div { flex: 1; display: flex; align-items: flex-end; padding: 6px; font-family: var(--font-data); font-size: 10px; }
+
+    /* Tagline section */
+    .tagline-list { list-style: none; }
+    .tagline-list li { font-family: var(--font-headline); font-size: 24px; font-weight: 600; letter-spacing: -0.02em; color: var(--color-ink); padding: 20px 0; border-bottom: 1px solid var(--color-mist); }
+    .tagline-list li:last-child { border-bottom: none; }
+    .tagline-num { font-family: var(--font-data); font-size: 14px; color: var(--color-teal); margin-right: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="preview-nav">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <!-- Inline SVG Logo -->
+    <svg width="160" height="36" viewBox="0 0 200 48" fill="none">
+      <line x1="6" y1="9" x2="6" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="18" y1="9" x2="18" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="30" y1="9" x2="30" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="0" y1="15" x2="36" y2="15" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="0" y1="27" x2="36" y2="27" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="30" cy="27" r="3" fill="#00C2B7"/>
+      <text x="52" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+      <text x="127" y="32" font-family="JetBrains Mono, monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+    </svg>
+  </div>
+  <div style="display:flex;align-items:center;">
+    <a href="#logos">Logos</a>
+    <a href="#colors">Colors</a>
+    <a href="#typography">Type</a>
+    <a href="#components">Components</a>
+    <a href="#hero">Hero</a>
+    <button class="theme-toggle" onclick="toggleTheme()" style="margin-left:24px;">Toggle Dark</button>
+  </div>
+</nav>
+
+<!-- LOGOS -->
+<section class="preview-section" id="logos">
+  <h2>01 / Logo System</h2>
+  <h3>Coordinate Grid — Primary Logo</h3>
+  <div class="logo-grid">
+    <!-- Light bg -->
+    <div class="logo-card light">
+      <svg width="240" height="56" viewBox="0 0 200 48" fill="none">
+        <line x1="6" y1="9" x2="6" y2="39" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="18" y1="9" x2="18" y2="39" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="9" x2="30" y2="39" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="0" y1="15" x2="36" y2="15" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="0" y1="27" x2="36" y2="27" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="30" cy="27" r="3" fill="#00C2B7"/>
+        <text x="52" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#0A1628">Parq</text>
+        <text x="127" y="32" font-family="JetBrains Mono, monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+      </svg>
+      <div class="logo-card-label">On light background</div>
+    </div>
+    <!-- Dark bg -->
+    <div class="logo-card dark">
+      <svg width="240" height="56" viewBox="0 0 200 48" fill="none">
+        <line x1="6" y1="9" x2="6" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="18" y1="9" x2="18" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="30" y1="9" x2="30" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="0" y1="15" x2="36" y2="15" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="0" y1="27" x2="36" y2="27" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="30" cy="27" r="3" fill="#00C2B7"/>
+        <text x="52" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+        <text x="127" y="32" font-family="JetBrains Mono, monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+      </svg>
+      <div class="logo-card-label">On dark background</div>
+    </div>
+    <!-- Icon only -->
+    <div class="logo-card light">
+      <svg width="72" height="72" viewBox="0 0 48 48" fill="none">
+        <line x1="12" y1="3" x2="12" y2="45" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="3" x2="24" y2="45" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="36" y1="3" x2="36" y2="45" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="12" x2="45" y2="12" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="24" x2="45" y2="24" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="36" x2="45" y2="36" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="36" cy="36" r="3.5" fill="#00C2B7"/>
+      </svg>
+      <div class="logo-card-label">Icon only (48x48)</div>
+    </div>
+    <!-- Monochrome -->
+    <div class="logo-card dark">
+      <svg width="72" height="72" viewBox="0 0 48 48" fill="none">
+        <line x1="12" y1="3" x2="12" y2="45" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="3" x2="24" y2="45" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="36" y1="3" x2="36" y2="45" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="12" x2="45" y2="12" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="24" x2="45" y2="24" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="36" x2="45" y2="36" stroke="#00C2B7" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="36" cy="36" r="3.5" fill="#00C2B7"/>
+      </svg>
+      <div class="logo-card-label">Monochrome teal</div>
+    </div>
+  </div>
+
+  <!-- Concept 1b: Coordinate Grid rotated 45° (diamond) -->
+  <h3 style="margin-top:64px;">Coordinate Grid — Diamond Variant</h3>
+  <div class="logo-grid">
+    <div class="logo-card dark">
+      <svg width="240" height="56" viewBox="0 0 200 48" fill="none">
+        <g transform="translate(18, 24) rotate(45) translate(-18, -12)">
+          <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+        </g>
+        <text x="52" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+        <text x="127" y="32" font-family="JetBrains Mono, monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+      </svg>
+      <div class="logo-card-label">Diamond grid — on dark</div>
+    </div>
+  </div>
+
+  <!-- Concept 2: Open Spot -->
+  <h3 style="margin-top:64px;">Open Spot — Alternate Concept</h3>
+  <div class="logo-grid">
+    <div class="logo-card light">
+      <svg width="260" height="80" viewBox="0 0 200 60" fill="none">
+        <!-- Open parking spot - 3 sides (no bottom), with subtle perspective taper -->
+        <path d="M16,40 L16,10 L54,10 L54,40" stroke="#0A1628" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Corner brackets - top-left -->
+        <path d="M9,10 L16,10 M16,3 L16,10" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Corner bracket - top-right -->
+        <path d="M54,10 L61,10 M54,3 L54,10" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Corner bracket - bottom-left (vertical tick only, no horizontal) -->
+        <path d="M16,40 L16,47" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Corner bracket - bottom-right (vertical tick only, no horizontal) -->
+        <path d="M54,40 L54,47" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Stacked wordmark -->
+        <text x="80" y="28" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#0A1628">Parq</text>
+        <text x="80" y="46" font-family="JetBrains Mono, monospace" font-weight="500" font-size="15" letter-spacing="0.1em" fill="#00C2B7">AI</text>
+      </svg>
+      <div class="logo-card-label">Open Spot — on light</div>
+    </div>
+    <div class="logo-card dark">
+      <svg width="260" height="80" viewBox="0 0 200 60" fill="none">
+        <path d="M16,40 L16,10 L54,10 L54,40" stroke="#F5F6F8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9,10 L16,10 M16,3 L16,10" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M54,10 L61,10 M54,3 L54,10" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M16,40 L16,47" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M54,40 L54,47" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="80" y="28" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+        <text x="80" y="46" font-family="JetBrains Mono, monospace" font-weight="500" font-size="15" letter-spacing="0.1em" fill="#00C2B7">AI</text>
+      </svg>
+      <div class="logo-card-label">Open Spot — on dark</div>
+    </div>
+  </div>
+
+  <!-- Concept 3: Precision Polygon -->
+  <h3 style="margin-top:64px;">Precision Polygon — Alternate Concept</h3>
+  <div class="logo-grid">
+    <div class="logo-card light">
+      <svg width="260" height="80" viewBox="0 0 200 60" fill="none">
+        <!-- Parking spot polygon -->
+        <polygon points="16,10 54,10 56,40 14,40" stroke="#0A1628" stroke-width="1.5" fill="none"/>
+        <!-- Corner brackets -->
+        <path d="M9,10 L14,10 M16,5 L16,10" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M56,10 L61,10 M54,5 L54,10" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M58,40 L63,40 M56,45 L56,40" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M9,40 L14,40 M14,45 L14,40" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Stacked wordmark -->
+        <text x="80" y="28" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#0A1628">Parq</text>
+        <text x="80" y="46" font-family="JetBrains Mono, monospace" font-weight="500" font-size="15" letter-spacing="0.1em" fill="#00C2B7">AI</text>
+      </svg>
+      <div class="logo-card-label">Precision Polygon — on light</div>
+    </div>
+    <div class="logo-card dark">
+      <svg width="260" height="80" viewBox="0 0 200 60" fill="none">
+        <polygon points="16,10 54,10 56,40 14,40" stroke="#F5F6F8" stroke-width="1.5" fill="none"/>
+        <path d="M9,10 L14,10 M16,5 L16,10" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M56,10 L61,10 M54,5 L54,10" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M58,40 L63,40 M56,45 L56,40" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M9,40 L14,40 M14,45 L14,40" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="80" y="28" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+        <text x="80" y="46" font-family="JetBrains Mono, monospace" font-weight="500" font-size="15" letter-spacing="0.1em" fill="#00C2B7">AI</text>
+      </svg>
+      <div class="logo-card-label">Precision Polygon — on dark</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="preview-section" id="colors">
+  <h2>02 / Color System</h2>
+  <h3>Primary + Neutral Palette</h3>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#0A1628;"></div>
+      <div class="swatch-info"><div class="swatch-name">Parq Navy</div><div class="swatch-hex">#0A1628</div><div class="swatch-role">Primary brand color</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#00C2B7;"></div>
+      <div class="swatch-info"><div class="swatch-name">Parq Teal</div><div class="swatch-hex">#00C2B7</div><div class="swatch-role">Primary accent / CTAs</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#2E7CF6;"></div>
+      <div class="swatch-info"><div class="swatch-name">Parq Blue</div><div class="swatch-hex">#2E7CF6</div><div class="swatch-role">Secondary accent / charts</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#1A1F2E;"></div>
+      <div class="swatch-info"><div class="swatch-name">Ink</div><div class="swatch-hex">#1A1F2E</div><div class="swatch-role">Primary text</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#4A5167;"></div>
+      <div class="swatch-info"><div class="swatch-name">Slate</div><div class="swatch-hex">#4A5167</div><div class="swatch-role">Secondary text</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#8B92A7;"></div>
+      <div class="swatch-info"><div class="swatch-name">Stone</div><div class="swatch-hex">#8B92A7</div><div class="swatch-role">Borders / muted</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#E8EAF0;"></div>
+      <div class="swatch-info"><div class="swatch-name">Mist</div><div class="swatch-hex">#E8EAF0</div><div class="swatch-role">Card backgrounds</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#F5F6F8; border-bottom: 1px solid #E8EAF0;"></div>
+      <div class="swatch-info"><div class="swatch-name">Cloud</div><div class="swatch-hex">#F5F6F8</div><div class="swatch-role">Page background</div></div>
+    </div>
+  </div>
+
+  <!-- Teal scale -->
+  <h4 style="font-size:14px; font-weight:500; color: var(--color-slate); margin: 40px 0 12px;">Teal Scale</h4>
+  <div class="teal-scale">
+    <div style="background:#E6FAF9;color:#004A46;">50</div>
+    <div style="background:#B3F0EC;color:#004A46;">100</div>
+    <div style="background:#66E3DB;color:#004A46;">200</div>
+    <div style="background:#33D6CD;color:#004A46;">300</div>
+    <div style="background:#00C2B7;color:#002A28;">400</div>
+    <div style="background:#00A89E;color:#E6FAF9;">500</div>
+    <div style="background:#008C83;color:#E6FAF9;">600</div>
+    <div style="background:#006B64;color:#E6FAF9;">700</div>
+    <div style="background:#004A46;color:#E6FAF9;">800</div>
+    <div style="background:#002A28;color:#E6FAF9;">900</div>
+  </div>
+
+  <!-- Semantic colors -->
+  <h4 style="font-size:14px; font-weight:500; color: var(--color-slate); margin: 40px 0 12px;">Semantic Colors</h4>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <div class="color-swatch" style="flex:1;min-width:140px;">
+      <div class="swatch-block" style="background:#12B76A;"></div>
+      <div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-hex">#12B76A</div></div>
+    </div>
+    <div class="color-swatch" style="flex:1;min-width:140px;">
+      <div class="swatch-block" style="background:#F59E0B;"></div>
+      <div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-hex">#F59E0B</div></div>
+    </div>
+    <div class="color-swatch" style="flex:1;min-width:140px;">
+      <div class="swatch-block" style="background:#EF4444;"></div>
+      <div class="swatch-info"><div class="swatch-name">Error</div><div class="swatch-hex">#EF4444</div></div>
+    </div>
+    <div class="color-swatch" style="flex:1;min-width:140px;">
+      <div class="swatch-block" style="background:#3B82F6;"></div>
+      <div class="swatch-info"><div class="swatch-name">Info</div><div class="swatch-hex">#3B82F6</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="preview-section" id="typography">
+  <h2>03 / Typography</h2>
+  <h3>Type Scale & Font Pairing</h3>
+
+  <div class="type-row">
+    <div class="type-meta"><span>Display</span><span>Inter 600</span><span>clamp(32px, 61px)</span></div>
+    <div style="font-family:var(--font-headline);font-size:clamp(32px, 3vw + 16px, 61px);font-weight:600;letter-spacing:-0.03em;line-height:1.1;color:var(--color-ink);">Every spot. Every hour.</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta"><span>H1</span><span>Inter 600</span><span>clamp(28px, 49px)</span></div>
+    <div style="font-family:var(--font-headline);font-size:clamp(28px, 2.5vw + 12px, 49px);font-weight:600;letter-spacing:-0.025em;line-height:1.15;color:var(--color-ink);">Autonomous parking compliance</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta"><span>H2</span><span>Inter 600</span><span>clamp(24px, 39px)</span></div>
+    <div style="font-family:var(--font-headline);font-size:clamp(24px, 2vw + 10px, 39px);font-weight:600;letter-spacing:-0.02em;line-height:1.2;color:var(--color-ink);">See everything. Miss nothing.</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta"><span>H3</span><span>Inter 500</span><span>clamp(22px, 31px)</span></div>
+    <div style="font-family:var(--font-headline);font-size:clamp(22px, 1.5vw + 8px, 31px);font-weight:500;letter-spacing:-0.015em;line-height:1.25;color:var(--color-ink);">99.2% detection accuracy, 24/7</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta"><span>Body</span><span>Inter 400</span><span>16px</span></div>
+    <div style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--color-slate);max-width:65ch;">Parq AI uses computer vision to autonomously monitor parking lots for compliance. Detect violations, enforce rules, and generate actionable intelligence — all without human patrol. Deploy in weeks on your existing camera infrastructure.</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta"><span>Data Display</span><span>JetBrains Mono 500</span><span>clamp(32px, 48px)</span></div>
+    <div style="font-family:var(--font-data);font-size:clamp(32px, 3vw, 48px);font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:var(--color-teal);">99.2%</div>
+    <div style="font-family:var(--font-body);font-size:14px;color:var(--color-slate);margin-top:4px;">Detection accuracy</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta"><span>Overline</span><span>Inter 500</span><span>12px</span><span>letter-spacing: 0.1em</span></div>
+    <div style="font-family:var(--font-body);font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-teal-accessible);">Autonomous Compliance</div>
+  </div>
+
+  <div class="type-row" style="border-bottom:none;">
+    <div class="type-meta"><span>Caption</span><span>Inter 400</span><span>12px</span></div>
+    <div style="font-family:var(--font-body);font-size:12px;line-height:1.5;color:var(--color-stone);">Last updated 2 minutes ago</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COMPONENTS -->
+<section class="preview-section" id="components">
+  <h2>04 / Components</h2>
+  <h3>UI Building Blocks</h3>
+
+  <div class="component-grid">
+    <!-- Buttons -->
+    <div class="component-card">
+      <h4>Buttons</h4>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary">Get Started</button>
+          <button class="btn btn-secondary">Learn More</button>
+          <button class="btn btn-ghost">View Demo</button>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="component-card">
+      <h4>Badges</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="badge badge-accent">AI Powered</span>
+        <span class="badge badge-success">Active</span>
+        <span class="badge badge-warning">Pending</span>
+        <span class="badge badge-error">Violation</span>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="component-card">
+      <h4>Form Input</h4>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <input class="input" type="email" placeholder="name@company.com">
+        <input class="input" type="text" placeholder="Enter property address" value="123 Main Street">
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="component-card">
+      <h4>Metric Callouts</h4>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        <div class="metric">
+          <div class="metric-value">99.2%</div>
+          <div class="metric-label">Detection accuracy</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">90%</div>
+          <div class="metric-label">Labor reduction</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">35%</div>
+          <div class="metric-label">Revenue increase</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="component-card">
+      <h4>Cards</h4>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card-elevated">
+          <div style="font-weight:600;margin-bottom:4px;">Elevated Card</div>
+          <div style="font-size:14px;color:var(--color-slate);">Shadow + border for content sections</div>
+        </div>
+        <div class="card-interactive">
+          <div style="font-weight:600;margin-bottom:4px;">Interactive Card</div>
+          <div style="font-size:14px;color:var(--color-slate);">Hover me — lifts on hover</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark component preview -->
+    <div class="component-card" style="background:var(--color-navy);border-color:#1E2A45;">
+      <h4 style="color:var(--color-stone);">Dark Variants</h4>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:12px;">
+          <button class="btn" style="background:#00D4C8;color:#070D1A;border-color:#00D4C8;">Primary</button>
+          <button class="btn" style="background:transparent;color:#F0F1F4;border-color:#2A3A5C;">Secondary</button>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <span class="badge" style="background:rgba(0,212,200,0.15);color:#00D4C8;">Active</span>
+          <span class="badge" style="background:rgba(52,211,153,0.15);color:#34D399;">Online</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- HERO DEMO -->
+<section class="preview-section" id="hero">
+  <h2>05 / Hero Section</h2>
+  <h3>Full-width Hero Pattern</h3>
+
+  <div class="hero-demo">
+    <div class="overline">Autonomous Compliance</div>
+    <h1>Every spot. Every hour.<br>Every time.</h1>
+    <p>Parq AI uses computer vision to monitor your parking lots 24/7. Detect violations, enforce rules, and increase revenue — without human patrol.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary btn-lg">Get Started</button>
+      <button class="btn" style="background:transparent;color:#F5F6F8;border-color:rgba(245,246,248,0.3);">Watch Demo</button>
+    </div>
+    <!-- Metrics bar -->
+    <div style="display:flex;justify-content:center;gap:48px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(245,246,248,0.1);">
+      <div class="metric" style="align-items:center;">
+        <div class="metric-value" style="font-size:32px;">99.2%</div>
+        <div class="metric-label" style="color:var(--color-stone);">Accuracy</div>
+      </div>
+      <div class="metric" style="align-items:center;">
+        <div class="metric-value" style="font-size:32px;">24/7</div>
+        <div class="metric-label" style="color:var(--color-stone);">Monitoring</div>
+      </div>
+      <div class="metric" style="align-items:center;">
+        <div class="metric-value" style="font-size:32px;">35%</div>
+        <div class="metric-label" style="color:var(--color-stone);">Revenue lift</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TAGLINES -->
+<section class="preview-section" id="taglines">
+  <h2>06 / Tagline Candidates</h2>
+  <h3>Brand Taglines</h3>
+  <ul class="tagline-list">
+    <li><span class="tagline-num">01</span>Every spot. Every hour. Every time.</li>
+    <li><span class="tagline-num">02</span>Parking compliance on autopilot.</li>
+    <li><span class="tagline-num">03</span>See everything. Miss nothing.</li>
+    <li><span class="tagline-num">04</span>Intelligent parking. Effortless compliance.</li>
+    <li><span class="tagline-num">05</span>Your lot. Always watched. Always working.</li>
+  </ul>
+</section>
+
+<!-- Footer -->
+<footer style="background:var(--color-navy);padding:48px 32px;text-align:center;border-top:1px solid #1E2A45;">
+  <svg width="140" height="36" viewBox="0 0 200 48" fill="none" style="margin:0 auto 16px;">
+    <line x1="6" y1="9" x2="6" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="18" y1="9" x2="18" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="30" y1="9" x2="30" y2="39" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="0" y1="15" x2="36" y2="15" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="0" y1="27" x2="36" y2="27" stroke="#F5F6F8" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="30" cy="27" r="3" fill="#00C2B7"/>
+    <text x="52" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="28" letter-spacing="-0.02em" fill="#F5F6F8">Parq</text>
+    <text x="127" y="32" font-family="JetBrains Mono, monospace" font-weight="500" font-size="18" letter-spacing="0.05em" fill="#00C2B7">AI</text>
+  </svg>
+  <p style="font-size:12px;color:#8B92A7;">Brand System Preview — Generated by 6-agent Brand Design Team</p>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  }
+</script>
+
+</body>
+</html>

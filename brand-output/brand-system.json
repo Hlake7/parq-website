@@ -1,0 +1,340 @@
+{
+  "brand": "Parq AI",
+  "version": "1.0",
+  "date": "2026-02-19",
+  "description": "Assembled brand system combining strategy, color, typography, and logo specifications into a unified design system for production use.",
+
+  "brand_summary": {
+    "positioning": "AI-powered autonomous parking compliance platform for property managers, municipalities, and commercial real estate operators",
+    "archetype": "The Sentinel — vigilant, precise, always-on protector of property value",
+    "aesthetic": "Calm authority. Structured, minimal, and data-informed. References Palantir, Linear, Vercel, Stripe.",
+    "primary_tagline": "Every spot. Every hour. Every time.",
+    "color_identity": "Deep navy (#0A1628) anchors authority; electric teal (#00C2B7) signals intelligent precision",
+    "type_identity": "General Sans headlines, Inter body, JetBrains Mono data — geometric confidence, screen-optimized readability, technical credibility",
+    "logo_identity": "Coordinate Grid — 3x3 grid with teal detection node, representing the spatial mapping technology"
+  },
+
+  "cross_references": {
+    "hero_sections": {
+      "background": "Parq Navy (#0A1628)",
+      "headline": "General Sans Semibold, display size, Cloud (#F5F6F8)",
+      "lead_text": "Inter Regular, body_large, Cloud (#F5F6F8)",
+      "cta_button": "Parq Teal (#00C2B7) background, Parq Navy text",
+      "metrics": "JetBrains Mono Medium, data_display size, Parq Teal (#00C2B7)"
+    },
+    "content_sections": {
+      "background": "Cloud (#F5F6F8)",
+      "section_label": "Inter Medium, overline size, Teal Accessible (#008C83), uppercase",
+      "heading": "General Sans Semibold, h2, Ink (#1A1F2E)",
+      "body": "Inter Regular, body, Ink (#1A1F2E)",
+      "secondary_text": "Inter Regular, body_small, Slate (#4A5167)"
+    },
+    "card_components": {
+      "background": "Mist (#E8EAF0)",
+      "heading": "General Sans Medium, h4, Ink (#1A1F2E)",
+      "body": "Inter Regular, body_small, Slate (#4A5167)",
+      "accent_element": "Parq Teal (#00C2B7)"
+    },
+    "data_callouts": {
+      "number": "JetBrains Mono Medium, data_display, Parq Teal on dark / Teal Accessible on light",
+      "label": "Inter Regular, body_small, secondary text color"
+    },
+    "navigation": {
+      "background": "Parq Navy (#0A1628)",
+      "links": "Inter Medium, body_small, Cloud (#F5F6F8)",
+      "active_state": "Parq Teal (#00C2B7)",
+      "logo": "Horizontal lockup, light version"
+    },
+    "footer": {
+      "background": "Parq Navy (#0A1628)",
+      "text": "Inter Regular, body_small, Stone (#8B92A7)",
+      "links": "Inter Regular, body_small, Cloud (#F5F6F8)",
+      "legal": "Inter Regular, caption, Stone (#8B92A7)"
+    }
+  },
+
+  "component_patterns": {
+    "buttons": {
+      "primary": {
+        "background": "#00C2B7",
+        "text": "#0A1628",
+        "font": "Inter Medium, body size",
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "hover": "background #00A89E",
+        "active": "background #008C83",
+        "transition": "all 200ms ease"
+      },
+      "secondary": {
+        "background": "transparent",
+        "text": "#0A1628",
+        "border": "1.5px solid #0A1628",
+        "font": "Inter Medium, body size",
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "hover": "background rgba(10, 22, 40, 0.05)",
+        "active": "background rgba(10, 22, 40, 0.1)"
+      },
+      "ghost": {
+        "background": "transparent",
+        "text": "#008C83",
+        "font": "Inter Medium, body size",
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "hover": "background rgba(0, 194, 183, 0.08)"
+      },
+      "dark_primary": {
+        "background": "#00D4C8",
+        "text": "#070D1A",
+        "hover": "background #00C2B7"
+      },
+      "dark_secondary": {
+        "background": "transparent",
+        "text": "#F0F1F4",
+        "border": "1.5px solid #2A3A5C",
+        "hover": "background rgba(240, 241, 244, 0.05)"
+      },
+      "sizes": {
+        "sm": { "padding": "8px 16px", "font_size": "0.875rem" },
+        "md": { "padding": "12px 24px", "font_size": "1rem" },
+        "lg": { "padding": "16px 32px", "font_size": "1.125rem" }
+      }
+    },
+    "cards": {
+      "default": {
+        "background": "#E8EAF0",
+        "border": "none",
+        "border_radius": "12px",
+        "padding": "24px",
+        "shadow": "none",
+        "hover": "translateY(-2px), shadow elevation-2"
+      },
+      "elevated": {
+        "background": "#F5F6F8",
+        "border": "1px solid #E8EAF0",
+        "border_radius": "12px",
+        "padding": "24px",
+        "shadow": "0 1px 3px rgba(10, 22, 40, 0.06), 0 1px 2px rgba(10, 22, 40, 0.04)"
+      },
+      "dark": {
+        "background": "#1A2540",
+        "border": "1px solid #1E2A45",
+        "border_radius": "12px",
+        "padding": "24px"
+      },
+      "interactive": {
+        "extends": "elevated",
+        "cursor": "pointer",
+        "hover_shadow": "0 4px 12px rgba(10, 22, 40, 0.08), 0 2px 4px rgba(10, 22, 40, 0.04)",
+        "hover_transform": "translateY(-2px)",
+        "transition": "all 200ms ease"
+      }
+    },
+    "headers": {
+      "site_header": {
+        "background": "#0A1628",
+        "height": "64px",
+        "padding": "0 24px",
+        "position": "sticky",
+        "z_index": 100,
+        "backdrop_filter": "blur(8px)",
+        "border_bottom": "1px solid rgba(42, 58, 92, 0.5)"
+      }
+    },
+    "footers": {
+      "site_footer": {
+        "background": "#0A1628",
+        "padding": "64px 24px 32px",
+        "border_top": "1px solid #1E2A45"
+      }
+    },
+    "inputs": {
+      "text_input": {
+        "background": "#F5F6F8",
+        "border": "1.5px solid #8B92A7",
+        "border_radius": "8px",
+        "padding": "12px 16px",
+        "font": "Inter Regular, body size",
+        "color": "#1A1F2E",
+        "placeholder_color": "#8B92A7",
+        "focus_border": "#00C2B7",
+        "focus_ring": "0 0 0 3px rgba(0, 194, 183, 0.15)",
+        "error_border": "#EF4444",
+        "transition": "border-color 150ms ease, box-shadow 150ms ease"
+      }
+    },
+    "badges": {
+      "default": {
+        "background": "#E8EAF0",
+        "text": "#4A5167",
+        "font": "Inter Medium, caption size",
+        "padding": "4px 10px",
+        "border_radius": "100px"
+      },
+      "accent": {
+        "background": "rgba(0, 194, 183, 0.12)",
+        "text": "#008C83",
+        "font": "Inter Medium, caption size",
+        "padding": "4px 10px",
+        "border_radius": "100px"
+      },
+      "success": { "background": "rgba(18, 183, 106, 0.12)", "text": "#12B76A" },
+      "warning": { "background": "rgba(245, 158, 11, 0.12)", "text": "#F59E0B" },
+      "error": { "background": "rgba(239, 68, 68, 0.12)", "text": "#EF4444" }
+    }
+  },
+
+  "layout": {
+    "grid": {
+      "type": "12-column",
+      "max_width": "1200px",
+      "gutter": "24px",
+      "margin": "auto",
+      "breakpoints": {
+        "mobile": { "max_width": "639px", "columns": 4, "gutter": "16px", "margin": "16px" },
+        "tablet": { "min_width": "640px", "max_width": "1023px", "columns": 8, "gutter": "24px", "margin": "32px" },
+        "desktop": { "min_width": "1024px", "columns": 12, "gutter": "24px", "margin": "auto" },
+        "wide": { "min_width": "1440px", "columns": 12, "gutter": "32px", "margin": "auto", "max_width": "1400px" }
+      }
+    },
+    "containers": {
+      "narrow": { "max_width": "680px", "use": "Blog posts, long-form text, legal pages" },
+      "default": { "max_width": "1200px", "use": "Standard page content" },
+      "wide": { "max_width": "1400px", "use": "Dashboard layouts, data-heavy pages" },
+      "full": { "max_width": "100%", "use": "Hero sections, full-bleed backgrounds" }
+    }
+  },
+
+  "spacing": {
+    "base_unit": "4px",
+    "scale": {
+      "0": "0px",
+      "1": "4px",
+      "2": "8px",
+      "3": "12px",
+      "4": "16px",
+      "5": "20px",
+      "6": "24px",
+      "8": "32px",
+      "10": "40px",
+      "12": "48px",
+      "16": "64px",
+      "20": "80px",
+      "24": "96px",
+      "32": "128px"
+    },
+    "semantic": {
+      "section_padding_y": "96px (mobile: 64px)",
+      "card_padding": "24px (mobile: 16px)",
+      "stack_gap_sm": "8px",
+      "stack_gap_md": "16px",
+      "stack_gap_lg": "24px",
+      "inline_gap_sm": "8px",
+      "inline_gap_md": "12px",
+      "inline_gap_lg": "16px"
+    }
+  },
+
+  "shadows": {
+    "elevation_1": {
+      "value": "0 1px 2px rgba(10, 22, 40, 0.04)",
+      "use": "Subtle depth for resting cards and inputs"
+    },
+    "elevation_2": {
+      "value": "0 1px 3px rgba(10, 22, 40, 0.06), 0 1px 2px rgba(10, 22, 40, 0.04)",
+      "use": "Default card elevation, dropdowns"
+    },
+    "elevation_3": {
+      "value": "0 4px 12px rgba(10, 22, 40, 0.08), 0 2px 4px rgba(10, 22, 40, 0.04)",
+      "use": "Hover states, tooltips, popovers"
+    },
+    "elevation_4": {
+      "value": "0 8px 24px rgba(10, 22, 40, 0.12), 0 4px 8px rgba(10, 22, 40, 0.06)",
+      "use": "Modals, dialogs, floating elements"
+    },
+    "focus_ring": {
+      "value": "0 0 0 3px rgba(0, 194, 183, 0.2)",
+      "use": "Focus indicators on interactive elements"
+    },
+    "dark_mode": {
+      "elevation_2": "0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15)",
+      "elevation_3": "0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15)",
+      "elevation_4": "0 8px 24px rgba(0, 0, 0, 0.35), 0 4px 8px rgba(0, 0, 0, 0.2)"
+    }
+  },
+
+  "border_radius": {
+    "none": "0px",
+    "sm": "4px",
+    "md": "8px",
+    "lg": "12px",
+    "xl": "16px",
+    "2xl": "24px",
+    "full": "9999px",
+    "semantic": {
+      "buttons": "8px",
+      "cards": "12px",
+      "inputs": "8px",
+      "badges": "9999px",
+      "modals": "16px",
+      "avatars": "9999px",
+      "tooltips": "8px"
+    }
+  },
+
+  "animation": {
+    "philosophy": "Understated transitions that feel like live systems updating. No playful bounces or attention-seeking animations.",
+    "durations": {
+      "instant": "100ms",
+      "fast": "150ms",
+      "default": "200ms",
+      "moderate": "300ms",
+      "slow": "500ms"
+    },
+    "easings": {
+      "default": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "ease_in": "cubic-bezier(0.4, 0, 1, 1)",
+      "ease_out": "cubic-bezier(0, 0, 0.2, 1)",
+      "ease_in_out": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    },
+    "common_transitions": {
+      "color_change": "color 150ms ease, background-color 150ms ease",
+      "hover_lift": "transform 200ms ease, box-shadow 200ms ease",
+      "fade_in": "opacity 300ms ease",
+      "slide_up": "transform 300ms ease-out, opacity 300ms ease-out",
+      "focus": "border-color 150ms ease, box-shadow 150ms ease"
+    },
+    "guidelines": [
+      "Prefer opacity and transform animations — they are GPU-accelerated",
+      "Avoid animating layout properties (width, height, margin, padding)",
+      "Use 200ms as the default for interactive feedback (hover, click)",
+      "Use 300ms for content entering the viewport",
+      "Data visualization updates should use 500ms for readability",
+      "Reduce motion: respect prefers-reduced-motion by disabling transforms and using opacity-only transitions"
+    ]
+  },
+
+  "pitch_deck_templates": {
+    "title_slide": {
+      "background": "#0A1628",
+      "layout": "Logo (horizontal lockup) top-left. Title in General Sans Semibold, display size, Cloud. Subtitle in Inter Regular, body_large, Stone. Grid pattern at 5% opacity as background texture. Teal accent bar (3px) along the bottom edge.",
+      "content": ["Logo", "Title (max 8 words)", "Subtitle (1 line)", "Date or context"]
+    },
+    "content_slide": {
+      "background": "#F5F6F8",
+      "layout": "Section label in overline style (teal, uppercase). Headline in General Sans Semibold, h2, Ink. Body in Inter Regular, body_large. Max 5 bullet points. Logo (icon only) bottom-right at 24px.",
+      "content": ["Section label", "Headline", "3-5 bullet points or short paragraphs"]
+    },
+    "data_slide": {
+      "background": "#0A1628",
+      "layout": "Up to 3 metric callouts arranged horizontally. Each callout: JetBrains Mono Medium, 60-80pt number in Parq Teal, Inter Regular 16pt label in Cloud below. Section headline in General Sans Medium, h3, Cloud, centered above metrics.",
+      "content": ["Section headline", "2-3 key metrics with labels"]
+    },
+    "closing_slide": {
+      "background": "#0A1628",
+      "layout": "Logo (stacked lockup) centered. Tagline in Inter Regular, body_large, Stone below. Contact info or CTA in Inter Medium, body, Parq Teal. Grid pattern at 3% opacity.",
+      "content": ["Logo", "Tagline", "CTA or contact info"]
+    }
+  }
+}

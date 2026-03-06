@@ -57,10 +57,20 @@ const ContactPage: React.FC = () => {
       <nav className="navbar">
         <div className="nav-container">
           <Link to="/" className="nav-logo">
-            <span className="logo-text">Parq</span>
-            <span className="logo-tagline">AI</span>
+            <svg width="120" height="32" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+              </g>
+              <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+              <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+            </svg>
           </Link>
-          
+
           {/* Desktop Menu */}
           <div className="nav-menu desktop-menu">
             <Link to="/" className="nav-link">Home</Link>
@@ -71,12 +81,16 @@ const ContactPage: React.FC = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="mobile-menu-button"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
           >
-            <span className="hamburger-icon">☰</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
           </button>
 
           {/* Mobile Menu Overlay */}
@@ -84,15 +98,28 @@ const ContactPage: React.FC = () => {
             <div className="mobile-menu">
               <div className="mobile-menu-header">
                 <Link to="/" className="mobile-nav-logo" onClick={closeMobileMenu}>
-                  <span className="logo-text">Parq</span>
-                  <span className="logo-tagline">AI</span>
+                  <svg width="120" height="32" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                      <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+                    </g>
+                    <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+                    <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+                  </svg>
                 </Link>
-                <button 
+                <button
                   className="mobile-menu-close"
                   onClick={closeMobileMenu}
                   aria-label="Close mobile menu"
                 >
-                  ✕
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
                 </button>
               </div>
               <div className="mobile-nav-links">
@@ -112,9 +139,10 @@ const ContactPage: React.FC = () => {
       {/* Hero Section */}
       <section className="page-hero">
         <div className="container">
+          <div className="overline">Connect With Us</div>
           <h1 className="page-title">Get in Touch</h1>
           <p className="page-subtitle">
-            Ready to transform your parking operations? Let's discuss how 
+            Ready to transform your parking operations? Let's discuss how
             Parq AI can increase your revenue and reduce operational costs.
           </p>
         </div>
@@ -131,7 +159,7 @@ const ContactPage: React.FC = () => {
               
               {submitStatus === 'success' && (
                 <div className="success-message">
-                  <p>✅ Thank you for your interest! We'll be in touch within 24 hours.</p>
+                  <p>Thank you for your interest! We'll be in touch within 24 hours.</p>
                 </div>
               )}
 
@@ -227,7 +255,13 @@ const ContactPage: React.FC = () => {
               <h2>Contact Information</h2>
               
               <div className="contact-item">
-                <div className="contact-icon">📧</div>
+                <div className="contact-icon">
+                  <div className="icon-circle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/>
+                    </svg>
+                  </div>
+                </div>
                 <div className="contact-details">
                   <h4>Email</h4>
                   <p>parqitai@gmail.com pleaseparq@gmail.com</p>
@@ -235,7 +269,13 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div className="contact-item">
-                <div className="contact-icon">⏱️</div>
+                <div className="contact-icon">
+                  <div className="icon-circle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C2B7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  </div>
+                </div>
                 <div className="contact-details">
                   <h4>Response Time</h4>
                   <p>We respond to all inquiries within 24 hours during business days.</p>
@@ -281,8 +321,19 @@ const ContactPage: React.FC = () => {
         <div className="container">
           <div className="footer-content">
             <div className="footer-section">
-              <h3>Parq AI</h3>
-              <p>Revolutionizing parking management through artificial intelligence.</p>
+              <svg width="100" height="28" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                  <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+                </g>
+                <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+                <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+              </svg>
+              <p>Autonomous parking compliance for modern property owners.</p>
             </div>
             <div className="footer-section">
               <h4>Solutions</h4>

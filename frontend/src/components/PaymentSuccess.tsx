@@ -68,9 +68,9 @@ const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => 
         padding: isMobile ? '20px' : '40px',
         textAlign: 'center',
         minHeight: '100vh',
-        backgroundColor: '#f8f9fa'
+        backgroundColor: '#0A1628'
       }}>
-        <h2>Processing your booking...</h2>
+        <h2 style={{ color: '#F5F6F8' }}>Processing your booking...</h2>
       </div>
     );
   }
@@ -81,15 +81,15 @@ const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => 
         padding: isMobile ? '20px' : '40px',
         textAlign: 'center',
         minHeight: '100vh',
-        backgroundColor: '#f8f9fa'
+        backgroundColor: '#0A1628'
       }}>
-        <h2 style={{ color: '#dc3545' }}>Booking Error</h2>
-        <p>{error}</p>
+        <h2 style={{ color: '#EF4444' }}>Booking Error</h2>
+        <p style={{ color: '#8B92A7' }}>{error}</p>
         <button
           onClick={() => window.location.href = '/'}
           style={{
-            backgroundColor: '#007bff',
-            color: 'white',
+            backgroundColor: '#00C2B7',
+            color: '#0A1628',
             border: 'none',
             padding: '12px 24px',
             borderRadius: '8px',
@@ -108,34 +108,34 @@ const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => 
       padding: isMobile ? '20px' : '40px',
       textAlign: 'center',
       minHeight: '100vh',
-      backgroundColor: '#f8f9fa'
+      backgroundColor: '#0A1628'
     }}>
       <div style={{
         maxWidth: '600px',
         margin: '0 auto',
-        backgroundColor: 'white',
+        backgroundColor: '#1A2540',
         padding: isMobile ? '30px 20px' : '40px',
         borderRadius: '12px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
       }}>
-        <div style={{
-          fontSize: '48px',
-          color: '#4CAF50',
-          marginBottom: '20px'
-        }}>
-          ✅
+        <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="#00C2B7" strokeWidth="2" fill="rgba(0,194,183,0.1)"/>
+            <polyline points="15 24 22 31 33 18" stroke="#00C2B7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+          </svg>
         </div>
         
         <h1 style={{
-          color: '#2c3e50',
+          color: '#F5F6F8',
+          fontFamily: "'General Sans', sans-serif",
           marginBottom: '10px',
           fontSize: isMobile ? '24px' : '32px'
         }}>
           Booking Confirmed!
         </h1>
-        
+
         <p style={{
-          color: '#6c757d',
+          color: '#8B92A7',
           fontSize: isMobile ? '16px' : '18px',
           marginBottom: '30px'
         }}>
@@ -144,48 +144,48 @@ const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => 
 
         {bookingDetails && (
           <div style={{
-            backgroundColor: '#e8f5e8',
-            border: '2px solid #4caf50',
+            backgroundColor: 'rgba(0, 194, 183, 0.08)',
+            border: '2px solid rgba(0, 194, 183, 0.25)',
             borderRadius: '8px',
             padding: isMobile ? '20px' : '30px',
             marginBottom: '30px',
             textAlign: 'left'
           }}>
             <h3 style={{
-              color: '#2e7d32',
+              color: '#00C2B7',
               marginBottom: '15px',
               fontSize: isMobile ? '18px' : '20px'
             }}>
               Booking Details:
             </h3>
-            
-            <div style={{ lineHeight: '1.8', fontSize: isMobile ? '16px' : '18px' }}>
+
+            <div style={{ lineHeight: '1.8', fontSize: isMobile ? '16px' : '18px', color: '#F5F6F8' }}>
               <p><strong>Parking Spot:</strong> #{bookingDetails.spotId}</p>
               <p><strong>Duration:</strong> {getDurationLabel(bookingDetails.duration)}</p>
-              <p><strong>Amount Paid:</strong> ${bookingDetails.amount}</p>
+              <p><strong>Amount Paid:</strong> <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>${bookingDetails.amount}</span></p>
               <p><strong>License Plate:</strong> {bookingDetails.licensePlate}</p>
               <p><strong>Email:</strong> {bookingDetails.email}</p>
               <p><strong>Phone:</strong> {bookingDetails.phone}</p>
               {bookingDetails.smsReminders && (
-                <p><strong>SMS Reminders:</strong> <span style={{ color: '#4CAF50' }}>Enabled</span></p>
+                <p><strong>SMS Reminders:</strong> <span style={{ color: '#00C2B7' }}>Enabled</span></p>
               )}
               <p><strong>Booking Date:</strong> {new Date(bookingDetails.bookingDate).toLocaleString()}</p>
-              <p><strong>Status:</strong> <span style={{ color: '#4CAF50' }}>Confirmed</span></p>
+              <p><strong>Status:</strong> <span style={{ color: '#00C2B7' }}>Confirmed</span></p>
             </div>
           </div>
         )}
 
         <div style={{
-          backgroundColor: '#e3f2fd',
-          border: '1px solid #2196F3',
+          backgroundColor: 'rgba(0, 194, 183, 0.06)',
+          border: '1px solid rgba(0, 194, 183, 0.2)',
           borderRadius: '8px',
           padding: isMobile ? '15px' : '20px',
           marginBottom: '30px'
         }}>
-          <h4 style={{ color: '#1565c0', marginBottom: '10px' }}>Important Information:</h4>
+          <h4 style={{ color: '#00C2B7', marginBottom: '10px' }}>Important Information:</h4>
           <ul style={{
             textAlign: 'left',
-            color: '#1565c0',
+            color: '#8B92A7',
             fontSize: isMobile ? '14px' : '16px',
             lineHeight: '1.6'
           }}>
@@ -199,23 +199,23 @@ const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ isMobile = false }) => 
         <button
           onClick={() => window.location.href = '/'}
           style={{
-            backgroundColor: '#4CAF50',
-            color: 'white',
+            backgroundColor: '#00C2B7',
+            color: '#0A1628',
             border: 'none',
             padding: isMobile ? '16px 30px' : '18px 40px',
             borderRadius: '8px',
             fontSize: isMobile ? '16px' : '18px',
             fontWeight: '600',
             cursor: 'pointer',
-            boxShadow: '0 4px 8px rgba(76, 175, 80, 0.2)',
+            boxShadow: '0 4px 8px rgba(0, 194, 183, 0.2)',
             transition: 'all 0.3s ease'
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = '#45a049';
+            e.currentTarget.style.backgroundColor = '#00A89E';
             e.currentTarget.style.transform = 'translateY(-2px)';
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = '#4CAF50';
+            e.currentTarget.style.backgroundColor = '#00C2B7';
             e.currentTarget.style.transform = 'translateY(0)';
           }}
         >

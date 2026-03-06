@@ -19,10 +19,20 @@ const TermsPage: React.FC = () => {
       <nav className="navbar">
         <div className="nav-container">
           <Link to="/" className="nav-logo">
-            <span className="logo-text">Parq</span>
-            <span className="logo-tagline">AI</span>
+            <svg width="120" height="32" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+              </g>
+              <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+              <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+            </svg>
           </Link>
-          
+
           {/* Desktop Menu */}
           <div className="nav-menu desktop-menu">
             <Link to="/" className="nav-link">Home</Link>
@@ -33,12 +43,16 @@ const TermsPage: React.FC = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="mobile-menu-button"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
           >
-            <span className="hamburger-icon">☰</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
           </button>
 
           {/* Mobile Menu Overlay */}
@@ -46,15 +60,28 @@ const TermsPage: React.FC = () => {
             <div className="mobile-menu">
               <div className="mobile-menu-header">
                 <Link to="/" className="mobile-nav-logo" onClick={closeMobileMenu}>
-                  <span className="logo-text">Parq</span>
-                  <span className="logo-tagline">AI</span>
+                  <svg width="120" height="32" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                      <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+                    </g>
+                    <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+                    <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+                  </svg>
                 </Link>
-                <button 
+                <button
                   className="mobile-menu-close"
                   onClick={closeMobileMenu}
                   aria-label="Close mobile menu"
                 >
-                  ✕
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
                 </button>
               </div>
               <div className="mobile-nav-links">
@@ -329,8 +356,19 @@ const TermsPage: React.FC = () => {
         <div className="container">
           <div className="footer-content">
             <div className="footer-section">
-              <h3>Parq AI</h3>
-              <p>Revolutionizing parking management through artificial intelligence.</p>
+              <svg width="100" height="28" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                  <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+                </g>
+                <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+                <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+              </svg>
+              <p>Autonomous parking compliance for modern property owners.</p>
             </div>
             <div className="footer-section">
               <h4>Solutions</h4>

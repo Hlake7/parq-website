@@ -273,10 +273,20 @@ const BookingPage: React.FC = () => {
       <nav className="navbar">
         <div className="nav-container">
           <Link to="/" className="nav-logo">
-            <span className="logo-text">Parq</span>
-            <span className="logo-tagline">AI</span>
+            <svg width="120" height="32" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+              </g>
+              <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+              <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+            </svg>
           </Link>
-          
+
           {/* Desktop Menu */}
           <div className="nav-menu desktop-menu">
             <Link to="/" className="nav-link">Home</Link>
@@ -287,12 +297,16 @@ const BookingPage: React.FC = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="mobile-menu-button"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
           >
-            <span className="hamburger-icon">☰</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
           </button>
 
           {/* Mobile Menu Overlay */}
@@ -300,15 +314,28 @@ const BookingPage: React.FC = () => {
             <div className="mobile-menu">
               <div className="mobile-menu-header">
                 <Link to="/" className="mobile-nav-logo" onClick={closeMobileMenu}>
-                  <span className="logo-text">Parq</span>
-                  <span className="logo-tagline">AI</span>
+                  <svg width="120" height="32" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(18,24) rotate(45) translate(-18,-12)">
+                      <line x1="6" y1="0" x2="6" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="18" y1="0" x2="18" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="30" y1="0" x2="30" y2="24" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="0" y1="6" x2="36" y2="6" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <line x1="0" y1="18" x2="36" y2="18" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round"/>
+                      <circle cx="30" cy="18" r="3" fill="#00C2B7"/>
+                    </g>
+                    <text x="52" y="32" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="28" letterSpacing="-0.02em" fill="#F5F6F8">Parq</text>
+                    <text x="127" y="32" fontFamily="JetBrains Mono, monospace" fontWeight="500" fontSize="18" letterSpacing="0.05em" fill="#00C2B7">AI</text>
+                  </svg>
                 </Link>
-                <button 
+                <button
                   className="mobile-menu-close"
                   onClick={closeMobileMenu}
                   aria-label="Close mobile menu"
                 >
-                  ✕
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F6F8" strokeWidth="1.5" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
                 </button>
               </div>
               <div className="mobile-nav-links">
@@ -342,7 +369,7 @@ const BookingPage: React.FC = () => {
           textTransform: 'uppercase',
           letterSpacing: '1px'
         }}>
-          ⚠️ DEMONSTRATION ONLY
+          DEMONSTRATION ONLY
         </h2>
         <p style={{
           color: 'white',
@@ -358,24 +385,21 @@ const BookingPage: React.FC = () => {
       {/* Booking Header */}
       <div style={{
         padding: isMobile ? '2rem 1rem 1rem' : '3rem 2rem 1rem',
-        backgroundColor: '#f8f9fa',
+        backgroundColor: '#0A1628',
         textAlign: 'center',
-        borderBottom: '1px solid #e9ecef'
+        borderBottom: '1px solid #1E2A45'
       }}>
         <h1 style={{
-          color: '#1a1a1a',
+          color: '#00C2B7',
           marginBottom: '0.5rem',
           fontSize: isMobile ? '1.8rem' : '2.5rem',
           fontWeight: '700',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
+          fontFamily: "'General Sans', sans-serif"
         }}>
           Lumber Building Parking
         </h1>
         <p style={{
-          color: '#6c757d',
+          color: '#8B92A7',
           fontSize: isMobile ? '1rem' : '1.1rem',
           marginBottom: '1rem'
         }}>
@@ -383,15 +407,15 @@ const BookingPage: React.FC = () => {
         </p>
       </div>
 
-      <div style={{ 
-        padding: isMobile ? '15px' : '20px', 
-        backgroundColor: '#f8f9fa', 
+      <div style={{
+        padding: isMobile ? '15px' : '20px',
+        backgroundColor: '#0A1628',
         minHeight: '100vh'
       }}>
         
-        <p style={{ 
-          fontSize: isMobile ? '16px' : '18px', 
-          color: '#5a6c7d', 
+        <p style={{
+          fontSize: isMobile ? '16px' : '18px',
+          color: '#8B92A7',
           fontWeight: '400',
           textAlign: 'center',
           maxWidth: '90%',
@@ -412,7 +436,8 @@ const BookingPage: React.FC = () => {
           <label style={{
             fontSize: isMobile ? '16px' : '18px',
             fontWeight: '600',
-            color: '#2c3e50',
+            color: '#F5F6F8',
+            fontFamily: "'Inter', sans-serif",
             textAlign: 'center'
           }}>
             Select Spot Number:
@@ -425,15 +450,15 @@ const BookingPage: React.FC = () => {
               fontSize: isMobile ? '18px' : '16px',
               padding: isMobile ? '12px 20px' : '10px 16px',
               borderRadius: '8px',
-              border: '2px solid #ddd',
-              backgroundColor: 'white',
-              color: '#2c3e50',
+              border: '2px solid #1E2A45',
+              backgroundColor: '#1A2540',
+              color: '#F5F6F8',
               fontWeight: '500',
               minWidth: isMobile ? '120px' : '100px',
               minHeight: isMobile ? '48px' : '40px',
               cursor: 'pointer',
               outline: 'none',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+              boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
             }}
           >
             <option value="">Choose a spot</option>
@@ -475,7 +500,8 @@ const BookingPage: React.FC = () => {
             <h3 style={{
               fontSize: isMobile ? '18px' : '22px',
               fontWeight: '600',
-              color: '#2d3748',
+              color: '#F5F6F8',
+              fontFamily: "'General Sans', sans-serif",
               textAlign: 'center',
               marginBottom: '20px'
             }}>
@@ -495,20 +521,16 @@ const BookingPage: React.FC = () => {
                     key={option.value}
                     onClick={() => handleDurationSelect(option.value)}
                     style={{
-                      background: isSelected
-                        ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                        : 'white',
-                      border: isSelected
-                        ? '2px solid #667eea'
-                        : '2px solid #e2e8f0',
+                      background: isSelected ? '#00C2B7' : '#1A2540',
+                      border: isSelected ? '2px solid #00C2B7' : '2px solid #1E2A45',
                       borderRadius: '12px',
                       padding: isMobile ? '16px 12px' : '20px 16px',
                       textAlign: 'center',
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       boxShadow: isSelected
-                        ? '0 8px 24px rgba(102, 126, 234, 0.3)'
-                        : '0 2px 8px rgba(0,0,0,0.08)',
+                        ? '0 8px 24px rgba(0, 194, 183, 0.3)'
+                        : '0 2px 8px rgba(0,0,0,0.15)',
                       transform: isSelected ? 'translateY(-2px)' : 'translateY(0)',
                       minHeight: isMobile ? '90px' : '100px',
                       display: 'flex',
@@ -518,30 +540,30 @@ const BookingPage: React.FC = () => {
                     }}
                     onMouseEnter={(e) => {
                       if (!isSelected) {
-                        e.currentTarget.style.borderColor = '#667eea';
+                        e.currentTarget.style.borderColor = '#00C2B7';
                         e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.15)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 194, 183, 0.15)';
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!isSelected) {
-                        e.currentTarget.style.borderColor = '#e2e8f0';
+                        e.currentTarget.style.borderColor = '#1E2A45';
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
                       }
                     }}
                   >
                     <div style={{
                       fontSize: isMobile ? '16px' : '18px',
                       fontWeight: '700',
-                      color: isSelected ? 'white' : '#2d3748'
+                      color: isSelected ? '#0A1628' : '#F5F6F8'
                     }}>
                       {option.label}
                     </div>
                     <div style={{
                       fontSize: isMobile ? '14px' : '16px',
                       fontWeight: '600',
-                      color: isSelected ? 'white' : '#4a5568'
+                      color: isSelected ? '#0A1628' : '#8B92A7'
                     }}>
                       ${option.price.toFixed(2)}
                     </div>
@@ -562,7 +584,8 @@ const BookingPage: React.FC = () => {
             <h3 style={{
               fontSize: isMobile ? '18px' : '20px',
               fontWeight: '600',
-              color: '#2c3e50',
+              color: '#F5F6F8',
+              fontFamily: "'General Sans', sans-serif",
               textAlign: 'center',
               marginBottom: '20px'
             }}>
@@ -581,7 +604,7 @@ const BookingPage: React.FC = () => {
                   display: 'block',
                   fontSize: isMobile ? '14px' : '16px',
                   fontWeight: '600',
-                  color: '#2c3e50',
+                  color: '#F5F6F8',
                   marginBottom: '5px'
                 }}>
                   Email Address *
@@ -596,11 +619,11 @@ const BookingPage: React.FC = () => {
                     fontSize: isMobile ? '16px' : '14px',
                     padding: isMobile ? '12px 15px' : '10px 12px',
                     borderRadius: '8px',
-                    border: '2px solid #ddd',
-                    backgroundColor: 'white',
-                    color: '#2c3e50',
+                    border: '2px solid #1E2A45',
+                    backgroundColor: '#1A2540',
+                    color: '#F5F6F8',
                     outline: 'none',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
                     minHeight: isMobile ? '48px' : '40px'
                   }}
                 />
@@ -612,7 +635,7 @@ const BookingPage: React.FC = () => {
                   display: 'block',
                   fontSize: isMobile ? '14px' : '16px',
                   fontWeight: '600',
-                  color: '#2c3e50',
+                  color: '#F5F6F8',
                   marginBottom: '5px'
                 }}>
                   Phone Number *
@@ -627,11 +650,11 @@ const BookingPage: React.FC = () => {
                     fontSize: isMobile ? '16px' : '14px',
                     padding: isMobile ? '12px 15px' : '10px 12px',
                     borderRadius: '8px',
-                    border: '2px solid #ddd',
-                    backgroundColor: 'white',
-                    color: '#2c3e50',
+                    border: '2px solid #1E2A45',
+                    backgroundColor: '#1A2540',
+                    color: '#F5F6F8',
                     outline: 'none',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
                     minHeight: isMobile ? '48px' : '40px'
                   }}
                 />
@@ -643,7 +666,7 @@ const BookingPage: React.FC = () => {
                   display: 'block',
                   fontSize: isMobile ? '14px' : '16px',
                   fontWeight: '600',
-                  color: '#2c3e50',
+                  color: '#F5F6F8',
                   marginBottom: '5px'
                 }}>
                   License Plate Number *
@@ -658,11 +681,11 @@ const BookingPage: React.FC = () => {
                     fontSize: isMobile ? '16px' : '14px',
                     padding: isMobile ? '12px 15px' : '10px 12px',
                     borderRadius: '8px',
-                    border: '2px solid #ddd',
-                    backgroundColor: 'white',
-                    color: '#2c3e50',
+                    border: '2px solid #1E2A45',
+                    backgroundColor: '#1A2540',
+                    color: '#F5F6F8',
                     outline: 'none',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.15)',
                     minHeight: isMobile ? '48px' : '40px',
                     textTransform: 'uppercase'
                   }}
@@ -691,7 +714,7 @@ const BookingPage: React.FC = () => {
                   htmlFor="smsReminders"
                   style={{
                     fontSize: isMobile ? '14px' : '15px',
-                    color: '#2c3e50',
+                    color: '#8B92A7',
                     cursor: 'pointer',
                     lineHeight: '1.4'
                   }}
@@ -709,7 +732,7 @@ const BookingPage: React.FC = () => {
               <h3 style={{
                 fontSize: isMobile ? '16px' : '18px',
                 fontWeight: '600',
-                color: '#2d3748',
+                color: '#F5F6F8',
                 marginBottom: '12px'
               }}>
                 Promo Code
@@ -735,9 +758,9 @@ const BookingPage: React.FC = () => {
                         fontSize: isMobile ? '16px' : '14px',
                         padding: isMobile ? '12px 15px' : '10px 12px',
                         borderRadius: '8px',
-                        border: promoError ? '2px solid #e53e3e' : '2px solid #e2e8f0',
-                        backgroundColor: 'white',
-                        color: '#2d3748',
+                        border: promoError ? '2px solid #EF4444' : '2px solid #1E2A45',
+                        backgroundColor: '#1A2540',
+                        color: '#F5F6F8',
                         outline: 'none',
                         textTransform: 'uppercase',
                         minHeight: isMobile ? '48px' : '40px'
@@ -757,8 +780,8 @@ const BookingPage: React.FC = () => {
                   <button
                     onClick={handleApplyPromo}
                     style={{
-                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                      color: 'white',
+                      background: '#00C2B7',
+                      color: '#0A1628',
                       border: 'none',
                       padding: isMobile ? '12px 20px' : '10px 20px',
                       borderRadius: '8px',
@@ -771,7 +794,7 @@ const BookingPage: React.FC = () => {
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-1px)';
-                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 194, 183, 0.3)';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = 'translateY(0)';
@@ -821,8 +844,8 @@ const BookingPage: React.FC = () => {
             {/* Reservation Summary */}
             <div style={{
               marginTop: '25px',
-              background: 'linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)',
-              border: '2px solid #e2e8f0',
+              background: '#1A2540',
+              border: '2px solid #1E2A45',
               borderRadius: '12px',
               padding: isMobile ? '20px 15px' : '24px 20px',
               boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
@@ -830,7 +853,8 @@ const BookingPage: React.FC = () => {
               <h3 style={{
                 fontSize: isMobile ? '18px' : '20px',
                 fontWeight: '700',
-                color: '#2d3748',
+                color: '#F5F6F8',
+                fontFamily: "'General Sans', sans-serif",
                 marginBottom: '16px',
                 textAlign: 'center'
               }}>
@@ -840,15 +864,15 @@ const BookingPage: React.FC = () => {
               {/* Time Display */}
               {getEndTime && (
                 <div style={{
-                  background: 'white',
+                  background: '#0A1628',
                   padding: isMobile ? '12px' : '14px',
                   borderRadius: '8px',
                   marginBottom: '16px',
-                  border: '1px solid #e2e8f0'
+                  border: '1px solid #1E2A45'
                 }}>
                   <div style={{
                     fontSize: isMobile ? '13px' : '14px',
-                    color: '#718096',
+                    color: '#8B92A7',
                     fontWeight: '600',
                     marginBottom: '6px',
                     textAlign: 'center'
@@ -857,7 +881,7 @@ const BookingPage: React.FC = () => {
                   </div>
                   <div style={{
                     fontSize: isMobile ? '14px' : '15px',
-                    color: '#2d3748',
+                    color: '#F5F6F8',
                     fontWeight: '500',
                     lineHeight: '1.6',
                     textAlign: 'center'
@@ -865,7 +889,7 @@ const BookingPage: React.FC = () => {
                     <div>
                       <strong>Start:</strong> {startTime.toLocaleDateString('en-US', { weekday: 'short' })} at {startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
                     </div>
-                    <div style={{ margin: '4px 0', color: '#667eea', fontWeight: '600' }}>→</div>
+                    <div style={{ margin: '4px 0', color: '#00C2B7', fontWeight: '600' }}>→</div>
                     <div>
                       <strong>End:</strong> {getEndTime.toLocaleDateString('en-US', { weekday: 'short' })} at {getEndTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
                     </div>
@@ -883,7 +907,7 @@ const BookingPage: React.FC = () => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   fontSize: isMobile ? '15px' : '16px',
-                  color: '#4a5568'
+                  color: '#8B92A7'
                 }}>
                   <span>Spot #{selectedSpot}</span>
                   <span style={{ fontWeight: '500' }}>
@@ -895,7 +919,7 @@ const BookingPage: React.FC = () => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   fontSize: isMobile ? '15px' : '16px',
-                  color: '#4a5568'
+                  color: '#8B92A7'
                 }}>
                   <span>Base Price</span>
                   <span style={{ fontWeight: '500' }}>
@@ -919,22 +943,17 @@ const BookingPage: React.FC = () => {
                 )}
 
                 <div style={{
-                  borderTop: '2px solid #e2e8f0',
+                  borderTop: '2px solid #1E2A45',
                   marginTop: '8px',
                   paddingTop: '12px',
                   display: 'flex',
                   justifyContent: 'space-between',
                   fontSize: isMobile ? '18px' : '20px',
                   fontWeight: '700',
-                  color: '#2d3748'
+                  color: '#F5F6F8'
                 }}>
                   <span>Total</span>
-                  <span style={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
-                  }}>
+                  <span style={{ color: '#00C2B7' }}>
                     ${selectedPrice.toFixed(2)}
                   </span>
                 </div>
@@ -955,19 +974,18 @@ const BookingPage: React.FC = () => {
               onClick={handleContinueToPayment}
               disabled={!isFormValid() || isLoading}
               style={{
-                background: !isFormValid() || isLoading
-                  ? '#cbd5e0'
-                  : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
+                background: !isFormValid() || isLoading ? '#1E2A45' : '#00C2B7',
+                color: !isFormValid() || isLoading ? '#4A5167' : '#0A1628',
                 border: 'none',
                 padding: isMobile ? '16px 40px' : '20px 60px',
                 borderRadius: '12px',
                 fontSize: isMobile ? '18px' : '22px',
                 fontWeight: '700',
+                fontFamily: "'Inter', sans-serif",
                 cursor: !isFormValid() || isLoading ? 'not-allowed' : 'pointer',
                 boxShadow: !isFormValid() || isLoading
                   ? 'none'
-                  : '0 8px 24px rgba(102, 126, 234, 0.4)',
+                  : '0 8px 24px rgba(0, 194, 183, 0.4)',
                 transition: 'all 0.3s ease',
                 minHeight: isMobile ? '54px' : '60px',
                 width: isMobile ? '90%' : 'auto',
@@ -978,13 +996,13 @@ const BookingPage: React.FC = () => {
               onMouseOver={(e) => {
                 if (isFormValid() && !isLoading) {
                   e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 12px 32px rgba(102, 126, 234, 0.5)';
+                  e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 194, 183, 0.5)';
                 }
               }}
               onMouseOut={(e) => {
                 if (isFormValid() && !isLoading) {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(102, 126, 234, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 194, 183, 0.4)';
                 }
               }}
             >
@@ -997,38 +1015,38 @@ const BookingPage: React.FC = () => {
         <div style={{
           marginTop: isMobile ? '25px' : '40px',
           fontSize: isMobile ? '13px' : '14px',
-          color: '#6c757d',
+          color: '#8B92A7',
           maxWidth: isMobile ? '95%' : '600px',
           lineHeight: '1.6',
           padding: isMobile ? '0 10px' : '0',
           margin: isMobile ? '25px 10px 0' : '40px auto 0'
         }}>
-          <div style={{ 
-            display: 'flex', 
-            gap: isMobile ? '15px' : '30px', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
+          <div style={{
+            display: 'flex',
+            gap: isMobile ? '15px' : '30px',
+            justifyContent: 'center',
+            alignItems: 'center',
             marginBottom: isMobile ? '15px' : '20px',
             flexWrap: isMobile ? 'wrap' : 'nowrap'
           }}>
             {!selectedSpot ? (
               // Show legend when no spot is selected
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ color: '#4CAF50', fontSize: isMobile ? '14px' : '16px' }}>▢</span> 
-                <span style={{ color: '#495057', fontWeight: '500', fontSize: isMobile ? '12px' : '14px' }}>Numbered Parking Spaces</span>
+                <span style={{ color: '#4CAF50', fontSize: isMobile ? '14px' : '16px' }}>▢</span>
+                <span style={{ color: '#8B92A7', fontWeight: '500', fontSize: isMobile ? '12px' : '14px' }}>Numbered Parking Spaces</span>
               </div>
             ) : (
               // Show selected spot legend
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ color: '#2196F3', fontSize: isMobile ? '18px' : '20px' }}>▬</span> 
-                <span style={{ color: '#495057', fontWeight: '600', fontSize: isMobile ? '12px' : '14px' }}>Your Parking Space</span>
+                <span style={{ color: '#2196F3', fontSize: isMobile ? '18px' : '20px' }}>▬</span>
+                <span style={{ color: '#8B92A7', fontWeight: '600', fontSize: isMobile ? '12px' : '14px' }}>Your Parking Space</span>
               </div>
             )}
           </div>
           <p style={{
             textAlign: 'center',
             margin: 0,
-            color: '#6c757d',
+            color: '#8B92A7',
             fontSize: isMobile ? '13px' : '15px',
             lineHeight: '1.5'
           }}>
